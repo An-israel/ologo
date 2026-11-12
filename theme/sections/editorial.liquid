@@ -1,11 +1,12 @@
 <style>
   #shopify-section-{{ section.id }} .editorial { display: grid; gap: 24px; align-items: center; }
+  #shopify-section-{{ section.id }} .editorial__media .media { border-radius: 8px; }
   @media (min-width: 750px) {
     #shopify-section-{{ section.id }} .editorial { grid-template-columns: 1fr 1fr; gap: 48px; }
     #shopify-section-{{ section.id }} .editorial--reverse .editorial__media { order: 2; }
   }
 </style>
-<div class="section {% if section.settings.background == 'sand' %}section--sand{% elsif section.settings.background == 'plume' %}section--plume{% endif %}">
+<div class="section{% if section.settings.background != 'none' %} section--{{ section.settings.background }}{% endif %}">
   <div class="page-width editorial{% if section.settings.reverse %} editorial--reverse{% endif %}">
     <div class="editorial__media">
       <div class="media">
@@ -17,10 +18,11 @@
       </div>
     </div>
     <div>
-      <h2>{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+      <h2 class="heading-accent">{{ section.settings.heading | escape }}</h2>
       {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
       {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-        <a class="button button--secondary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+        <a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
       {%- endif -%}
     </div>
   </div>
@@ -31,14 +33,13 @@
   "name": "Editorial image and text",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image", "info": "Real product photography. No text in the image." },
+    { "type": "text", "id": "eyebrow", "label": "Label above the heading", "default": "Edit" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Winter layers" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Knits, fleeces and coats that work hard on cold mornings and still look good by the evening.</p>" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop knitwear" },
     { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/women" },
     { "type": "checkbox", "id": "reverse", "label": "Image on the right", "default": false },
-    { "type": "select", "id": "background", "label": "Background", "default": "sand", "options": [
-      { "value": "none", "label": "Paper" }, { "value": "sand", "label": "Sand" }, { "value": "plume", "label": "Plume" }
-    ] }
+    { "type": "select", "id": "background", "label": "Background", "default": "lilac", "options": [{"value": "none", "label": "Paper"}, {"value": "mint", "label": "Mint"}, {"value": "peach", "label": "Peach"}, {"value": "lilac", "label": "Lilac"}, {"value": "butter", "label": "Butter"}, {"value": "plume", "label": "Plume"}, {"value": "sand", "label": "Sand"}] }
   ],
   "presets": [{ "name": "Editorial image and text" }]
 }

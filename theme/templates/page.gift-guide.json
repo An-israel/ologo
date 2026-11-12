@@ -3,8 +3,11 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "The Ornis gift guide",
-        "text": "Thoughtful presents for everyone on your list, most under £25.",
+        "eyebrow": "Gift guide",
+        "heading": "Presents for everyone,",
+        "heading_highlight": "most under £25",
+        "button_style": "accent",
+        "text": "Thoughtful gifts for her, for him and for the kids, delivered across the UK.",
         "button_label": "Shop all gifts",
         "button_link": "shopify://collections/gifts"
       }

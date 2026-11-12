@@ -7,9 +7,12 @@
   assign mobile = section.settings.image_mobile | default: desktop
 -%}
 <style>
-  #shopify-section-{{ section.id }} .hero { position: relative; display: grid; background: var(--color-sand); }
+  #shopify-section-{{ section.id }} .hero { position: relative; display: grid; background: linear-gradient(135deg, var(--color-peach) 0%, var(--color-butter) 60%, var(--color-mint) 100%); overflow: hidden; }
+  #shopify-section-{{ section.id }} .hero::before { content: ''; position: absolute; width: 420px; height: 420px; right: -120px; bottom: -160px; border-radius: 50%; background: var(--color-gold); opacity: 0.35; pointer-events: none; }
+  #shopify-section-{{ section.id }} .hero__content { position: relative; }
+  #shopify-section-{{ section.id }} .hero__content h1 span { color: var(--color-coral); }
   #shopify-section-{{ section.id }} .hero__media { position: relative; aspect-ratio: 4 / 5; max-height: 52vh; width: 100%; overflow: hidden; }
-  #shopify-section-{{ section.id }} .hero__media img { width: 100%; height: 100%; object-fit: cover; }
+  #shopify-section-{{ section.id }} .hero__media img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
   #shopify-section-{{ section.id }} .hero__content { padding: 24px 16px 32px; }
   #shopify-section-{{ section.id }} .hero__content p { font-size: 1.125rem; }
   @media (min-width: 750px) {
@@ -35,10 +38,11 @@
     {%- endif -%}
   </div>
   <div class="hero__content">
-    <h1 id="HeroHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h1>
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+    <h1 id="HeroHeading-{{ section.id }}">{{ section.settings.heading | escape }}{% if section.settings.heading_highlight != blank %} <span>{{ section.settings.heading_highlight | escape }}</span>{% endif %}</h1>
     {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
     {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-      <a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+      <a class="button button--{{ section.settings.button_style }}" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
     {%- endif -%}
   </div>
 </section>
@@ -49,10 +53,13 @@
   "settings": [
     { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Real product photography, at least 1500 px wide. No text in the image." },
     { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Portrait 4:5, at least 1100 px wide. Uses the desktop image if empty." },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Christmas gifts from £10" },
+    { "type": "text", "id": "eyebrow", "label": "Label above the heading", "default": "The Christmas shop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Christmas gifts" },
+    { "type": "text", "id": "heading_highlight", "label": "Highlighted end of the heading (coral)", "default": "from £10" },
     { "type": "text", "id": "text", "label": "Supporting line", "default": "Jumpers, accessories and stocking fillers, delivered across the UK." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop gifts" },
-    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/gifts" }
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/gifts" },
+    { "type": "select", "id": "button_style", "label": "Button colour", "default": "accent", "options": [{ "value": "accent", "label": "Marigold" }, { "value": "primary", "label": "Kingfisher" }] }
   ],
   "presets": [{ "name": "Hero" }]
 }

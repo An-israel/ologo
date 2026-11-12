@@ -3,7 +3,10 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "heading": "Christmas gifts from £10",
+        "eyebrow": "The Christmas shop",
+        "heading": "Christmas gifts",
+        "heading_highlight": "from £10",
+        "button_style": "accent",
         "text": "Jumpers, accessories and stocking fillers, delivered across the UK.",
         "button_label": "Shop gifts",
         "button_link": "shopify://collections/gifts"
@@ -12,28 +15,99 @@
     "trust": {
       "type": "trust-strip",
       "blocks": {
-        "delivery": { "type": "point", "settings": { "icon": "delivery", "heading": "Free UK delivery over £30", "text": "Standard delivery £4.99, express £6.99." } },
-        "returns": { "type": "point", "settings": { "icon": "returns", "heading": "14-day returns", "text": "Changed your mind? Send it back within 14 days." } },
-        "secure": { "type": "point", "settings": { "icon": "secure", "heading": "Secure payment", "text": "Pay with card, Apple Pay, Shop Pay or Klarna." } }
+        "delivery": {
+          "type": "point",
+          "settings": {
+            "icon": "delivery",
+            "heading": "Free UK delivery over £30",
+            "text": "Standard delivery £4.99, express £6.99."
+          }
+        },
+        "returns": {
+          "type": "point",
+          "settings": {
+            "icon": "returns",
+            "heading": "14-day returns",
+            "text": "Changed your mind? Send it back within 14 days."
+          }
+        },
+        "secure": {
+          "type": "point",
+          "settings": {
+            "icon": "secure",
+            "heading": "Secure payment",
+            "text": "Pay with card, Apple Pay, Shop Pay or Klarna."
+          }
+        }
       },
-      "block_order": ["delivery", "returns", "secure"],
-      "settings": { "heading": "Why shop with Ornis" }
+      "block_order": [
+        "delivery",
+        "returns",
+        "secure"
+      ],
+      "settings": {
+        "heading": "Why shop with Ornis"
+      }
     },
     "categories": {
       "type": "category-tiles",
       "blocks": {
-        "women": { "type": "tile", "settings": { "collection": "women", "title": "Women" } },
-        "men": { "type": "tile", "settings": { "collection": "men", "title": "Men" } },
-        "kids": { "type": "tile", "settings": { "collection": "kids", "title": "Kids" } },
-        "beauty": { "type": "tile", "settings": { "collection": "beauty", "title": "Beauty" } },
-        "gifts": { "type": "tile", "settings": { "collection": "gifts", "title": "Gifts" } }
+        "women": {
+          "type": "tile",
+          "settings": {
+            "collection": "women",
+            "title": "Women"
+          }
+        },
+        "men": {
+          "type": "tile",
+          "settings": {
+            "collection": "men",
+            "title": "Men"
+          }
+        },
+        "kids": {
+          "type": "tile",
+          "settings": {
+            "collection": "kids",
+            "title": "Kids"
+          }
+        },
+        "beauty": {
+          "type": "tile",
+          "settings": {
+            "collection": "beauty",
+            "title": "Beauty"
+          }
+        },
+        "gifts": {
+          "type": "tile",
+          "settings": {
+            "collection": "gifts",
+            "title": "Gifts"
+          }
+        }
       },
-      "block_order": ["women", "men", "kids", "beauty", "gifts"],
-      "settings": { "heading": "Shop by category" }
+      "block_order": [
+        "women",
+        "men",
+        "kids",
+        "beauty",
+        "gifts"
+      ],
+      "settings": {
+        "heading": "Shop by category"
+      }
     },
     "new-in": {
       "type": "featured-collection",
-      "settings": { "heading": "New in", "collection": "new-in", "limit": 8, "quick_add": true }
+      "settings": {
+        "heading": "New in",
+        "collection": "new-in",
+        "limit": 8,
+        "quick_add": true,
+        "background": "none"
+      }
     },
     "editorial": {
       "type": "editorial",
@@ -43,28 +117,75 @@
         "button_label": "Shop winter layers",
         "button_link": "shopify://collections/women",
         "reverse": false,
-        "background": "sand"
+        "background": "lilac",
+        "eyebrow": "Edit"
       }
     },
     "gift-finder": {
       "type": "gift-finder",
       "blocks": {
-        "under-15": { "type": "link", "settings": { "collection": "gifts-under-15", "label": "Gifts under £15" } },
-        "under-25": { "type": "link", "settings": { "collection": "gifts-under-25", "label": "Gifts under £25" } },
-        "her": { "type": "link", "settings": { "collection": "gifts-for-her", "label": "For her" } },
-        "him": { "type": "link", "settings": { "collection": "gifts-for-him", "label": "For him" } },
-        "kids": { "type": "link", "settings": { "collection": "gifts-for-kids", "label": "For kids" } }
+        "under-15": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-under-15",
+            "label": "Gifts under £15"
+          }
+        },
+        "under-25": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-under-25",
+            "label": "Gifts under £25"
+          }
+        },
+        "her": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-her",
+            "label": "For her"
+          }
+        },
+        "him": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-him",
+            "label": "For him"
+          }
+        },
+        "kids": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-kids",
+            "label": "For kids"
+          }
+        }
       },
-      "block_order": ["under-15", "under-25", "her", "him", "kids"],
-      "settings": { "heading": "Find a gift" }
+      "block_order": [
+        "under-15",
+        "under-25",
+        "her",
+        "him",
+        "kids"
+      ],
+      "settings": {
+        "heading": "Find a gift"
+      }
     },
     "picked": {
       "type": "featured-collection",
-      "settings": { "heading": "Picked for you", "collection": "picked-for-you", "limit": 8, "quick_add": true }
+      "settings": {
+        "heading": "Picked for you",
+        "collection": "picked-for-you",
+        "limit": 8,
+        "quick_add": true,
+        "background": "mint"
+      }
     },
     "reviews": {
       "type": "reviews",
-      "settings": { "heading": "What customers say" }
+      "settings": {
+        "heading": "What customers say"
+      }
     },
     "about": {
       "type": "about-line",
@@ -77,8 +198,22 @@
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": { "heading": "Join the Ornis list", "text": "New arrivals and offers, no more than once a week." }
+      "settings": {
+        "heading": "Join the Ornis list",
+        "text": "New arrivals and offers, no more than once a week."
+      }
     }
   },
-  "order": ["hero", "trust", "categories", "new-in", "editorial", "gift-finder", "picked", "reviews", "about", "newsletter"]
+  "order": [
+    "hero",
+    "trust",
+    "categories",
+    "new-in",
+    "editorial",
+    "gift-finder",
+    "picked",
+    "reviews",
+    "about",
+    "newsletter"
+  ]
 }

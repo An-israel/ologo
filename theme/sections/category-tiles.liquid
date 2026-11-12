@@ -1,12 +1,21 @@
 <style>
   #shopify-section-{{ section.id }} .tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; list-style: none; padding: 0; margin: 0; }
   @media (min-width: 750px) { #shopify-section-{{ section.id }} .tiles { grid-template-columns: repeat({{ section.blocks.size | at_most: 5 }}, 1fr); } }
-  #shopify-section-{{ section.id }} .tile { display: grid; gap: 8px; color: var(--color-ink); text-decoration: none; font-weight: var(--font-body-weight-bold); font-size: 1.125rem; }
-  #shopify-section-{{ section.id }} .tile:hover span { text-decoration: underline; }
+  #shopify-section-{{ section.id }} .tile { display: grid; gap: 0; color: var(--color-ink); text-decoration: none; font-weight: var(--font-body-weight-bold); font-size: 1.125rem; border-radius: 8px; overflow: hidden; background: var(--color-peach); transition: transform 150ms ease, box-shadow 150ms ease; }
+  #shopify-section-{{ section.id }} li:nth-child(5n+2) .tile { background: var(--color-mint); }
+  #shopify-section-{{ section.id }} li:nth-child(5n+3) .tile { background: var(--color-lilac); }
+  #shopify-section-{{ section.id }} li:nth-child(5n+4) .tile { background: var(--color-butter); }
+  #shopify-section-{{ section.id }} li:nth-child(5n+5) .tile { background: var(--color-plume); }
+  #shopify-section-{{ section.id }} .tile .media { background: transparent; }
+  #shopify-section-{{ section.id }} .tile .media img { mix-blend-mode: multiply; }
+  #shopify-section-{{ section.id }} .tile__label { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 14px; }
+  #shopify-section-{{ section.id }} .tile__arrow { width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--color-kingfisher); color: var(--color-paper); flex: none; }
+  #shopify-section-{{ section.id }} .tile:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(10, 74, 92, 0.15); }
+  #shopify-section-{{ section.id }} .tile:hover .tile__text { text-decoration: underline; }
 </style>
 <div class="section">
   <div class="page-width">
-    <h2>{{ section.settings.heading | escape }}</h2>
+    <h2 class="heading-accent">{{ section.settings.heading | escape }}</h2>
     <ul class="tiles">
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
@@ -15,7 +24,7 @@
         <li {{ block.shopify_attributes }}>
           <a class="tile" href="{{ c.url }}">
             <div class="media">{%- render 'image', image: tile_image, sizes: '(min-width: 750px) 20vw, 50vw', widths: '240,360,480,640', alt: '' -%}</div>
-            <span>{{ block.settings.title | default: c.title | escape }}</span>
+            <span class="tile__label"><span class="tile__text">{{ block.settings.title | default: c.title | escape }}</span><span class="tile__arrow" aria-hidden="true">{% render 'icon', name: 'chevron-right', class: 'icon--small' %}</span></span>
           </a>
         </li>
       {%- endfor -%}

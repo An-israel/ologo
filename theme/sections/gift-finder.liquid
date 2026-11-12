@@ -1,10 +1,17 @@
 {%- comment -%} Links to automated gift collections (by price and tag). Empty collections are hidden. {%- endcomment -%}
 <style>
-  #shopify-section-{{ section.id }} .gift-links { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  #shopify-section-{{ section.id }} .gift-links { display: flex; flex-wrap: wrap; gap: 12px; list-style: none; padding: 0; margin: 0; }
+  #shopify-section-{{ section.id }} .gift-links a { border-radius: 999px; border: 0; background: var(--color-gold); color: var(--color-ink); padding-inline: 22px; }
+  #shopify-section-{{ section.id }} .gift-links li:nth-child(5n+2) a { background: var(--color-kingfisher); color: var(--color-paper); }
+  #shopify-section-{{ section.id }} .gift-links li:nth-child(5n+3) a { background: var(--color-coral); color: var(--color-paper); }
+  #shopify-section-{{ section.id }} .gift-links li:nth-child(5n+4) a { background: var(--color-deep); color: var(--color-paper); }
+  #shopify-section-{{ section.id }} .gift-links li:nth-child(5n+5) a { background: var(--color-berry); color: var(--color-paper); }
+  #shopify-section-{{ section.id }} .gift-links a:hover { filter: brightness(1.08); text-decoration: underline; }
+  #shopify-section-{{ section.id }} h2 .icon { display: inline-block; vertical-align: -3px; color: var(--color-coral); }
 </style>
-<div class="section section--tight">
+<div class="section section--tight section--peach">
   <div class="page-width">
-    <h2>{% render 'icon', name: 'gift' %} {{ section.settings.heading | escape }}</h2>
+    <h2 class="heading-accent">{% render 'icon', name: 'gift' %} {{ section.settings.heading | escape }}</h2>
     <ul class="gift-links">
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}

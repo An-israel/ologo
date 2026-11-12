@@ -1,6 +1,6 @@
-<div class="section section--ink on-ink">
+<div class="section section--brand on-ink">
   <div class="page-width page-width--narrow">
-    <h2>{{ section.settings.heading | escape }}</h2>
+    <h2 class="heading-accent">{{ section.settings.heading | escape }}</h2>
     {%- if settings.newsletter_offer != blank -%}<p><strong>{{ settings.newsletter_offer | escape }}</strong></p>{%- endif -%}
     {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
     {%- render 'newsletter-form', form_id: section.id -%}
@@ -8,7 +8,9 @@
 </div>
 <style>
   #shopify-section-{{ section.id }} .input { border-color: var(--color-paper); }
-  #shopify-section-{{ section.id }} .muted { color: #c9ccd1; }
+  #shopify-section-{{ section.id }} .muted { color: #e6eef0; }
+  #shopify-section-{{ section.id }} strong { color: var(--color-gold); }
+  #shopify-section-{{ section.id }} .button--primary { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); }
   #shopify-section-{{ section.id }} .form-message--success { color: var(--color-ink); }
 </style>
 

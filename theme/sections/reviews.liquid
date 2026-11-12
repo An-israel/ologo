@@ -7,7 +7,7 @@
   assign min_reviews = settings.reviews_min_count | default: 5
 -%}
 {%- if review_count >= min_reviews and section.blocks.size > 0 -%}
-  <div class="section section--plume">
+  <div class="section section--lilac">
     <div class="page-width">
       <h2>{{ section.settings.heading | escape }}</h2>
       <p class="small muted">{{ 'products.verified_reviews' | t }}</p>

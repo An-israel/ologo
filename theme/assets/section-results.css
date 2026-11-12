@@ -1,4 +1,5 @@
-.collection-hero { padding-block: 16px 24px; }
+.collection-hero { padding-block: 24px 28px; margin-top: 12px; margin-bottom: 8px; background: linear-gradient(120deg, var(--color-butter), var(--color-peach)); border-radius: 8px; }
+@media (min-width: 750px) { .collection-hero { padding-inline: 32px; } }
 .collection-hero h1 { margin-bottom: 8px; }
 .collection-hero .rte { max-width: 720px; color: var(--color-stone); }
 .results { padding-bottom: 64px; }
@@ -21,5 +22,7 @@
 .price-range { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .active-filters__list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
 .chip { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 6px 12px; border: 1.5px solid var(--color-border); border-radius: 18px; color: var(--color-ink); text-decoration: none; font-size: 0.875rem; background: #fff; }
-.chip:hover { border-color: var(--color-ink); }
+.chip:hover { border-color: var(--color-kingfisher); }
+.active-filters .chip { background: var(--color-mint); border-color: var(--color-mint); }
+.facet-checkbox input { accent-color: var(--color-kingfisher); }
 .results__empty { padding: 32px 0; }

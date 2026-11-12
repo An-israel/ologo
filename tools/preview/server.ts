@@ -339,7 +339,7 @@ function buildData(): Data {
   const linklists = Object.fromEntries(MENUS.map((m) => [m.handle, { handle: m.handle, title: m.title, links: m.items.map(toLink) }]));
   return {
     products, collections, pages, linklists,
-    heroImage: imageObj({ name: 'hero', shape: 'jumper', colour: '#c9a24a', width: 1536, height: 2048, alt: 'Knitwear gifts laid out on a table' }),
+    heroImage: imageObj({ name: 'hero', shape: 'jumper', colour: '#C2491D', width: 1536, height: 2048, alt: 'Knitwear gifts laid out on a table' }),
     editorialImage: imageObj({ name: 'editorial', shape: 'jacket', colour: '#5d6532', width: 1536, height: 2048, alt: 'Olive padded jacket' }),
   };
 }
@@ -532,7 +532,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname.startsWith('/preview-img/')) {
       const name = path.basename(url.pathname, '.jpg');
-      const fixture = PRODUCTS.flatMap((p) => p.images).find((i) => i.name === name) ?? (name === 'hero' ? { name, shape: 'jumper', colour: '#c9a24a' } : { name, shape: 'jacket', colour: '#5d6532' });
+      const fixture = PRODUCTS.flatMap((p) => p.images).find((i) => i.name === name) ?? (name === 'hero' ? { name, shape: 'jumper', colour: '#C2491D' } : { name, shape: 'jacket', colour: '#5d6532' });
       const file = await ensureImage(IMG_DIR, fixture.name, fixture.shape, fixture.colour);
       return send(200, fs.readFileSync(file), 'image/jpeg');
     }

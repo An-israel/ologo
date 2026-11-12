@@ -15,9 +15,13 @@
         "content": "Every text pair below passes WCAG 2.2 AA at these defaults. If you change a colour, check contrast at webaim.org/resources/contrastchecker before saving."
       },
       {
+        "type": "header",
+        "content": "Core"
+      },
+      {
         "type": "color",
         "id": "color_ink",
-        "label": "Ink (text, header, footer, primary buttons)",
+        "label": "Ink (body text)",
         "default": "#15171C"
       },
       {
@@ -28,16 +32,15 @@
       },
       {
         "type": "color",
-        "id": "color_kingfisher",
-        "label": "Kingfisher (links, focus ring, selected swatch)",
-        "default": "#0B6782"
+        "id": "color_deep",
+        "label": "Deep teal (header and footer)",
+        "default": "#0A4A5C"
       },
       {
         "type": "color",
-        "id": "color_robin",
-        "label": "Robin (real sale prices only)",
-        "default": "#C23A1E",
-        "info": "Never place Robin text on Sand."
+        "id": "color_kingfisher",
+        "label": "Kingfisher (buttons, links, focus ring)",
+        "default": "#0B6782"
       },
       {
         "type": "color",
@@ -46,22 +49,72 @@
         "default": "#5B6068"
       },
       {
-        "type": "color",
-        "id": "color_plume",
-        "label": "Plume (soft panels)",
-        "default": "#E8F1F3"
-      },
-      {
-        "type": "color",
-        "id": "color_sand",
-        "label": "Sand (seasonal and editorial bands)",
-        "default": "#EFE9DF"
+        "type": "header",
+        "content": "Accents"
       },
       {
         "type": "color",
         "id": "color_gold",
-        "label": "Gold (small accents only)",
-        "default": "#E2B23A"
+        "label": "Marigold (highlight buttons, announcement bar). Text on it is Ink.",
+        "default": "#F2C14E"
+      },
+      {
+        "type": "color",
+        "id": "color_coral",
+        "label": "Coral (New badges, labels). Text on it is Paper.",
+        "default": "#C2491D"
+      },
+      {
+        "type": "color",
+        "id": "color_berry",
+        "label": "Berry (low stock, gift labels). Text on it is Paper.",
+        "default": "#9C2A5B"
+      },
+      {
+        "type": "color",
+        "id": "color_robin",
+        "label": "Robin (real sale prices only)",
+        "default": "#C23A1E"
+      },
+      {
+        "type": "header",
+        "content": "Soft section backgrounds (text on them is Ink)"
+      },
+      {
+        "type": "color",
+        "id": "color_plume",
+        "label": "Plume",
+        "default": "#E8F1F3"
+      },
+      {
+        "type": "color",
+        "id": "color_mint",
+        "label": "Mint",
+        "default": "#DDF1EA"
+      },
+      {
+        "type": "color",
+        "id": "color_peach",
+        "label": "Peach",
+        "default": "#FCE3D3"
+      },
+      {
+        "type": "color",
+        "id": "color_lilac",
+        "label": "Lilac",
+        "default": "#E9E1F7"
+      },
+      {
+        "type": "color",
+        "id": "color_butter",
+        "label": "Butter",
+        "default": "#FBF0CC"
+      },
+      {
+        "type": "color",
+        "id": "color_sand",
+        "label": "Sand",
+        "default": "#EFE9DF"
       }
     ]
   },
