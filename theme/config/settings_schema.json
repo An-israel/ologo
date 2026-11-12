@@ -123,13 +123,19 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Headings use Bricolage Grotesque, bundled with the theme. Pick the body font from Shopify's library."
+        "content": "Fonts come from Shopify's font library, served from Shopify's CDN. Poppins is the default. Montserrat and Helvetica are good alternatives."
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "Headings",
+        "default": "poppins_n7"
       },
       {
         "type": "font_picker",
         "id": "type_body_font",
-        "label": "Body and interface font",
-        "default": "inter_n4"
+        "label": "Body and interface",
+        "default": "poppins_n4"
       }
     ]
   },

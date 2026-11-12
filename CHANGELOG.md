@@ -4,6 +4,9 @@ Theme releases are tagged in Git (`v2.0.0` upward). Store schema changes bump `S
 
 ## Unreleased: 2.0.0 (milestones 1 to 3, built before store access)
 
+### Font change (operator request)
+- Poppins for headings and body, from Shopify's font library (no self-hosted font files). Montserrat or Helvetica can be picked in Theme settings > Typography.
+
 ### Colour refresh (operator request: "add life and colour")
 - New palette, all editable in Theme settings > Colours and all WCAG AA: Deep teal header and footer, Kingfisher buttons,
   Marigold announcement bar, highlight buttons and heading underlines, Coral labels and New badges, Berry low-stock badges,
@@ -13,7 +16,7 @@ Theme releases are tagged in Git (`v2.0.0` upward). Store schema changes bump `S
 - Every product row, editorial and hero section has a background or button colour choice in the theme editor.
 
 ### Theme
-- New Ornis 2.0 theme on Online Store 2.0: "Plumage" design system (colour and type tokens as theme settings, Bricolage Grotesque headings self-hosted, Inter body), ORNIS wordmark with feather, and favicon.
+- New Ornis 2.0 theme on Online Store 2.0: "Plumage" design system (colour and type tokens as theme settings, Poppins for headings and body from Shopify's font library), ORNIS wordmark with feather, and favicon.
 - Global: announcement bar (pausable, at least 6 s per message), sticky header with mega menu and full-screen mobile menu, predictive search (keyboard combobox), cart drawer with free-delivery progress, footer with three menus, newsletter, social and payment icons, business details, and cookie preferences link.
 - Home: hero (LCP image preloaded), trust strip, category tiles, New in, editorial, gift finder, Picked for you, verified reviews (hidden under 5), About line, newsletter.
 - Collection and search: filters (sidebar and drawer), active filter chips, sort, product cards with second image, swatches, quick add, honest badges, Load more that keeps the URL.

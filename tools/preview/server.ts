@@ -55,8 +55,10 @@ engine.registerFilter('preload_tag', (url: string, ...args: unknown[]) => {
   const n = named(args);
   return `<link rel="preload" href="${url}" as="${n.as}"${n.type ? ` type="${n.type}"` : ''}${n.crossorigin ? ' crossorigin="anonymous"' : ''}>`;
 });
-engine.registerFilter('font_face', () => '');
-engine.registerFilter('font_modify', (f: unknown) => f);
+const fontFile = (f: any) => `/preview-fonts/${String(f?.family ?? 'Poppins').toLowerCase()}-latin-${f?.weight ?? 400}-normal.woff2`;
+engine.registerFilter('font_face', (f: any) => `@font-face { font-family: ${f.family}; font-weight: ${f.weight}; font-style: normal; font-display: swap; src: url('${fontFile(f)}') format('woff2'); }`);
+engine.registerFilter('font_url', (f: any) => fontFile(f));
+engine.registerFilter('font_modify', (f: any, prop: string, value: string) => (prop === 'weight' ? { ...f, weight: Number(value) } : f));
 engine.registerFilter('color_modify', (hex: string, _p: string, a: number) => {
   const n = parseInt(String(hex).slice(1), 16);
   return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
@@ -347,7 +349,9 @@ function buildData(): Data {
 function defaultSettings() {
   const s: Record<string, unknown> = {};
   for (const group of settingsSchema) for (const def of group.settings ?? []) if (def.id) s[def.id] = def.default ?? null;
-  s.type_body_font = { family: 'Inter', fallback_families: "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif", weight: 400 };
+  // Stand-ins for Shopify's font library objects; the files are served from @fontsource/poppins.
+  s.type_heading_font = { family: 'Poppins', fallback_families: "'Helvetica Neue', Helvetica, Arial, sans-serif", weight: 700 };
+  s.type_body_font = { family: 'Poppins', fallback_families: "'Helvetica Neue', Helvetica, Arial, sans-serif", weight: 400 };
   // Preview only: sample Christmas date so the cut-off block can be checked visually.
   s.christmas_standard_cutoff = 'Thursday 17 December';
   return s;
@@ -529,6 +533,11 @@ const server = http.createServer(async (req, res) => {
       const ext = path.extname(file);
       const types: Record<string, string> = { '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.png': 'image/png', '.jpg': 'image/jpeg' };
       return send(200, fs.readFileSync(file), types[ext] ?? 'application/octet-stream');
+    }
+    if (url.pathname.startsWith('/preview-fonts/')) {
+      const file = path.resolve('node_modules/@fontsource/poppins/files', path.basename(url.pathname));
+      if (!fs.existsSync(file)) return send(404, 'not found', 'text/plain');
+      return send(200, fs.readFileSync(file), 'font/woff2');
     }
     if (url.pathname.startsWith('/preview-img/')) {
       const name = path.basename(url.pathname, '.jpg');

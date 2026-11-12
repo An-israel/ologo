@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
-    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
     "@lhci/cli": "^0.16.1",
     "@playwright/test": "^1.65.0",
     "@shopify/theme-check-node": "^4.0.0",
