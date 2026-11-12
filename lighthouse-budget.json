@@ -1,0 +1,19 @@
+[
+  {
+    "path": "/*",
+    "timings": [
+      { "metric": "largest-contentful-paint", "budget": 2500 },
+      { "metric": "cumulative-layout-shift", "budget": 0.05 },
+      { "metric": "total-blocking-time", "budget": 200 }
+    ],
+    "resourceSizes": [
+      { "resourceType": "script", "budget": 60 },
+      { "resourceType": "stylesheet", "budget": 40 },
+      { "resourceType": "font", "budget": 60 },
+      { "resourceType": "total", "budget": 900 }
+    ],
+    "resourceCounts": [
+      { "resourceType": "third-party", "budget": 10 }
+    ]
+  }
+]

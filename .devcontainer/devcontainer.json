@@ -1,0 +1,7 @@
+{
+  "name": "Ornis theme and toolkit",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "postCreateCommand": "npm ci && npx playwright install --with-deps chromium && npm install -g @shopify/cli@3",
+  "forwardPorts": [9292],
+  "customizations": { "vscode": { "extensions": ["Shopify.theme-check-vscode", "dbaeumer.vscode-eslint"] } }
+}

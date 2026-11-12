@@ -42,7 +42,7 @@
         <span class="visually-hidden">{{ value | escape }}{% unless forloop.last %},{% endunless %}</span>
       {%- endfor -%}
       {%- if colour_option.values.size > 5 -%}
-        <span aria-hidden="true">{{ 'products.more_colours' | t: count: colour_option.values.size | minus: 5 }}</span>
+        <span aria-hidden="true">{%- assign more_count = colour_option.values.size | minus: 5 -%}{{ 'products.more_colours' | t: count: more_count }}</span>
       {%- endif -%}
     </div>
   {%- endif -%}

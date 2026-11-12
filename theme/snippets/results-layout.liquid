@@ -46,6 +46,7 @@
     {%- endif -%}
     <div class="results__main" data-results>
       {%- if total > 0 -%}
+        <h2 class="visually-hidden">{{ 'collections.products_heading' | t }}</h2>
         <ul class="grid grid--3" data-product-list>
           {%- for item in items -%}
             <li data-product-id="{{ item.id }}">

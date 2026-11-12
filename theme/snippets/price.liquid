@@ -19,7 +19,7 @@
     <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
     <s class="price__compare">{{ target.compare_at_price | money }}</s>
   {%- elsif show_from_price -%}
-    <span>{{ 'products.from_price' | t: price: product.price_min | money }}</span>
+    {%- assign min_money = product.price_min | money -%}<span>{{ 'products.from_price' | t: price: min_money }}</span>
   {%- else -%}
     <span>{{ target.price | money }}</span>
   {%- endif -%}

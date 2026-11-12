@@ -164,7 +164,7 @@
     </delivery-estimate>
 
     <ul class="trust-list product__trust">
-      {%- if threshold_pence > 0 -%}<li>{% render 'icon', name: 'delivery', class: 'icon--small' %}<span>{{ 'products.free_delivery_over' | t: amount: threshold_pence | money_without_trailing_zeros }}</span></li>{%- endif -%}
+      {%- if threshold_pence > 0 -%}<li>{% render 'icon', name: 'delivery', class: 'icon--small' %}{%- assign threshold_money = threshold_pence | money_without_trailing_zeros -%}<span>{{ 'products.free_delivery_over' | t: amount: threshold_money }}</span></li>{%- endif -%}
       {%- if returns_days != blank -%}<li>{% render 'icon', name: 'returns', class: 'icon--small' %}<span>{{ 'products.returns_window' | t: days: returns_days }}</span></li>{%- endif -%}
       <li>{% render 'icon', name: 'secure', class: 'icon--small' %}<span>{{ 'products.secure_checkout' | t }}</span></li>
     </ul>

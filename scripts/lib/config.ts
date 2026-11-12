@@ -24,7 +24,8 @@ export const IMAGE_CONCURRENCY = 4;
 export function requireEnv(name: string): string {
   const value = process.env[name];
   if (!value) {
-    throw new Error(`Missing environment variable ${name}. Add it to the environment secrets (see .env.example). Never paste it into chat or commit it.`);
+    console.error(`Missing environment variable ${name}. Add it to the environment secrets (see .env.example). Never paste it into chat or commit it.`);
+    process.exit(2);
   }
   return value;
 }

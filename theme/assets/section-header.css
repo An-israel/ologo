@@ -32,9 +32,9 @@
 .mega-menu__feature { display: grid; gap: 8px; font-weight: var(--font-body-weight-bold); }
 
 .wordmark { font-family: var(--font-heading); font-weight: 700; letter-spacing: 0.04em; font-size: 1.5rem; line-height: 1; color: currentColor; }
-.wordmark__text { display: inline-flex; align-items: flex-end; padding-top: 10px; }
+.wordmark__text { display: inline-flex; align-items: flex-end; padding-top: 14px; }
 .wordmark__i { position: relative; display: inline-block; }
-.wordmark__feather { position: absolute; width: 14px; height: 14px; left: 50%; bottom: 100%; transform: translate(-30%, 2px); }
+.wordmark__feather { position: absolute; width: 18px; height: 18px; left: 50%; bottom: 100%; transform: translate(-25%, 4px); }
 @media (min-width: 990px) { .wordmark { font-size: 1.75rem; } }
 
 .cart-count__bubble {

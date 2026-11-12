@@ -182,7 +182,8 @@
     "showing": "Showing {{ shown }} of {{ total }}",
     "empty": "No products match these filters.",
     "empty_collection": "This collection is being restocked. Have a look at these instead.",
-    "selected": "{{ count }} selected"
+    "selected": "{{ count }} selected",
+    "products_heading": "Products"
   },
   "newsletter": {
     "label": "Email address",

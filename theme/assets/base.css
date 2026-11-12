@@ -63,6 +63,10 @@ strong, b { font-weight: var(--font-body-weight-bold); }
 [hidden] { display: none !important; }
 .no-js .js-only { display: none !important; }
 
+/* Custom elements are inline by default; the theme's are layout blocks. */
+announcement-bar, sticky-header, mega-menu, predictive-search, product-form, variant-picker, media-gallery, sticky-add,
+cart-items, facet-form, load-more, newsletter-popup, recently-viewed, product-recommendations, delivery-estimate { display: block; }
+
 /* Layout */
 .page-width { max-width: 1320px; margin: 0 auto; padding: 0 16px; }
 @media (min-width: 750px) { .page-width { padding: 0 32px; } }
@@ -112,7 +116,7 @@ strong, b { font-weight: var(--font-body-weight-bold); }
 .button--secondary.is-loading::after { border-color: var(--color-ink); border-right-color: transparent; }
 .on-ink .button--primary { background: var(--color-paper); color: var(--color-ink); border-color: var(--color-paper); }
 .link { color: inherit; font-weight: var(--font-body-weight-bold); }
-.link-button { background: none; border: 0; padding: 0; color: var(--color-kingfisher); text-decoration: underline; text-underline-offset: 0.2em; min-height: 24px; }
+.link-button { display: inline-flex; align-items: center; gap: 4px; background: none; border: 0; padding: 0; color: var(--color-kingfisher); text-decoration: underline; text-underline-offset: 0.2em; min-height: 24px; }
 .icon-button {
   display: inline-flex; align-items: center; justify-content: center;
   width: 44px; height: 44px; padding: 0; border: 0; background: none; color: inherit; position: relative;

@@ -29,7 +29,7 @@
   <div class="page-width footer__bottom">
     {%- render 'payment-icons' -%}
     <div class="footer__legal small">
-      <p class="mb-0">{{ 'footer.copyright' | t: year: 'now' | date: '%Y', name: settings.business_name }}{% if settings.legal_name != blank and settings.legal_name != settings.business_name %} ({{ settings.legal_name | escape }}){% endif %}</p>
+      <p class="mb-0">{%- assign this_year = 'now' | date: '%Y' -%}{{ 'footer.copyright' | t: year: this_year, name: settings.business_name }}{% if settings.legal_name != blank and settings.legal_name != settings.business_name %} ({{ settings.legal_name | escape }}){% endif %}</p>
       {%- if settings.business_address != blank -%}<address class="mb-0">{{ settings.business_address | escape | newline_to_br }}</address>{%- endif -%}
       {%- if settings.business_email != blank -%}<p class="mb-0"><a href="mailto:{{ settings.business_email | escape }}">{{ settings.business_email | escape }}</a></p>{%- endif -%}
       {%- if settings.company_number != blank -%}<p class="mb-0">{{ 'footer.company_number' | t: number: settings.company_number }}</p>{%- endif -%}

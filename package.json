@@ -9,7 +9,7 @@
   },
   "scripts": {
     "theme:dev": "shopify theme dev --path theme",
-    "theme:check": "theme-check theme --fail-level suggestion",
+    "theme:check": "tsx tests/theme-check.ts",
     "theme:push": "shopify theme push --path theme --unpublished --theme \"Ornis 2.0\" --json",
     "theme:share": "shopify theme share --path theme",
     "lint:placeholders": "tsx tests/static-placeholder-scan.ts",
@@ -30,7 +30,8 @@
     "redirects": "tsx scripts/set-redirects.ts",
     "weekly-report": "tsx scripts/weekly-report.ts",
     "smoke": "tsx scripts/smoke-test.ts",
-    "backup": "tsx scripts/backup-export.ts"
+    "backup": "tsx scripts/backup-export.ts",
+    "preview": "tsx tools/preview/server.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
@@ -39,6 +40,7 @@
     "@playwright/test": "^1.65.0",
     "@shopify/theme-check-node": "^4.0.0",
     "@types/node": "^22.20.5",
+    "liquidjs": "^10.30.1",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vitest": "^5.1.0"

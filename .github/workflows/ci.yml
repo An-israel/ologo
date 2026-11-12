@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Theme Check, unit tests and static scans
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Theme Check (zero errors, zero warnings)
+        run: npm run theme:check
+      - name: Placeholder scan
+        run: npm run lint:placeholders
+      - name: Link check
+        run: npm run lint:links
+      - name: Copy check (British English, no em dashes)
+        run: npm run lint:copy
+      - name: Validate the example product CSV
+        run: npm run validate -- templates/ornis_products_example.csv
+      - name: Dependency audit
+        run: npm audit --omit=dev --audit-level=high
+
+  e2e:
+    name: Playwright, axe and Lighthouse on the preview
+    runs-on: ubuntu-latest
+    needs: checks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: End-to-end, accessibility, placeholder and link tests (390 px and 1440 px)
+        run: npm run test:e2e
+      - name: Lighthouse CI (budgets in lighthouse-budget.json)
+        run: npm run lhci
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
+
+  deploy-preview:
+    name: Push to the unpublished "Ornis 2.0" theme
+    runs-on: ubuntu-latest
+    needs: [checks, e2e]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    concurrency:
+      group: theme-deploy
+      cancel-in-progress: false
+    env:
+      SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+      SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli@3
+      - name: Push theme (never publishes; publishing is manual after sign-off)
+        run: shopify theme push --path theme --unpublished --theme "Ornis 2.0" --json
+      - name: Smoke test the preview
+        run: npm ci && npx playwright install --with-deps chromium && npm run smoke
+        env:
+          STORE_URL: https://${{ secrets.SHOPIFY_STORE }}
+          PREVIEW_THEME_ID: ${{ vars.ORNIS_PREVIEW_THEME_ID }}
+          STOREFRONT_PASSWORD: ${{ secrets.STOREFRONT_PASSWORD }}

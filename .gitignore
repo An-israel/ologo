@@ -13,3 +13,4 @@ playwright-report/
 work/
 *.lock-run
 .DS_Store
+tools/preview/.cache/

@@ -1,0 +1,63 @@
+name: Scheduled jobs
+
+on:
+  schedule:
+    # Monday 07:00 UTC = 08:00 UK in summer (BST); 07:00 UK in winter. The job checks UK time and skips the wrong one.
+    - cron: '0 7 * * 1'
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      job:
+        description: Which job to run
+        type: choice
+        options: [weekly-report, backup]
+        default: weekly-report
+
+concurrency:
+  group: store-scripts
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    env:
+      SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}
+      SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Run only at 08:00 UK time
+        id: uk
+        run: |
+          hour=$(TZ=Europe/London date +%H)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$hour" = "08" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/checkout@v4
+        if: steps.uk.outputs.run == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.uk.outputs.run == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - if: steps.uk.outputs.run == 'true'
+        run: npm ci
+      - name: Weekly report (opens a GitHub issue)
+        if: steps.uk.outputs.run == 'true' && (github.event_name == 'schedule' || inputs.job == 'weekly-report')
+        run: npm run weekly-report
+      - name: Weekly backup of products, collections, pages, menus, redirects and metaobjects
+        if: steps.uk.outputs.run == 'true' && (github.event_name == 'schedule' || inputs.job == 'backup')
+        run: |
+          npm run backup
+          git config user.name "ornis-backup"
+          git config user.email "backup@users.noreply.github.com"
+          git add backup
+          git commit -m "Weekly store backup $(date +%F)" || echo "No changes"
+          git push
+      - name: Alert on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title: `Scheduled job failed: ${new Date().toISOString().slice(0,10)}`, body: `The scheduled workflow failed. See ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`, labels: ['alert'] });

@@ -11,7 +11,7 @@
       {%- assign progress = 100 -%}
     {%- else -%}
       {%- assign remaining = threshold_pence | minus: total -%}
-      <p class="mb-0">{{ 'cart.free_delivery_remaining' | t: amount: remaining | money }}</p>
+      {%- assign remaining_money = remaining | money -%}<p class="mb-0">{{ 'cart.free_delivery_remaining' | t: amount: remaining_money }}</p>
       {%- assign progress = total | times: 100 | divided_by: threshold_pence -%}
     {%- endif -%}
     <div class="free-delivery__bar" aria-hidden="true"><div class="free-delivery__fill" style="--progress: {{ progress }}%"></div></div>

@@ -28,11 +28,11 @@
         <p class="mb-0">{{ 'templates.gift_card.balance' | t }}</p>
         <p class="gift__balance">{{ gift_card.balance | money }}</p>
         {%- if gift_card.expired -%}
-          <p class="mb-0">{{ 'templates.gift_card.expired' | t: date: gift_card.expires_on | date: '%-d %B %Y' }}</p>
+          <p class="mb-0">{%- assign expiry = gift_card.expires_on | date: '%-d %B %Y' -%}{{ 'templates.gift_card.expired' | t: date: expiry }}</p>
         {%- elsif gift_card.enabled == false -%}
           <p class="mb-0">{{ 'templates.gift_card.disabled' | t }}</p>
         {%- elsif gift_card.expires_on -%}
-          <p class="mb-0 small">{{ 'templates.gift_card.expires' | t: date: gift_card.expires_on | date: '%-d %B %Y' }}</p>
+          <p class="mb-0 small">{%- assign expiry = gift_card.expires_on | date: '%-d %B %Y' -%}{{ 'templates.gift_card.expires' | t: date: expiry }}</p>
         {%- endif -%}
         <p class="mb-0 small">{{ 'templates.gift_card.code' | t }}</p>
         <p class="gift__code" id="GiftCardCode">{{ gift_card.code | format_code }}</p>
