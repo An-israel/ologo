@@ -116,7 +116,7 @@ cart-items, facet-form, load-more, newsletter-popup, recently-viewed, product-re
 .button--primary { background: var(--color-kingfisher); border-color: var(--color-kingfisher); color: var(--color-paper); }
 .button--primary:hover { background: var(--color-deep); border-color: var(--color-deep); }
 .button--accent { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); }
-.button--accent:hover { background: #e9b23a; border-color: #e9b23a; }
+.button--accent:hover { background: #FFB800; border-color: #FFB800; }
 .button--secondary { background: var(--color-paper); color: var(--color-ink); border-color: var(--color-kingfisher); }
 .button--secondary:hover { background: var(--color-mint); }
 .button--full { width: 100%; }

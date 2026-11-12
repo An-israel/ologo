@@ -22,31 +22,31 @@
         "type": "color",
         "id": "color_ink",
         "label": "Ink (body text)",
-        "default": "#15171C"
+        "default": "#111827"
       },
       {
         "type": "color",
         "id": "color_paper",
         "label": "Paper (page background)",
-        "default": "#FBFAF7"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "color_deep",
-        "label": "Deep teal (header and footer)",
-        "default": "#0A4A5C"
+        "label": "Navy (footer, dark bands)",
+        "default": "#172554"
       },
       {
         "type": "color",
         "id": "color_kingfisher",
-        "label": "Kingfisher (buttons, links, focus ring)",
-        "default": "#0B6782"
+        "label": "Royal blue (header, buttons, links, focus ring)",
+        "default": "#1D4ED8"
       },
       {
         "type": "color",
         "id": "color_stone",
         "label": "Stone (secondary text, borders)",
-        "default": "#5B6068"
+        "default": "#4B5563"
       },
       {
         "type": "header",
@@ -55,26 +55,26 @@
       {
         "type": "color",
         "id": "color_gold",
-        "label": "Marigold (highlight buttons, announcement bar). Text on it is Ink.",
-        "default": "#F2C14E"
+        "label": "Sunshine (highlight buttons, announcement bar). Text on it is Ink.",
+        "default": "#FFC629"
       },
       {
         "type": "color",
         "id": "color_coral",
         "label": "Coral (New badges, labels). Text on it is Paper.",
-        "default": "#C2491D"
+        "default": "#D9381E"
       },
       {
         "type": "color",
         "id": "color_berry",
         "label": "Berry (low stock, gift labels). Text on it is Paper.",
-        "default": "#9C2A5B"
+        "default": "#BE185D"
       },
       {
         "type": "color",
         "id": "color_robin",
         "label": "Robin (real sale prices only)",
-        "default": "#C23A1E"
+        "default": "#C81E1E"
       },
       {
         "type": "header",
@@ -83,38 +83,38 @@
       {
         "type": "color",
         "id": "color_plume",
-        "label": "Plume",
-        "default": "#E8F1F3"
+        "label": "Sky",
+        "default": "#BFDBFE"
       },
       {
         "type": "color",
         "id": "color_mint",
         "label": "Mint",
-        "default": "#DDF1EA"
+        "default": "#A7F3D0"
       },
       {
         "type": "color",
         "id": "color_peach",
         "label": "Peach",
-        "default": "#FCE3D3"
+        "default": "#FED7AA"
       },
       {
         "type": "color",
         "id": "color_lilac",
         "label": "Lilac",
-        "default": "#E9E1F7"
+        "default": "#DDD6FE"
       },
       {
         "type": "color",
         "id": "color_butter",
         "label": "Butter",
-        "default": "#FBF0CC"
+        "default": "#FDE68A"
       },
       {
         "type": "color",
         "id": "color_sand",
-        "label": "Sand",
-        "default": "#EFE9DF"
+        "label": "Pink",
+        "default": "#FBCFE8"
       }
     ]
   },

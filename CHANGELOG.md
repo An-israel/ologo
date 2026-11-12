@@ -4,6 +4,11 @@ Theme releases are tagged in Git (`v2.0.0` upward). Store schema changes bump `S
 
 ## Unreleased: 2.0.0 (milestones 1 to 3, built before store access)
 
+### Brighter colours (operator request: "colours look faint and dull")
+- Vivid palette: royal blue #1D4ED8 header and buttons, navy #172554 footer, sunshine #FFC629 highlights, coral #D9381E,
+  raspberry #BE185D, and saturated sky, mint, peach, lilac, butter and pink backgrounds on a pure white page.
+- Photo areas take on the section colour (light photo backgrounds blend in). All pairs still pass WCAG AA.
+
 ### Font change (operator request)
 - Poppins for headings and body, from Shopify's font library (no self-hosted font files). Montserrat or Helvetica can be picked in Theme settings > Typography.
 

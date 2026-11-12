@@ -24,7 +24,7 @@ export async function ensureImage(dir: string, name: string, shape: string, colo
     ? `<pattern id="p" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 40 Q20 0 40 40 T80 40" fill="none" stroke="rgba(0,0,0,0.08)" stroke-width="6"/></pattern>`
     : '';
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="2048" viewBox="0 0 1536 2048">
-    <defs>${pattern}<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f4ef"/><stop offset="1" stop-color="#ebe7df"/></linearGradient></defs>
+    <defs>${pattern}<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>
     <rect width="1536" height="2048" fill="url(#bg)"/>
     <ellipse cx="768" cy="1790" rx="460" ry="40" fill="rgba(0,0,0,0.06)"/>
     <path d="${d}" fill="${colour}" fill-rule="evenodd"/>

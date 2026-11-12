@@ -1,4 +1,4 @@
-.site-header { display: block; position: sticky; top: 0; z-index: 50; background: var(--color-deep); color: var(--color-paper); transition: transform 200ms ease; }
+.site-header { display: block; position: sticky; top: 0; z-index: 50; background: var(--color-kingfisher); color: var(--color-paper); transition: transform 200ms ease; }
 .site-header.is-hidden { transform: translateY(-100%); }
 .header { display: grid; grid-template-columns: 1fr auto; align-items: center; min-height: 60px; gap: 8px; }
 .header__left { display: flex; align-items: center; gap: 4px; }
