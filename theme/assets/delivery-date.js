@@ -22,12 +22,14 @@ const toUTC = (iso) => {
 };
 const toISO = (ms) => new Date(ms).toISOString().slice(0, 10);
 
+/** @param {string} iso @param {Set<string>} holidays */
 export function isWorkingDay(iso, holidays) {
   const day = new Date(toUTC(iso)).getUTCDay();
   return day !== 0 && day !== 6 && !holidays.has(iso);
 }
 
 /** Move forward `count` working days from `iso` (count 0 returns iso). */
+/** @param {string} iso @param {number} count @param {Set<string>} holidays */
 export function addWorkingDays(iso, count, holidays) {
   let ms = toUTC(iso);
   let left = count;
@@ -38,6 +40,7 @@ export function addWorkingDays(iso, count, holidays) {
   return toISO(ms);
 }
 
+/** @param {string} iso @param {Set<string>} holidays */
 export function nextWorkingDay(iso, holidays) {
   let ms = toUTC(iso) + DAY_MS;
   while (!isWorkingDay(toISO(ms), holidays)) ms += DAY_MS;
@@ -53,6 +56,8 @@ const toInt = (value) => {
 /**
  * Returns { from, to } as YYYY-MM-DD, or null when any fact is missing so no estimate is shown.
  * Orders placed after the cut-off hour, or on a weekend or bank holiday, start processing on the next working day.
+ * @param {{ now?: Date, processingDays?: unknown, deliveryMinDays?: unknown, deliveryMaxDays?: unknown, cutoffHour?: unknown, bankHolidays?: string[] }} input
+ * @returns {{ from: string, to: string } | null}
  */
 export function estimateDelivery({ now = new Date(), processingDays, deliveryMinDays, deliveryMaxDays, cutoffHour = 14, bankHolidays = [] }) {
   const processing = toInt(processingDays);

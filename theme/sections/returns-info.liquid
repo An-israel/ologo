@@ -1,0 +1,21 @@
+{%- render 'breadcrumbs' -%}
+<div class="section section--tight">
+  <div class="page-width page-width--narrow">
+    <h1>{{ page.title | escape }}</h1>
+    <div class="rte">{{ page.content }}</div>
+    {%- if settings.return_postage_note != blank -%}
+      <h2>{{ 'delivery.postage_heading' | t }}</h2>
+      <p>{{ settings.return_postage_note | escape }}</p>
+    {%- endif -%}
+    <h2>{{ 'delivery.returns_address_heading' | t }}</h2>
+    {%- if settings.returns_address != blank -%}
+      <address>{{ settings.legal_name | default: settings.business_name | escape }}<br>{{ settings.returns_address | escape | newline_to_br }}</address>
+    {%- else -%}
+      <p>{{ 'delivery.returns_address_by_email' | t }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Returns information", "settings": [] }
+{% endschema %}

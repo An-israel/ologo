@@ -1,0 +1,15 @@
+{%- comment -%} Delivery facts from shop_info and theme settings, so one edit updates every page. Missing facts are left out. {%- endcomment -%}
+{%- render 'breadcrumbs' -%}
+<div class="section section--tight">
+  <div class="page-width page-width--narrow">
+    <h1>{{ page.title | escape }}</h1>
+    <h2>{{ 'delivery.costs_heading' | t }}</h2>
+    {%- render 'delivery-facts' -%}
+    {%- render 'christmas-cutoffs' -%}
+    <div class="rte" style="margin-top: 24px">{{ page.content }}</div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Delivery information", "settings": [] }
+{% endschema %}

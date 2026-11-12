@@ -34,6 +34,7 @@
       {%- if settings.business_email != blank -%}<p class="mb-0"><a href="mailto:{{ settings.business_email | escape }}">{{ settings.business_email | escape }}</a></p>{%- endif -%}
       {%- if settings.company_number != blank -%}<p class="mb-0">{{ 'footer.company_number' | t: number: settings.company_number }}</p>{%- endif -%}
       {%- if settings.vat_number != blank -%}<p class="mb-0">{{ 'footer.vat_number' | t: number: settings.vat_number }}</p>{%- endif -%}
+      <p class="mb-0"><button type="button" class="link-button footer__cookies" data-cookie-preferences hidden>{{ 'footer.cookie_preferences' | t }}</button></p>
     </div>
   </div>
 </footer>

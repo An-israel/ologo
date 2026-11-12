@@ -215,6 +215,14 @@
   }
   customElements.define('newsletter-popup', NewsletterPopup);
 
+  /* "Cookie preferences" re-opens Shopify's own consent banner (Customer Privacy API). */
+  window.addEventListener('load', () => {
+    const button = document.querySelector('[data-cookie-preferences]');
+    if (!button || !window.privacyBanner || typeof window.privacyBanner.showPreferences !== 'function') return;
+    button.hidden = false;
+    button.addEventListener('click', () => window.privacyBanner.showPreferences());
+  });
+
   /* Forms: move focus to the first error so screen readers hear it. */
   window.addEventListener('DOMContentLoaded', () => {
     const error = document.querySelector('[data-form-error]');

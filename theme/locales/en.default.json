@@ -129,7 +129,11 @@
     "read_returns": "Returns and exchanges",
     "christmas_cutoffs": "Christmas last order dates",
     "christmas_standard": "Standard delivery: order by {{ date }}",
-    "christmas_express": "Express delivery: order by {{ date }}"
+    "christmas_express": "Express delivery: order by {{ date }}",
+    "costs_heading": "Delivery costs and times",
+    "returns_address_heading": "Where to send returns",
+    "returns_address_by_email": "We email you the returns address when you start a return.",
+    "postage_heading": "Return postage"
   },
   "cart": {
     "title": "Your bag",
@@ -208,7 +212,8 @@
     "newsletter_heading": "Get new arrivals first",
     "copyright": "© {{ year }} {{ name }}",
     "company_number": "Company number {{ number }}",
-    "vat_number": "VAT number {{ number }}"
+    "vat_number": "VAT number {{ number }}",
+    "cookie_preferences": "Cookie preferences"
   },
   "reviews": {
     "heading": "What customers say",
