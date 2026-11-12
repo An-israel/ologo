@@ -34,7 +34,7 @@ jobs:
         run: |
           hour=$(TZ=Europe/London date +%H)
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$hour" = "08" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: steps.uk.outputs.run == 'true'
       - uses: actions/setup-node@v4
         if: steps.uk.outputs.run == 'true'
