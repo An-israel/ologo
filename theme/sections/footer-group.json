@@ -1,0 +1,19 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "newsletter_heading": "Get new arrivals first",
+        "menu_1": "footer-shop",
+        "menu_heading_1": "Shop",
+        "menu_2": "footer-help",
+        "menu_heading_2": "Help",
+        "menu_3": "footer-about",
+        "menu_heading_3": "About"
+      }
+    }
+  },
+  "order": ["footer"]
+}

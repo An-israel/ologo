@@ -1,0 +1,15 @@
+node_modules/
+logs/*
+!logs/.gitkeep
+reports/*
+!reports/.gitkeep
+.env
+.env.*
+!.env.example
+.shopify/
+.lighthouseci/
+test-results/
+playwright-report/
+work/
+*.lock-run
+.DS_Store

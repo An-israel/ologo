@@ -1,0 +1,22 @@
+{%- render 'breadcrumbs' -%}
+<div class="section section--tight">
+  <div class="page-width">
+    <h1>{{ blog.title | escape }}</h1>
+    {%- paginate blog.articles by 12 -%}
+      <ul class="grid grid--3">
+        {%- for article in blog.articles -%}
+          <li class="card">
+            {%- if article.image -%}<div class="media media--landscape">{%- render 'image', image: article.image, sizes: '(min-width: 750px) 33vw, 50vw', alt: '' -%}</div>{%- endif -%}
+            <h2 class="card__title h4"><a href="{{ article.url }}">{{ article.title | escape }}</a></h2>
+            <p class="small muted">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if paginate.pages > 1 -%}{{ paginate | default_pagination }}{%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Blog posts", "settings": [] }
+{% endschema %}

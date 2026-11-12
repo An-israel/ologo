@@ -1,0 +1,17 @@
+<recently-viewed class="section section--tight" data-handle="{{ product.handle }}" hidden>
+  <div class="page-width">
+    <h2>{{ section.settings.heading | escape }}</h2>
+    <ul class="scroll-row" data-list></ul>
+  </div>
+</recently-viewed>
+
+{% schema %}
+{
+  "name": "Recently viewed",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Recently viewed" }
+  ],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [{ "name": "Recently viewed" }]
+}
+{% endschema %}

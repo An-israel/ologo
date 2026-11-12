@@ -1,0 +1,21 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "msg-delivery": { "type": "announcement", "settings": { "text": "Free UK delivery on orders over £30", "link": "shopify://pages/delivery" } },
+        "msg-returns": { "type": "announcement", "settings": { "text": "14-day returns", "link": "shopify://pages/returns" } },
+        "msg-klarna": { "type": "announcement", "settings": { "text": "Pay in 3 with Klarna", "link": "" } }
+      },
+      "block_order": ["msg-delivery", "msg-returns", "msg-klarna"],
+      "settings": { "interval": 7 }
+    },
+    "header": {
+      "type": "header",
+      "settings": { "menu": "main-menu" }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

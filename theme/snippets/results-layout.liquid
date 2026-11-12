@@ -1,0 +1,94 @@
+{%- comment -%}
+  Shared layout for collection and search results: sidebar filters (desktop), filter drawer (mobile),
+  sort, active filter chips, product grid, Load more. Params: results, paginate (the paginate object), section_id, total
+{%- endcomment -%}
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign shown = paginate.current_offset | plus: paginate.page_size
+  if shown > paginate.items
+    assign shown = paginate.items
+  endif
+-%}
+<facet-form class="results page-width" data-section-id="{{ section_id }}">
+  <div class="results__toolbar">
+    <p class="results__count mb-0" data-results-count role="status">{{ 'collections.product_count' | t: count: total }}</p>
+    <button type="button" class="button button--secondary results__filter-button" data-dialog-open="FilterDrawer-{{ section_id }}">
+      {%- render 'icon', name: 'filter', class: 'icon--small' %} {{ 'collections.filter_and_sort' | t -}}
+    </button>
+    <form class="results__sort" data-facet-form data-sort action="{{ request.path }}" method="get">
+      {%- if results.terms -%}<input type="hidden" name="q" value="{{ results.terms | escape }}">{%- endif -%}
+      {%- for filter in results.filters -%}
+        {%- for value in filter.active_values -%}<input type="hidden" name="{{ value.param_name }}" value="{{ value.value | escape }}">{%- endfor -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value -%}<input type="hidden" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}">{%- endif -%}
+          {%- if filter.max_value.value -%}<input type="hidden" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}">{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <label for="SortBy-{{ section_id }}">{{ 'collections.sort_by' | t }}</label>
+      <select id="SortBy-{{ section_id }}" name="sort_by" class="input">
+        {%- for option in results.sort_options -%}
+          {%- if option.value == 'best-selling' or option.value == 'title-ascending' or option.value == 'title-descending' or option.value == 'created-ascending' -%}{%- continue -%}{%- endif -%}
+          <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name | escape }}</option>
+        {%- endfor -%}
+      </select>
+      <noscript><button type="submit" class="button button--secondary">{{ 'collections.apply' | t }}</button></noscript>
+    </form>
+  </div>
+
+  {%- render 'active-filters', results: results -%}
+
+  <div class="results__layout">
+    {%- if results.filters.size > 0 -%}
+      <aside class="results__sidebar" data-facets-desktop aria-label="{{ 'collections.filter' | t }}">
+        <h2 class="h4">{{ 'collections.filter' | t }}</h2>
+        {%- render 'facets', results: results, section_id: section_id, context: 'desktop' -%}
+      </aside>
+    {%- endif -%}
+    <div class="results__main" data-results>
+      {%- if total > 0 -%}
+        <ul class="grid grid--3" data-product-list>
+          {%- for item in items -%}
+            <li data-product-id="{{ item.id }}">
+              {%- if item.object_type != 'product' -%}
+                <div class="card card--text">
+                  <h3 class="card__title"><a href="{{ item.url }}">{{ item.title | escape }}</a></h3>
+                  <p class="small muted">{{ item.content | strip_html | truncatewords: 20 }}</p>
+                </div>
+              {%- elsif forloop.index <= 4 and paginate.current_page == 1 -%}
+                {%- render 'product-card', product: item, section_id: section_id, show_quick_add: true, lazy: false, sizes: '(min-width: 990px) 25vw, 50vw' -%}
+              {%- else -%}
+                {%- render 'product-card', product: item, section_id: section_id, show_quick_add: true, sizes: '(min-width: 990px) 25vw, 50vw' -%}
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+        <load-more data-section-id="{{ section_id }}">
+          <div class="load-more" data-load-more-inner>
+            <p class="small muted mb-0" data-load-more-status>{{ 'collections.showing' | t: shown: shown, total: paginate.items }}</p>
+            {%- if paginate.next -%}
+              <a class="button button--secondary" data-next href="{{ paginate.next.url }}">{{ 'collections.load_more' | t }}</a>
+            {%- endif -%}
+          </div>
+        </load-more>
+      {%- else -%}
+        <div class="results__empty">
+          <p>{{ 'collections.empty' | t }}</p>
+          {%- if results.terms == blank -%}<a class="link" data-facet-link href="{{ results.url }}">{{ 'collections.clear_all' | t }}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <dialog class="drawer drawer--left" id="FilterDrawer-{{ section_id }}" aria-labelledby="FilterDrawerTitle-{{ section_id }}">
+    <div class="drawer__header">
+      <h2 id="FilterDrawerTitle-{{ section_id }}">{{ 'collections.filter_and_sort' | t }}</h2>
+      <button type="button" class="icon-button" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </div>
+    <div class="drawer__body" data-facets-drawer-body>
+      {%- render 'facets', results: results, section_id: section_id, context: 'drawer' -%}
+    </div>
+    <div class="drawer__footer">
+      <button type="button" class="button button--primary button--full" data-dialog-close>{{ 'collections.apply' | t }}</button>
+    </div>
+  </dialog>
+</facet-form>

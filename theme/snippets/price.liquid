@@ -1,0 +1,34 @@
+{%- comment -%}
+  Price display. The "was" price appears only when custom.price_history proves it (see compare-allowed).
+  Params: product, variant (optional), large (bool), show_from (bool, used on cards)
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  capture compare_allowed
+    render 'compare-allowed', product: product, variant: target
+  endcapture
+  assign show_from_price = false
+  if show_from and product.price_varies
+    assign show_from_price = true
+  endif
+-%}
+<div class="price{% if large %} price--large{% endif %}" data-price>
+  {%- if compare_allowed == 'true' -%}
+    <span class="visually-hidden">{{ 'products.sale_price' | t }}</span>
+    <span class="price__sale">{{ target.price | money }}</span>
+    <span class="visually-hidden">{{ 'products.regular_price' | t }}</span>
+    <s class="price__compare">{{ target.compare_at_price | money }}</s>
+  {%- elsif show_from_price -%}
+    <span>{{ 'products.from_price' | t: price: product.price_min | money }}</span>
+  {%- else -%}
+    <span>{{ target.price | money }}</span>
+  {%- endif -%}
+  {%- if target.unit_price_measurement -%}
+    <span class="price__unit">
+      <span class="visually-hidden">{{ 'products.unit_price' | t }}</span>
+      {{- target.unit_price | money }}/
+      {%- if target.unit_price_measurement.reference_value != 1 -%}{{ target.unit_price_measurement.reference_value }}{%- endif -%}
+      {{- target.unit_price_measurement.reference_unit -}}
+    </span>
+  {%- endif -%}
+</div>

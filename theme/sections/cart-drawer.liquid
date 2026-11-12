@@ -1,0 +1,9 @@
+<dialog class="drawer" id="CartDrawer" aria-labelledby="CartDrawerTitle">
+  <div class="drawer__header">
+    <h2 id="CartDrawerTitle">{{ 'cart.title' | t }}</h2>
+    <button type="button" class="icon-button" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <div class="drawer__body">
+    {%- render 'cart-contents', section_id: 'cart-drawer', context: 'drawer' -%}
+  </div>
+</dialog>

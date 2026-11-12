@@ -1,0 +1,48 @@
+{%- comment -%} Links to automated gift collections (by price and tag). Empty collections are hidden. {%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} .gift-links { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+</style>
+<div class="section section--tight">
+  <div class="page-width">
+    <h2>{% render 'icon', name: 'gift' %} {{ section.settings.heading | escape }}</h2>
+    <ul class="gift-links">
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- if c == blank or c.products_count == 0 -%}{%- continue -%}{%- endif -%}
+        <li {{ block.shopify_attributes }}><a class="button button--secondary" href="{{ c.url }}">{{ block.settings.label | default: c.title | escape }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gift finder",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find a gift" }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Gift collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift finder",
+      "blocks": [
+        { "type": "link", "settings": { "label": "Gifts under £15" } },
+        { "type": "link", "settings": { "label": "Gifts under £25" } },
+        { "type": "link", "settings": { "label": "For her" } },
+        { "type": "link", "settings": { "label": "For him" } },
+        { "type": "link", "settings": { "label": "For kids" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

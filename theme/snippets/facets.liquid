@@ -1,0 +1,76 @@
+{%- comment -%}
+  Filters and sort for collection and search pages. Params: results (collection or search), section_id, context ('desktop' | 'drawer')
+  Filters come from Shopify Search & Discovery: Availability, Price, Size, Colour, Product type, Fit.
+{%- endcomment -%}
+{%- liquid
+  assign sort_by = results.sort_by | default: results.default_sort_by
+  assign form_id = 'FacetForm-' | append: context | append: '-' | append: section_id
+-%}
+<form data-facet-form id="{{ form_id }}" action="{{ request.path }}" method="get">
+  {%- if results.terms -%}<input type="hidden" name="q" value="{{ results.terms | escape }}">{%- endif -%}
+  {%- if context == 'drawer' -%}
+    <div class="field">
+      <label for="Sort-{{ form_id }}">{{ 'collections.sort_by' | t }}</label>
+      <select id="Sort-{{ form_id }}" name="sort_by">
+        {%- for option in results.sort_options -%}
+          {%- if option.value == 'manual' or option.value == 'best-selling' or option.value == 'title-ascending' or option.value == 'title-descending' or option.value == 'created-ascending' -%}{%- continue -%}{%- endif -%}
+          <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name | escape }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  {%- else -%}
+    <input type="hidden" name="sort_by" value="{{ sort_by | escape }}">
+  {%- endif -%}
+  <div class="accordion">
+    {%- for filter in results.filters -%}
+      {%- assign panel_id = form_id | append: '-' | append: forloop.index -%}
+      <div class="accordion__item">
+        <h3 class="mb-0">
+          <button type="button" class="accordion__toggle" aria-expanded="{% if forloop.index <= 3 %}true{% else %}false{% endif %}" aria-controls="{{ panel_id }}">
+            <span>{{ filter.label | escape }}{% if filter.active_values.size > 0 %} <span class="small muted">({{ 'collections.selected' | t: count: filter.active_values.size }})</span>{% endif %}</span>
+            {%- render 'icon', name: 'chevron-down' -%}
+          </button>
+        </h3>
+        <div class="accordion__panel" id="{{ panel_id }}"{% if forloop.index > 3 %} hidden{% endif %}>
+          {%- case filter.type -%}
+            {%- when 'price_range' -%}
+              <fieldset class="option-group">
+                <legend class="visually-hidden">{{ 'collections.price_range' | t }}</legend>
+                <div class="price-range">
+                  <div class="field">
+                    <label for="{{ panel_id }}-min">{{ 'collections.from' | t }} (£)</label>
+                    <input id="{{ panel_id }}-min" type="number" inputmode="decimal" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                      name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value %}{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{% endif %}" placeholder="0">
+                  </div>
+                  <div class="field">
+                    <label for="{{ panel_id }}-max">{{ 'collections.to' | t }} (£)</label>
+                    <input id="{{ panel_id }}-max" type="number" inputmode="decimal" min="0" max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                      name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value %}{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{% endif %}" placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}">
+                  </div>
+                </div>
+              </fieldset>
+            {%- else -%}
+              <fieldset class="option-group">
+                <legend class="visually-hidden">{{ filter.label | escape }}</legend>
+                <ul class="facet-values list-unstyled">
+                  {%- for value in filter.values -%}
+                    {%- if value.count == 0 and value.active == false -%}{%- continue -%}{%- endif -%}
+                    <li>
+                      <label class="facet-checkbox">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value | escape }}"{% if value.active %} checked{% endif %}>
+                        {%- if filter.presentation == 'swatch' or filter.label == 'Colour' or filter.label == 'Color' -%}
+                          <span class="card__swatch" style="--swatch: {% render 'swatch-colour', value: value.label %}" aria-hidden="true"></span>
+                        {%- endif -%}
+                        <span>{{ value.label | escape }} <span class="muted">({{ value.count }})</span></span>
+                      </label>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </fieldset>
+          {%- endcase -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+  <noscript><button type="submit" class="button button--primary button--full">{{ 'collections.apply' | t }}</button></noscript>
+</form>

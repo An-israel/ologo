@@ -1,0 +1,30 @@
+{%- comment -%} Product row from a collection the operator curates (New in, Picked for you). Hides itself when empty. {%- endcomment -%}
+{%- assign c = section.settings.collection -%}
+{%- if c != blank and c.products_count > 0 -%}
+  <div class="section">
+    <div class="page-width">
+      <div class="section-header">
+        <h2>{{ section.settings.heading | escape }}</h2>
+        <a class="link" href="{{ c.url }}">{{ 'general.view_all' | t }}<span class="visually-hidden">: {{ section.settings.heading | escape }}</span></a>
+      </div>
+      <ul class="grid grid--4">
+        {%- for product in c.products limit: section.settings.limit -%}
+          <li>{%- render 'product-card', product: product, section_id: section.id, show_quick_add: section.settings.quick_add -%}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product row",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New in", "info": "Do not call this Bestsellers or Customer favourites unless sales data proves it." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products", "min": 4, "max": 12, "step": 4, "default": 8 },
+    { "type": "checkbox", "id": "quick_add", "label": "Show quick add", "default": true }
+  ],
+  "presets": [{ "name": "Product row" }]
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+{%- comment -%}
+  Verified reviews from the approved app (Judge.me). The section hides itself until the shop has at least
+  the minimum number of reviews (theme setting, default 5). No testimonials are ever typed in by hand.
+{%- endcomment -%}
+{%- liquid
+  assign review_count = shop.metafields.judgeme.all_reviews_count.value | default: shop.metafields.judgeme.all_reviews_count | default: 0 | plus: 0
+  assign min_reviews = settings.reviews_min_count | default: 5
+-%}
+{%- if review_count >= min_reviews and section.blocks.size > 0 -%}
+  <div class="section section--plume">
+    <div class="page-width">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      <p class="small muted">{{ 'products.verified_reviews' | t }}</p>
+      {%- for block in section.blocks -%}
+        {% render block %}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    { "type": "paragraph", "content": "Add the Judge.me reviews carousel app block. This section stays hidden until there are enough verified reviews (see Theme settings > Seasonal and features)." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What customers say" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Reviews" }]
+}
+{% endschema %}

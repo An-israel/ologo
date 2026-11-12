@@ -1,0 +1,4 @@
+<span data-cart-section="cart-count" class="cart-count">
+  <span class="visually-hidden">{{ 'header.bag' | t }}, {{ 'header.bag_count' | t: count: cart.item_count }}</span>
+  {%- if cart.item_count > 0 -%}<span class="cart-count__bubble" aria-hidden="true">{% if cart.item_count < 100 %}{{ cart.item_count }}{% else %}99+{% endif %}</span>{%- endif -%}
+</span>

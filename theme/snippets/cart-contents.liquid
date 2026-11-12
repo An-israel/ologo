@@ -1,0 +1,91 @@
+{%- comment -%}
+  Shared cart contents for the drawer and the cart page. Params: section_id, context ('drawer' | 'page')
+{%- endcomment -%}
+<div data-cart-section="{{ section_id }}" class="cart-contents">
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty">
+      {%- render 'feather-illustration' -%}
+      <h2 class="h3" tabindex="-1" data-cart-focus>{{ 'cart.empty' | t }}</h2>
+      <p>{{ 'cart.empty_text' | t }}</p>
+      {%- assign empty_menu = linklists['main-menu'] -%}
+      <ul class="cart-empty__links">
+        {%- for link in empty_menu.links limit: 5 -%}
+          {%- if link.type == 'collection_link' and link.object.products_count == 0 -%}{%- continue -%}{%- endif -%}
+          <li><a class="button button--secondary" href="{{ link.url }}">{{ link.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- else -%}
+    {%- render 'free-delivery-bar' -%}
+    <cart-items data-section-id="{{ section_id }}">
+      <p class="field__error" role="alert" data-cart-error hidden></p>
+      <h2 class="visually-hidden" tabindex="-1" data-cart-focus>{{ 'cart.item_count' | t: count: cart.item_count }}</h2>
+      <ul class="cart-items">
+        {%- for item in cart.items -%}
+          <li class="cart-item">
+            <a href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+              <div class="media">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120,176,240', sizes: '88px', alt: '' }}
+                {%- endif -%}
+              </div>
+            </a>
+            <div>
+              <a class="cart-item__title" href="{{ item.url }}">{{ item.product.title | escape }}</a>
+              <p class="cart-item__meta">
+                {%- unless item.product.has_only_default_variant -%}{{ item.variant.title | escape }}{%- endunless -%}
+                {%- for property in item.properties -%}
+                  {%- unless property.last == blank or property.first contains '_' -%}<br>{{ property.first | escape }}: {{ property.last | escape }}{%- endunless -%}
+                {%- endfor -%}
+                {%- for discount in item.line_level_discount_allocations -%}<br>{{ discount.discount_application.title | escape }} (-{{ discount.amount | money }}){%- endfor -%}
+              </p>
+              <div class="cart-item__row">
+                <div class="quantity">
+                  <button type="button" data-qty-change="-1" data-line="{{ forloop.index }}" aria-label="{{ 'products.decrease_quantity' | t: product: item.product.title | escape }}">{% render 'icon', name: 'minus', class: 'icon--small' %}</button>
+                  <label class="visually-hidden" for="Qty-{{ section_id }}-{{ forloop.index }}">{{ 'products.quantity' | t }}, {{ item.product.title | escape }}</label>
+                  <input id="Qty-{{ section_id }}-{{ forloop.index }}" type="number" inputmode="numeric" min="0" value="{{ item.quantity }}" data-line="{{ forloop.index }}">
+                  <button type="button" data-qty-change="1" data-line="{{ forloop.index }}" aria-label="{{ 'products.increase_quantity' | t: product: item.product.title | escape }}">{% render 'icon', name: 'plus', class: 'icon--small' %}</button>
+                </div>
+                <div class="price">
+                  {%- if item.original_line_price != item.final_line_price -%}
+                    <s class="price__compare">{{ item.original_line_price | money }}</s>
+                  {%- endif -%}
+                  <span>{{ item.final_line_price | money }}</span>
+                </div>
+              </div>
+              <button type="button" class="link-button small" data-remove data-line="{{ forloop.index }}">
+                {{- 'cart.remove_short' | t -}}<span class="visually-hidden">: {{ item.product.title | escape }}</span>
+              </button>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </cart-items>
+
+    <div class="cart-summary">
+      {%- if settings.cart_note -%}
+        <div class="field">
+          <label for="CartNote-{{ section_id }}">{{ 'cart.note' | t }}</label>
+          <textarea id="CartNote-{{ section_id }}" name="note" form="CartForm-{{ section_id }}" data-cart-note aria-describedby="CartNoteHint-{{ section_id }}">{{ cart.note }}</textarea>
+          <span class="field__hint" id="CartNoteHint-{{ section_id }}">{{ 'cart.note_hint' | t }}</span>
+        </div>
+      {%- endif -%}
+      {%- for discount in cart.cart_level_discount_applications -%}
+        <p class="cart-totals small"><span>{{ 'cart.discount' | t }}: {{ discount.title | escape }}</span><span>-{{ discount.total_allocated_amount | money }}</span></p>
+      {%- endfor -%}
+      <p class="cart-totals"><span>{{ 'cart.subtotal' | t }}</span><span>{{ cart.total_price | money_with_currency }}</span></p>
+      <p class="small muted">{%- if cart.taxes_included -%}{{ 'cart.taxes_shipping' | t }}{%- else -%}{{ 'cart.taxes_shipping_no_vat' | t }}{%- endif -%}</p>
+      {%- if context == 'page' -%}
+        <delivery-estimate class="note" hidden><span data-estimate-text></span></delivery-estimate>
+        <p class="small">{{ 'cart.returns_line_plain' | t: days: settings.returns_window_days }} <a href="/pages/returns">{{ 'delivery.read_returns' | t }}</a></p>
+        {%- render 'christmas-cutoffs' -%}
+      {%- endif -%}
+      <form action="{{ routes.cart_url }}" method="post" id="CartForm-{{ section_id }}">
+        <button type="submit" name="checkout" class="button button--primary button--full">{% render 'icon', name: 'secure', class: 'icon--small' %} {{ 'cart.checkout' | t }}</button>
+      </form>
+      {%- if additional_checkout_buttons -%}
+        <div class="dynamic-checkout">{{ content_for_additional_checkout_buttons }}</div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

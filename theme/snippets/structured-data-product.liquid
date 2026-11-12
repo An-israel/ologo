@@ -1,0 +1,43 @@
+{%- liquid
+  assign reviews_count = product.metafields.reviews.rating_count.value | default: 0
+  assign min_reviews = settings.reviews_min_count | default: 5
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {%- if product.featured_media -%}
+    "image": [
+      {%- for media in product.media limit: 6 -%}
+        {{ media.preview_image | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    {%- endif -%}
+    "description": {{ product.description | strip_html | strip_newlines | truncate: 5000 | json }},
+    "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    "brand": { "@type": "Brand", "name": "Ornis" },
+    {%- if reviews_count >= min_reviews -%}
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": {{ product.metafields.reviews.rating.value.rating | json }},
+      "reviewCount": {{ reviews_count | json }}
+    },
+    {%- endif -%}
+    "offers": [
+      {%- for variant in product.variants -%}
+        {
+          "@type": "Offer",
+          {%- if variant.sku != blank -%}"sku": {{ variant.sku | json }},{%- endif -%}
+          "name": {{ variant.title | json }},
+          "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price": {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "url": {{ request.origin | append: variant.url | json }},
+          "itemCondition": "https://schema.org/NewCondition"
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>

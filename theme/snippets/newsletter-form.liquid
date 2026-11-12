@@ -1,0 +1,18 @@
+{%- comment -%} Shopify customer newsletter form with consent line. Params: form_id, show_offer {%- endcomment -%}
+{%- form 'customer', id: form_id, class: 'newsletter-form' -%}
+  <input type="hidden" name="contact[tags]" value="newsletter">
+  {%- if form.posted_successfully? -%}
+    <p class="form-message form-message--success" role="status" tabindex="-1" data-form-error>{{ 'newsletter.success' | t }}</p>
+  {%- else -%}
+    {%- if form.errors -%}
+      <p class="form-message form-message--error" role="alert" tabindex="-1" data-form-error id="{{ form_id }}-error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+    {%- endif -%}
+    <label class="visually-hidden" for="{{ form_id }}-email">{{ 'newsletter.label' | t }}</label>
+    <div class="inline-form">
+      <input class="input" id="{{ form_id }}-email" type="email" name="contact[email]" autocomplete="email" required aria-required="true" placeholder="{{ 'newsletter.placeholder' | t }}"
+        {% if form.errors %}aria-invalid="true" aria-describedby="{{ form_id }}-error {{ form_id }}-consent"{% else %}aria-describedby="{{ form_id }}-consent"{% endif %}>
+      <button type="submit" class="button button--primary">{{ 'newsletter.subscribe' | t }}</button>
+    </div>
+    <p class="small muted" id="{{ form_id }}-consent">{{ 'newsletter.consent' | t }} <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">{{ shop.privacy_policy.title | default: 'Privacy policy' }}</a></p>
+  {%- endif -%}
+{%- endform -%}

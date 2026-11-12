@@ -1,0 +1,15 @@
+{%- liquid
+  assign show = false
+  if settings.christmas_mode
+    if settings.christmas_standard_cutoff != blank or settings.christmas_express_cutoff != blank
+      assign show = true
+    endif
+  endif
+-%}
+{%- if show -%}
+  <div class="note">
+    <p class="mb-0"><strong>{{ 'delivery.christmas_cutoffs' | t }}</strong></p>
+    {%- if settings.christmas_standard_cutoff != blank -%}<p class="mb-0">{{ 'delivery.christmas_standard' | t: date: settings.christmas_standard_cutoff }}</p>{%- endif -%}
+    {%- if settings.christmas_express_cutoff != blank -%}<p class="mb-0">{{ 'delivery.christmas_express' | t: date: settings.christmas_express_cutoff }}</p>{%- endif -%}
+  </div>
+{%- endif -%}

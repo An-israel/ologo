@@ -1,0 +1,32 @@
+{{ 'section-results.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'facets.js' | asset_url }}" defer></script>
+{%- render 'breadcrumbs' -%}
+<div class="collection-hero page-width">
+  <h1>{{ collection.title | escape }}</h1>
+  {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+</div>
+{%- paginate collection.products by section.settings.per_page -%}
+  {%- if collection.all_products_count == 0 -%}
+    <div class="page-width results__empty">
+      <p>{{ 'collections.empty_collection' | t }}</p>
+      <ul class="cart-empty__links" style="justify-content: flex-start">
+        {%- for link in linklists['main-menu'].links -%}
+          {%- if link.type == 'collection_link' and link.object.products_count == 0 -%}{%- continue -%}{%- endif -%}
+          {%- if link.object.handle == collection.handle -%}{%- continue -%}{%- endif -%}
+          <li><a class="button button--secondary" href="{{ link.url }}">{{ link.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- else -%}
+    {%- render 'results-layout', items: collection.products, results: collection, paginate: paginate, section_id: section.id, total: collection.products_count -%}
+  {%- endif -%}
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection products",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 12, "max": 36, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

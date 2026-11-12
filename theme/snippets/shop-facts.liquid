@@ -1,0 +1,43 @@
+{%- comment -%}
+  Single source for delivery and returns facts. Reads the shop_info metaobject (handle "main")
+  first, then falls back to theme settings. Empty values stay empty so nothing is invented.
+{%- endcomment -%}
+{%- liquid
+  assign info = shop.metaobjects.shop_info.main
+  assign processing = info.processing_days.value | default: settings.processing_days
+  assign dmin = info.delivery_min_days.value | default: settings.delivery_min_days
+  assign dmax = info.delivery_max_days.value | default: settings.delivery_max_days
+  assign threshold = info.free_delivery_threshold.value | default: settings.free_delivery_threshold
+  assign returns = info.returns_window_days.value | default: settings.returns_window_days
+  assign cutoff = settings.order_cutoff_hour | default: 14
+  assign threshold_pence = threshold | times: 100 | round
+-%}
+<script type="application/json" id="ShopFacts">
+  {
+    "processingDays": {{ processing | json }},
+    "deliveryMinDays": {{ dmin | json }},
+    "deliveryMaxDays": {{ dmax | json }},
+    "freeDeliveryThresholdPence": {{ threshold_pence | json }},
+    "returnsWindowDays": {{ returns | json }},
+    "cutoffHour": {{ cutoff | json }},
+    "bankHolidays": {{ settings.bank_holidays | newline_to_br | strip_newlines | split: '<br />' | json }},
+    "moneyFormat": {{ shop.money_format | json }},
+    "routes": {
+      "cartAdd": {{ routes.cart_add_url | append: '.js' | json }},
+      "cartChange": {{ routes.cart_change_url | append: '.js' | json }},
+      "cart": {{ routes.cart_url | append: '.js' | json }},
+      "predictiveSearch": {{ routes.predictive_search_url | json }},
+      "root": {{ routes.root_url | json }}
+    },
+    "strings": {
+      "addedToBag": {{ 'cart.added' | t | json }},
+      "bagUpdated": {{ 'cart.updated' | t | json }},
+      "error": {{ 'cart.error' | t | json }},
+      "soldOut": {{ 'products.sold_out' | t | json }},
+      "addToBag": {{ 'products.add_to_bag' | t | json }},
+      "unavailable": {{ 'products.unavailable' | t | json }},
+      "arrives": {{ 'delivery.arrives' | t | json }},
+      "resultsCount": {{ 'search.results_announcement' | t | json }}
+    }
+  }
+</script>

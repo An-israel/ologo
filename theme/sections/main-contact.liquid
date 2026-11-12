@@ -1,0 +1,54 @@
+{%- render 'breadcrumbs' -%}
+<div class="section section--tight">
+  <div class="page-width page-width--narrow">
+    <h1>{{ page.title | escape }}</h1>
+    {%- if page.content != blank -%}<div class="rte">{{ page.content }}</div>{%- endif -%}
+
+    <div class="contact-details note stack">
+      {%- if settings.business_email != blank -%}
+        <p class="mb-0"><strong>{{ 'contact.email_us' | t }}:</strong> <a href="mailto:{{ settings.business_email | escape }}">{{ settings.business_email | escape }}</a></p>
+      {%- endif -%}
+      {%- assign reply = shop.metaobjects.shop_info.main.response_time.value | default: settings.response_time -%}
+      {%- if reply != blank -%}<p class="mb-0">{{ 'contact.reply_time' | t: time: reply }}</p>{%- endif -%}
+      {%- if settings.business_phone != blank -%}<p class="mb-0"><strong>{{ 'contact.phone' | t }}:</strong> <a href="tel:{{ settings.business_phone | remove: ' ' }}">{{ settings.business_phone | escape }}</a></p>{%- endif -%}
+      {%- if settings.business_address != blank -%}
+        <p class="mb-0"><strong>{{ 'contact.address' | t }}:</strong></p>
+        <address>{{ settings.legal_name | default: settings.business_name | escape }}<br>{{ settings.business_address | escape | newline_to_br }}</address>
+      {%- endif -%}
+      <p class="mb-0"><a href="/pages/faq">{{ 'contact.faq_link' | t }}</a></p>
+    </div>
+
+    {%- form 'contact', id: 'ContactForm', class: 'contact-form' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-message form-message--success" role="status" tabindex="-1" data-form-error>{{ 'contact.success' | t }}</p>
+      {%- elsif form.errors -%}
+        <div class="form-message form-message--error" role="alert" tabindex="-1" data-form-error>
+          <p class="mb-0"><strong>{{ 'contact.error_heading' | t }}</strong></p>
+          <ul class="mb-0">{%- for field in form.errors -%}<li>{{ form.errors.translated_fields[field] | capitalize }} {{ form.errors.messages[field] }}</li>{%- endfor -%}</ul>
+        </div>
+      {%- endif -%}
+      <div class="field">
+        <label for="ContactName">{{ 'contact.name' | t }} <span class="required-mark" aria-hidden="true">*</span></label>
+        <input id="ContactName" type="text" name="contact[name]" autocomplete="name" required aria-required="true" value="{{ form.name }}"{% if form.errors contains 'name' %} aria-invalid="true"{% endif %}>
+      </div>
+      <div class="field">
+        <label for="ContactEmail">{{ 'contact.email' | t }} <span class="required-mark" aria-hidden="true">*</span></label>
+        <input id="ContactEmail" type="email" name="contact[email]" autocomplete="email" required aria-required="true" spellcheck="false" value="{{ form.email }}"{% if form.errors contains 'email' %} aria-invalid="true"{% endif %}>
+      </div>
+      <div class="field">
+        <label for="ContactOrder">{{ 'contact.order_number' | t }}</label>
+        <input id="ContactOrder" type="text" name="contact[order_number]" autocomplete="off" value="{{ form.order_number }}">
+      </div>
+      <div class="field">
+        <label for="ContactMessage">{{ 'contact.message' | t }} <span class="required-mark" aria-hidden="true">*</span></label>
+        <textarea id="ContactMessage" name="contact[body]" required aria-required="true"{% if form.errors contains 'body' %} aria-invalid="true"{% endif %}>{{ form.body }}</textarea>
+      </div>
+      <p class="small muted">* {{ 'accessibility.required' | t }}</p>
+      <button type="submit" class="button button--primary">{{ 'contact.send' | t }}</button>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Contact form", "settings": [] }
+{% endschema %}

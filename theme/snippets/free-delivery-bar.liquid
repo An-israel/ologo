@@ -1,0 +1,19 @@
+{%- liquid
+  assign info = shop.metaobjects.shop_info.main
+  assign threshold = info.free_delivery_threshold.value | default: settings.free_delivery_threshold
+  assign threshold_pence = threshold | times: 100 | round
+  assign total = cart.total_price
+-%}
+{%- if threshold_pence > 0 -%}
+  <div class="free-delivery">
+    {%- if total >= threshold_pence -%}
+      <p class="mb-0">{% render 'icon', name: 'delivery', class: 'icon--small' %} {{ 'cart.free_delivery_reached' | t }}</p>
+      {%- assign progress = 100 -%}
+    {%- else -%}
+      {%- assign remaining = threshold_pence | minus: total -%}
+      <p class="mb-0">{{ 'cart.free_delivery_remaining' | t: amount: remaining | money }}</p>
+      {%- assign progress = total | times: 100 | divided_by: threshold_pence -%}
+    {%- endif -%}
+    <div class="free-delivery__bar" aria-hidden="true"><div class="free-delivery__fill" style="--progress: {{ progress }}%"></div></div>
+  </div>
+{%- endif -%}

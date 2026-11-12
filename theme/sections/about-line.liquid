@@ -1,0 +1,20 @@
+<div class="section section--tight">
+  <div class="page-width page-width--narrow text-center">
+    <h2 class="h3">{{ section.settings.heading | escape }}</h2>
+    <p>{{ section.settings.text | escape }}</p>
+    {%- if section.settings.link != blank -%}<a class="link" href="{{ section.settings.link }}">{{ section.settings.link_label | escape }}</a>{%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About in one line",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "About Ornis" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Ornis is a small UK online shop for affordable fashion, beauty and gifts. We check every product before it goes on sale." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Read our story" },
+    { "type": "url", "id": "link", "label": "Link", "default": "/pages/about" }
+  ],
+  "presets": [{ "name": "About in one line" }]
+}
+{% endschema %}

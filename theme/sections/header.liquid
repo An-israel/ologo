@@ -1,0 +1,172 @@
+{{ 'section-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+  assign sale_collection = collections['sale']
+  assign logo_sizes = settings.logo_width | append: 'px'
+-%}
+
+<sticky-header class="site-header on-ink">
+  <header class="header page-width">
+    <div class="header__left">
+      <button type="button" class="icon-button header__menu-button" data-dialog-open="MenuDrawer" aria-label="{{ 'general.open_menu' | t }}">
+        {%- render 'icon', name: 'menu' -%}
+      </button>
+      <a href="{{ routes.root_url }}" class="header__logo" aria-label="{{ shop.name | escape }}, {{ 'general.home' | t }}">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 480 | image_tag: widths: '120,240,360,480', sizes: logo_sizes, alt: shop.name, style: 'width: var(--logo-width); height: auto;', loading: 'eager' }}
+        {%- else -%}
+          {%- render 'wordmark' -%}
+        {%- endif -%}
+      </a>
+    </div>
+
+    <nav class="header__nav" aria-label="{{ 'accessibility.main_navigation' | t }}">
+      <mega-menu>
+        <ul class="header__menu list-unstyled">
+          {%- for link in menu.links -%}
+            {%- liquid
+              assign skip = false
+              if link.type == 'collection_link' and link.object.products_count == 0
+                assign skip = true
+              endif
+              if link.handle == 'sale' or link.url contains '/collections/sale'
+                unless settings.show_sale_menu and sale_collection.products_count > 0
+                  assign skip = true
+                endunless
+              endif
+            -%}
+            {%- if skip -%}{%- continue -%}{%- endif -%}
+            <li class="header__menu-item">
+              {%- if link.links.size > 0 -%}
+                <button type="button" class="header__menu-link" data-mega-toggle aria-expanded="false" aria-controls="MegaMenu-{{ forloop.index }}">
+                  {{- link.title | escape }} {% render 'icon', name: 'chevron-down', class: 'icon--small' -%}
+                </button>
+                <div class="mega-menu" id="MegaMenu-{{ forloop.index }}" hidden>
+                  <div class="mega-menu__inner page-width">
+                    <ul class="mega-menu__columns list-unstyled">
+                      <li><a class="mega-menu__all" href="{{ link.url }}">{{ 'header.shop_all' | t: title: link.title }}</a></li>
+                      {%- for child in link.links -%}
+                        {%- if child.type == 'collection_link' and child.object.products_count == 0 -%}{%- continue -%}{%- endif -%}
+                        <li>
+                          <a href="{{ child.url }}"{% if child.current %} aria-current="page"{% endif %}>{{ child.title | escape }}</a>
+                          {%- if child.links.size > 0 -%}
+                            <ul class="list-unstyled mega-menu__sub">
+                              {%- for grandchild in child.links -%}
+                                {%- if grandchild.type == 'collection_link' and grandchild.object.products_count == 0 -%}{%- continue -%}{%- endif -%}
+                                <li><a href="{{ grandchild.url }}">{{ grandchild.title | escape }}</a></li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                    {%- if link.type == 'collection_link' and link.object.image -%}
+                      <a class="mega-menu__feature" href="{{ link.url }}">
+                        <div class="media">{% render 'image', image: link.object.image, sizes: '320px', widths: '320,480,640' %}</div>
+                        <span>{{ link.object.title | escape }}</span>
+                      </a>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- else -%}
+                <a class="header__menu-link" href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </mega-menu>
+    </nav>
+
+    <div class="header__icons">
+      <a href="{{ routes.search_url }}" class="icon-button" data-dialog-open="SearchModal" aria-label="{{ 'header.search' | t }}">{% render 'icon', name: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="icon-button header__account" aria-label="{{ 'header.account' | t }}">{% render 'icon', name: 'account' %}</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="icon-button" id="CartIcon" data-dialog-open="CartDrawer">
+        {%- render 'icon', name: 'bag' -%}
+        {%- render 'cart-count-badge' -%}
+      </a>
+    </div>
+  </header>
+</sticky-header>
+
+{%- comment -%} Mobile menu: full-screen drawer with large tap targets and a visible close button. {%- endcomment -%}
+<dialog class="drawer drawer--left drawer--full" id="MenuDrawer" aria-labelledby="MenuDrawerTitle">
+  <div class="drawer__header">
+    <h2 id="MenuDrawerTitle">{{ 'general.menu' | t }}</h2>
+    <button type="button" class="icon-button" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <nav class="drawer__body" aria-label="{{ 'accessibility.main_navigation' | t }}">
+    <ul class="mobile-menu list-unstyled">
+      {%- for link in menu.links -%}
+        {%- liquid
+          assign skip = false
+          if link.type == 'collection_link' and link.object.products_count == 0
+            assign skip = true
+          endif
+          if link.handle == 'sale' or link.url contains '/collections/sale'
+            unless settings.show_sale_menu and sale_collection.products_count > 0
+              assign skip = true
+            endunless
+          endif
+        -%}
+        {%- if skip -%}{%- continue -%}{%- endif -%}
+        <li>
+          {%- if link.links.size > 0 -%}
+            <button type="button" class="mobile-menu__link" data-disclosure aria-expanded="false" aria-controls="MobileSub-{{ forloop.index }}">
+              {{- link.title | escape }} {% render 'icon', name: 'chevron-down' -%}
+            </button>
+            <ul class="list-unstyled mobile-menu__sub" id="MobileSub-{{ forloop.index }}" hidden>
+              <li><a class="mobile-menu__link" href="{{ link.url }}">{{ 'header.shop_all' | t: title: link.title }}</a></li>
+              {%- for child in link.links -%}
+                {%- if child.type == 'collection_link' and child.object.products_count == 0 -%}{%- continue -%}{%- endif -%}
+                <li><a class="mobile-menu__link" href="{{ child.url }}">{{ child.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- else -%}
+            <a class="mobile-menu__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if shop.customer_accounts_enabled -%}
+      <a class="button button--secondary button--full" href="{{ routes.account_url }}">{% render 'icon', name: 'account' %} {{ 'header.account' | t }}</a>
+    {%- endif -%}
+  </nav>
+</dialog>
+
+<dialog class="drawer drawer--search" id="SearchModal" aria-labelledby="SearchModalTitle">
+  <div class="drawer__header">
+    <h2 id="SearchModalTitle">{{ 'search.title' | t }}</h2>
+    <button type="button" class="icon-button" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <div class="drawer__body">
+    <predictive-search>
+      <form action="{{ routes.search_url }}" method="get" role="search">
+        <label class="visually-hidden" for="PredictiveSearchInput">{{ 'search.label' | t }}</label>
+        <div class="inline-form">
+          <input class="input" type="search" id="PredictiveSearchInput" name="q" autofocus autocomplete="off"
+            placeholder="{{ 'search.placeholder' | t }}"
+            role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="PredictiveResults" aria-haspopup="listbox">
+          <input type="hidden" name="options[prefix]" value="last">
+          <button type="submit" class="button button--primary" aria-label="{{ 'search.submit' | t }}">{% render 'icon', name: 'search' %}</button>
+        </div>
+        <div id="PredictiveResults" class="predictive-results" data-predictive-results hidden></div>
+        <p class="visually-hidden" role="status" aria-live="polite" data-predictive-status></p>
+      </form>
+    </predictive-search>
+  </div>
+</dialog>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu", "info": "Women, Men, Kids, Beauty, Gifts. Sale shows only when the sale collection has products." }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

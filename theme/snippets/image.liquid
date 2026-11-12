@@ -1,0 +1,16 @@
+{%- comment -%}
+  Responsive image with srcset, sizes, width and height so layout never shifts.
+  Params: image, sizes, widths (comma list), loading ('lazy' | 'eager'), priority (true for LCP), alt, class
+{%- endcomment -%}
+{%- liquid
+  assign widths = widths | default: '240,360,480,640,800,1000,1200,1600,2000'
+  assign loading = loading | default: 'lazy'
+  assign img_alt = alt | default: image.alt | escape
+-%}
+{%- if image != blank -%}
+  {%- if priority -%}
+    {{ image | image_url: width: 2000 | image_tag: widths: widths, sizes: sizes, loading: 'eager', fetchpriority: 'high', alt: img_alt, class: class }}
+  {%- else -%}
+    {{ image | image_url: width: 2000 | image_tag: widths: widths, sizes: sizes, loading: loading, alt: img_alt, class: class }}
+  {%- endif -%}
+{%- endif -%}

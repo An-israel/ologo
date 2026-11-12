@@ -1,0 +1,65 @@
+{%- liquid
+  assign count = section.blocks.size
+-%}
+{%- if count > 0 -%}
+  <style>
+    .announcement { background: var(--color-plume); color: var(--color-ink); font-size: 0.875rem; }
+    .announcement__inner { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 40px; }
+    .announcement__slides { flex: 1; text-align: center; max-width: 560px; }
+    .announcement__slides p { margin: 0; padding: 8px 0; }
+    .announcement__slides a { color: var(--color-ink); }
+    .announcement .icon-button { width: 40px; height: 40px; }
+  </style>
+  <announcement-bar class="announcement" role="region" aria-label="{{ 'accessibility.announcements' | t }}" data-interval="{{ section.settings.interval }}">
+    <div class="announcement__inner page-width">
+      {%- if count > 1 -%}
+        <button type="button" class="icon-button" data-prev aria-label="{{ 'accessibility.previous_announcement' | t }}">{% render 'icon', name: 'chevron-left', class: 'icon--small' %}</button>
+      {%- endif -%}
+      <div class="announcement__slides">
+        {%- for block in section.blocks -%}
+          <p data-slide {{ block.shopify_attributes }}{% unless forloop.first %} hidden{% endunless %}>
+            {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>{%- else -%}{{ block.settings.text | escape }}{%- endif -%}
+          </p>
+        {%- endfor -%}
+      </div>
+      {%- if count > 1 -%}
+        <button type="button" class="icon-button" data-next aria-label="{{ 'accessibility.next_announcement' | t }}">{% render 'icon', name: 'chevron-right', class: 'icon--small' %}</button>
+        <button type="button" class="icon-button" data-pause aria-pressed="false">
+          <span data-label-pause>{% render 'icon', name: 'pause', class: 'icon--small' %}<span class="visually-hidden">{{ 'accessibility.pause_announcements' | t }}</span></span>
+          <span data-label-play hidden>{% render 'icon', name: 'play', class: 'icon--small' %}<span class="visually-hidden">{{ 'accessibility.play_announcements' | t }}</span></span>
+        </button>
+      {%- endif -%}
+    </div>
+  </announcement-bar>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "range", "id": "interval", "label": "Seconds per message", "min": 6, "max": 12, "step": 1, "unit": "s", "default": 7, "info": "Never faster than 6 seconds. Stops on hover, keyboard focus and for visitors who prefer reduced motion." }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free UK delivery on orders over £30" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["header"] },
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "announcement", "settings": { "text": "Free UK delivery on orders over £30" } },
+        { "type": "announcement", "settings": { "text": "14-day returns" } },
+        { "type": "announcement", "settings": { "text": "Pay in 3 with Klarna" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

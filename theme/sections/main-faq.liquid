@@ -1,0 +1,53 @@
+{%- comment -%} FAQ built from faq_item metaobjects, grouped by topic, with FAQPage structured data. {%- endcomment -%}
+{%- assign topics = 'Delivery,Returns,Sizing,Payment,Orders' | split: ',' -%}
+{%- assign items = shop.metaobjects.faq_item.values -%}
+{%- render 'breadcrumbs' -%}
+<div class="section section--tight">
+  <div class="page-width page-width--narrow">
+    <h1>{{ page.title | escape }}</h1>
+    {%- if page.content != blank -%}<div class="rte">{{ page.content }}</div>{%- endif -%}
+    <nav aria-label="{{ 'templates.faq.topics' | t }}">
+      <ul class="cart-empty__links" style="justify-content: flex-start">
+        {%- for topic in topics -%}
+          {%- assign has_items = false -%}
+          {%- for item in items -%}{%- if item.topic.value == topic -%}{%- assign has_items = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+          {%- if has_items -%}<li><a class="chip" href="#faq-{{ topic | handleize }}">{{ topic }}</a></li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </nav>
+    {%- for topic in topics -%}
+      {%- assign has_items = false -%}
+      {%- for item in items -%}{%- if item.topic.value == topic -%}{%- assign has_items = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+      {%- if has_items -%}
+        <h2 id="faq-{{ topic | handleize }}">{{ topic }}</h2>
+        <div class="accordion">
+          {%- for item in items -%}
+            {%- unless item.topic.value == topic -%}{%- continue -%}{%- endunless -%}
+            {%- assign panel = 'faq-' | append: topic | handleize | append: '-' | append: forloop.index -%}
+            <div class="accordion__item">
+              <h3 class="mb-0 h4"><button type="button" class="accordion__toggle" aria-expanded="false" aria-controls="{{ panel }}">{{ item.question.value | escape }}{% render 'icon', name: 'chevron-down' %}</button></h3>
+              <div class="accordion__panel rte" id="{{ panel }}" hidden>{{ item.answer | metafield_tag }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- if items.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for item in items -%}
+          { "@type": "Question", "name": {{ item.question.value | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ item.answer | metafield_tag | strip_html | strip | json }} } }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{ "name": "FAQ", "settings": [] }
+{% endschema %}

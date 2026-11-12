@@ -1,0 +1,57 @@
+{%- comment -%} Three trust points. Uses trust_point metaobjects when selected, otherwise the blocks below. {%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} .trust-strip { display: grid; gap: 16px; list-style: none; margin: 0; padding: 0; }
+  #shopify-section-{{ section.id }} .trust-strip li { display: flex; gap: 12px; align-items: flex-start; }
+  #shopify-section-{{ section.id }} .trust-strip p { margin: 0; }
+  @media (min-width: 750px) { #shopify-section-{{ section.id }} .trust-strip { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+</style>
+<div class="section section--tight section--plume">
+  <div class="page-width">
+    <h2 class="visually-hidden">{{ section.settings.heading | escape }}</h2>
+    <ul class="trust-strip">
+      {%- if section.settings.trust_points != blank -%}
+        {%- for point in section.settings.trust_points -%}
+          <li>{% render 'icon', name: point.icon.value %}<div><strong>{{ point.heading.value | escape }}</strong><p class="small">{{ point.text.value | escape }}</p></div></li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>{% render 'icon', name: block.settings.icon %}<div><strong>{{ block.settings.heading | escape }}</strong><p class="small">{{ block.settings.text | escape }}</p></div></li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust strip",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (screen readers only)", "default": "Why shop with Ornis" },
+    { "type": "metaobject_list", "id": "trust_points", "label": "Trust points from content", "metaobject_type": "trust_point", "limit": 3, "info": "Optional. Overrides the blocks." }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Trust point",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "delivery", "options": [
+          { "value": "delivery", "label": "Delivery" }, { "value": "returns", "label": "Returns" }, { "value": "secure", "label": "Secure payment" }, { "value": "gift", "label": "Gift" }, { "value": "ruler", "label": "Size guide" }
+        ] },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Free UK delivery over £30" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Standard delivery £4.99, express £6.99." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust strip",
+      "blocks": [
+        { "type": "point", "settings": { "icon": "delivery", "heading": "Free UK delivery over £30", "text": "Standard delivery £4.99, express £6.99." } },
+        { "type": "point", "settings": { "icon": "returns", "heading": "14-day returns", "text": "Changed your mind? Send it back within 14 days." } },
+        { "type": "point", "settings": { "icon": "secure", "heading": "Secure payment", "text": "Pay with card, Apple Pay, Shop Pay or Klarna." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

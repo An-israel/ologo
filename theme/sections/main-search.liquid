@@ -1,0 +1,38 @@
+{{ 'section-results.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'facets.js' | asset_url }}" defer></script>
+{%- render 'breadcrumbs' -%}
+<div class="collection-hero page-width">
+  <h1>{{ 'search.title' | t }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="inline-form" style="max-width: 560px">
+    <label class="visually-hidden" for="SearchPageInput">{{ 'search.label' | t }}</label>
+    <input class="input" type="search" id="SearchPageInput" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'search.placeholder' | t }}">
+    <input type="hidden" name="options[prefix]" value="last">
+    <button type="submit" class="button button--primary">{{ 'search.submit' | t }}</button>
+  </form>
+  {%- if search.performed -%}
+    <p class="small muted" style="margin-top: 8px">{{ 'search.results_count' | t: count: search.results_count, terms: search.terms }}</p>
+  {%- endif -%}
+</div>
+{%- if search.performed -%}
+  {%- paginate search.results by 24 -%}
+    {%- if search.results_count > 0 -%}
+      {%- render 'results-layout', items: search.results, results: search, paginate: paginate, section_id: section.id, total: search.results_count -%}
+    {%- else -%}
+      <div class="page-width results__empty">
+        <p>{{ 'search.no_results' | t: terms: search.terms }}</p>
+        {%- render 'popular-collections', heading: section.settings.popular_heading -%}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+{%- else -%}
+  <div class="page-width results__empty">{%- render 'popular-collections', heading: section.settings.popular_heading -%}</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Search results",
+  "settings": [
+    { "type": "text", "id": "popular_heading", "label": "Popular collections heading", "default": "Popular right now" }
+  ]
+}
+{% endschema %}

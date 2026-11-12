@@ -1,0 +1,42 @@
+{%- comment -%}
+  Renders a size_chart metaobject: name, unit_note, rows (JSON list of {size, chest, waist, hips, length} in cm), how_to_measure.
+  Inches are calculated from cm, never typed in by hand.
+{%- endcomment -%}
+{%- liquid
+  assign rows = chart.rows.value
+  assign first_row = rows | first
+  assign cols = 'chest,waist,hips,length' | split: ','
+-%}
+{%- if rows != blank -%}
+  <h3 class="h3">{{ chart.name.value | escape }}</h3>
+  <p class="small muted">{{ chart.unit_note.value | default: '' | escape }} {{ 'products.size_chart_units' | t }}</p>
+  <div class="table-scroll" role="region" aria-label="{{ chart.name.value | escape }}" tabindex="0">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">{{ 'products.size' | t }}</th>
+          {%- for col in cols -%}
+            {%- if first_row[col] != blank -%}<th scope="col">{{ col | capitalize }}</th>{%- endif -%}
+          {%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for row in rows -%}
+          <tr>
+            <th scope="row">{{ row.size | escape }}</th>
+            {%- for col in cols -%}
+              {%- if first_row[col] != blank -%}
+                {%- assign cm = row[col] -%}
+                <td>{% if cm != blank %}{{ cm }} ({{ cm | divided_by: 2.54 | round: 1 }}"){% endif %}</td>
+              {%- endif -%}
+            {%- endfor -%}
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+  {%- if chart.how_to_measure.value != blank -%}
+    <h4>{{ 'products.how_to_measure' | t }}</h4>
+    <div class="rte">{{ chart.how_to_measure | metafield_tag }}</div>
+  {%- endif -%}
+{%- endif -%}

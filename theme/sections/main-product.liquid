@@ -1,0 +1,246 @@
+{{ 'section-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+<script src="{{ 'delivery-date.js' | asset_url }}" type="module"></script>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign size_chart = product.metafields.custom.size_chart.value
+  assign fit_note = product.metafields.custom.fit_note.value
+  assign model_info = product.metafields.custom.model_info.value
+  assign fabric = product.metafields.custom.fabric.value
+  assign care = product.metafields.custom.care.value
+  assign media_count = product.media.size
+  assign info = shop.metaobjects.shop_info.main
+  assign threshold = info.free_delivery_threshold.value | default: settings.free_delivery_threshold
+  assign threshold_pence = threshold | times: 100 | round
+  assign returns_days = info.returns_window_days.value | default: settings.returns_window_days
+  assign form_id = 'ProductForm-' | append: section.id
+  assign has_size_option = false
+  for option in product.options_with_values
+    assign oname = option.name | downcase
+    if oname == 'size' or oname == 'age'
+      assign has_size_option = true
+    endif
+  endfor
+-%}
+
+{%- render 'breadcrumbs' -%}
+
+<section class="product page-width" data-product-section id="Product-{{ section.id }}">
+  {%- comment -%} Gallery: swipeable on mobile with dots and a real image counter; thumbnails and zoom on desktop. {%- endcomment -%}
+  <media-gallery class="product__gallery" aria-label="{{ product.title | escape }}">
+    <ul class="gallery__track list-unstyled" data-track>
+      {%- for media in product.media -%}
+        {%- assign alt = media.alt | default: product.title | escape -%}
+        <li class="gallery__slide" data-media-id="{{ media.id }}">
+          {%- if media.media_type == 'image' -%}
+            <button type="button" class="gallery__zoom" data-zoom="{{ media | image_url: width: 2048 }}" aria-label="{{ 'accessibility.zoom' | t: index: forloop.index }}">
+              <div class="media">
+                {%- if forloop.first -%}
+                  {%- render 'image', image: media.preview_image, sizes: '(min-width: 990px) 55vw, 100vw', priority: true, alt: alt -%}
+                {%- else -%}
+                  {%- render 'image', image: media.preview_image, sizes: '(min-width: 990px) 55vw, 100vw', alt: alt -%}
+                {%- endif -%}
+              </div>
+            </button>
+          {%- else -%}
+            <div class="media">{{ media | media_tag: image_size: '1200x', autoplay: false, loop: false, controls: true }}</div>
+          {%- endif -%}
+        </li>
+      {%- else -%}
+        <li class="gallery__slide"><div class="media">{{ 'product-apparel-1' | placeholder_svg_tag }}</div></li>
+      {%- endfor -%}
+    </ul>
+    {%- if media_count > 1 -%}
+      <div class="gallery__controls">
+        <p class="gallery__counter" aria-hidden="true"><span data-counter-current>1</span> / {{ media_count }}</p>
+        <div class="gallery__dots">
+          {%- for media in product.media -%}
+            <button type="button" class="gallery__dot" data-dot data-target="{{ media.id }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ 'accessibility.go_to_image' | t: index: forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+      </div>
+      <ul class="gallery__thumbs list-unstyled">
+        {%- for media in product.media -%}
+          <li>
+            <button type="button" class="gallery__thumb" data-thumb data-target="{{ media.id }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ 'accessibility.image_count' | t: current: forloop.index, total: media_count }}">
+              <div class="media">{{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px', alt: '' }}</div>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </media-gallery>
+
+  <div class="product__info">
+    <h1 class="product__title">{{ product.title | escape }}</h1>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}<div class="product__app" {{ block.shopify_attributes }}>{% render block %}</div>{%- endif -%}
+    {%- endfor -%}
+
+    <div data-price-wrapper>{%- render 'price', product: product, variant: current_variant, large: true -%}</div>
+    {%- if cart.taxes_included -%}<p class="small muted">{{ 'products.tax_included' | t }}</p>{%- endif -%}
+
+    <product-form>
+      {%- form 'product', product, id: form_id, novalidate: 'novalidate', class: 'product-form' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {%- if settings.show_klarna_message -%}<div class="product__installments">{{ form | payment_terms }}</div>{%- endif -%}
+
+        {%- unless product.has_only_default_variant -%}
+          <variant-picker>
+            {%- for option in product.options_with_values -%}
+              {%- assign oname = option.name | downcase -%}
+              {%- assign is_colour = false -%}
+              {%- if oname == 'colour' or oname == 'color' -%}{%- assign is_colour = true -%}{%- endif -%}
+              <fieldset class="option-group">
+                <legend>
+                  <span><strong>{{ option.name | escape }}:</strong> <span data-selected-value>{{ option.selected_value | escape }}</span></span>
+                  {%- if oname == 'size' or oname == 'age' -%}
+                    <button type="button" class="link-button small" data-dialog-open="SizeGuide-{{ section.id }}">{% render 'icon', name: 'ruler', class: 'icon--small' %} {{ 'products.size_guide' | t }}</button>
+                  {%- endif -%}
+                </legend>
+                {%- if oname == 'size' and fit_note != blank -%}<p class="small fit-note">{{ fit_note | escape }}</p>{%- endif -%}
+                <div class="option-list">
+                  {%- for value in option.values -%}
+                    {%- assign input_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index -%}
+                    <input class="option-input" type="radio" id="{{ input_id }}" name="option-{{ section.id }}-{{ option.position }}" value="{{ value | escape }}" form="VariantForm-{{ section.id }}"{% if option.selected_value == value %} checked{% endif %}>
+                    {%- if is_colour -%}
+                      <label class="option-pill option-swatch" for="{{ input_id }}" title="{{ value | escape }}">
+                        <span style="--swatch: {% render 'swatch-colour', value: value %}"></span>
+                        <span class="visually-hidden">{{ value | escape }}<span data-unavailable-hint hidden>, {{ 'accessibility.unavailable_option' | t }}</span></span>
+                      </label>
+                    {%- else -%}
+                      <label class="option-pill" for="{{ input_id }}">{{ value | escape }}<span class="visually-hidden" data-unavailable-hint hidden>, {{ 'accessibility.unavailable_option' | t }}</span></label>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+            <script type="application/json">
+              {
+                "variants": [
+                  {%- for v in product.variants -%}
+                    { "id": {{ v.id }}, "options": {{ v.options | json }}, "available": {{ v.available | json }}, "featured_media": {% if v.featured_media %}{ "id": {{ v.featured_media.id }} }{% else %}null{% endif %} }{% unless forloop.last %},{% endunless %}
+                  {%- endfor -%}
+                ],
+                "extras": {
+                  {%- for v in product.variants -%}
+                    {%- assign low = false -%}
+                    {%- if v.inventory_management == 'shopify' and v.inventory_policy == 'deny' and v.inventory_quantity > 0 and v.inventory_quantity < settings.low_stock_threshold -%}{%- assign low = true -%}{%- endif -%}
+                    "{{ v.id }}": { "sku": {{ v.sku | json }}, "low": {{ low }} }{% unless forloop.last %},{% endunless %}
+                  {%- endfor -%}
+                }
+              }
+            </script>
+          </variant-picker>
+          {%- for v in product.variants -%}
+            <template id="PriceTemplate-{{ v.id }}">{%- render 'price', product: product, variant: v, large: true -%}</template>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <p class="small badge--low-text" data-low-stock{% unless current_variant.inventory_management == 'shopify' and current_variant.inventory_policy == 'deny' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity < settings.low_stock_threshold %} hidden{% endunless %}>{{ 'products.low_stock' | t }}</p>
+
+        <div class="product__buy">
+          <div class="field product__qty">
+            <label for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label>
+            <input class="input" id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1" inputmode="numeric">
+          </div>
+          <button type="submit" class="button button--primary button--full" data-add-to-bag{% unless current_variant.available %} aria-disabled="true" data-sold-out="true"{% endunless %}>
+            <span data-label>{%- if current_variant.available -%}{{ 'products.add_to_bag' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</span>
+          </button>
+        </div>
+        <p class="field__error" role="alert" data-form-error-message hidden></p>
+        {%- if section.settings.show_dynamic_checkout -%}<div class="dynamic-checkout">{{ form | payment_button }}</div>{%- endif -%}
+      {%- endform -%}
+    </product-form>
+    <form id="VariantForm-{{ section.id }}" hidden></form>
+
+    <delivery-estimate class="note product__estimate" hidden
+      {%- if product.metafields.custom.delivery_min_days.value %} data-min="{{ product.metafields.custom.delivery_min_days.value }}"{% endif -%}
+      {%- if product.metafields.custom.delivery_max_days.value %} data-max="{{ product.metafields.custom.delivery_max_days.value }}"{% endif -%}>
+      {%- render 'icon', name: 'delivery', class: 'icon--small' -%}
+      <span><span class="visually-hidden">{{ 'delivery.estimate_label' | t }}: </span><span data-estimate-text></span></span>
+    </delivery-estimate>
+
+    <ul class="trust-list product__trust">
+      {%- if threshold_pence > 0 -%}<li>{% render 'icon', name: 'delivery', class: 'icon--small' %}<span>{{ 'products.free_delivery_over' | t: amount: threshold_pence | money_without_trailing_zeros }}</span></li>{%- endif -%}
+      {%- if returns_days != blank -%}<li>{% render 'icon', name: 'returns', class: 'icon--small' %}<span>{{ 'products.returns_window' | t: days: returns_days }}</span></li>{%- endif -%}
+      <li>{% render 'icon', name: 'secure', class: 'icon--small' %}<span>{{ 'products.secure_checkout' | t }}</span></li>
+    </ul>
+
+    <div class="accordion product__accordion">
+      <div class="accordion__item">
+        <h2 class="mb-0 h4"><button type="button" class="accordion__toggle" aria-expanded="true" aria-controls="Desc-{{ section.id }}">{{ 'products.description' | t }}{% render 'icon', name: 'chevron-down' %}</button></h2>
+        <div class="accordion__panel rte" id="Desc-{{ section.id }}">{{ product.description }}</div>
+      </div>
+      {%- if fabric != blank or care != blank -%}
+        <div class="accordion__item">
+          <h2 class="mb-0 h4"><button type="button" class="accordion__toggle" aria-expanded="false" aria-controls="Fabric-{{ section.id }}">{{ 'products.fabric_and_care' | t }}{% render 'icon', name: 'chevron-down' %}</button></h2>
+          <div class="accordion__panel" id="Fabric-{{ section.id }}" hidden>
+            {%- if fabric != blank -%}<p><strong>{{ 'products.fabric' | t }}:</strong> {{ fabric | escape }}</p>{%- endif -%}
+            {%- if care != blank -%}
+              <p class="mb-0"><strong>{{ 'products.care' | t }}:</strong></p>
+              <ul>{%- for line in care -%}<li>{{ line | escape }}</li>{%- endfor -%}</ul>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if has_size_option or fit_note != blank or model_info != blank -%}
+        <div class="accordion__item">
+          <h2 class="mb-0 h4"><button type="button" class="accordion__toggle" aria-expanded="false" aria-controls="Fit-{{ section.id }}">{{ 'products.size_and_fit' | t }}{% render 'icon', name: 'chevron-down' %}</button></h2>
+          <div class="accordion__panel" id="Fit-{{ section.id }}" hidden>
+            {%- if fit_note != blank -%}<p>{{ fit_note | escape }}</p>{%- endif -%}
+            {%- if model_info != blank -%}<p><strong>{{ 'products.model_info' | t }}:</strong> {{ model_info | escape }}</p>{%- endif -%}
+            {%- if has_size_option -%}<button type="button" class="link-button" data-dialog-open="SizeGuide-{{ section.id }}">{{ 'products.size_guide' | t }}</button>{%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+      <div class="accordion__item">
+        <h2 class="mb-0 h4"><button type="button" class="accordion__toggle" aria-expanded="false" aria-controls="Delivery-{{ section.id }}">{{ 'products.delivery_and_returns' | t }}{% render 'icon', name: 'chevron-down' %}</button></h2>
+        <div class="accordion__panel" id="Delivery-{{ section.id }}" hidden>{%- render 'delivery-facts', product: product -%}</div>
+      </div>
+    </div>
+    <p class="small muted">{{ 'products.sku' | t }}: <span data-sku>{{ current_variant.sku }}</span></p>
+  </div>
+</section>
+
+<dialog class="drawer" id="SizeGuide-{{ section.id }}" aria-labelledby="SizeGuideTitle-{{ section.id }}">
+  <div class="drawer__header">
+    <h2 id="SizeGuideTitle-{{ section.id }}">{{ 'products.size_guide' | t }}</h2>
+    <button type="button" class="icon-button" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  </div>
+  <div class="drawer__body">
+    {%- if fit_note != blank -%}<p class="note">{{ fit_note | escape }}</p>{%- endif -%}
+    {%- if size_chart != blank -%}
+      {%- render 'size-chart', chart: size_chart -%}
+    {%- else -%}
+      <p>{{ 'products.no_size_chart' | t }}</p>
+    {%- endif -%}
+    <p><a href="/pages/size-guide">{{ 'products.view_size_guide_page' | t }}</a></p>
+  </div>
+</dialog>
+
+<dialog class="modal modal--zoom" id="ProductZoom" aria-label="{{ product.title | escape }}">
+  <button type="button" class="icon-button modal__close" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="1536" height="2048">
+</dialog>
+
+<sticky-add class="sticky-add" hidden data-sticky-add>
+  <div class="page-width sticky-add__inner">
+    <span class="sticky-add__title">{{ product.title | escape }}</span>
+    <button type="button" class="button button--primary"><span data-label>{%- if current_variant.available -%}{{ 'products.add_to_bag' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</span></button>
+  </div>
+</sticky-add>
+
+{%- render 'structured-data-product' -%}
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show Shop Pay, Apple Pay and Google Pay buttons", "default": true }
+  ],
+  "blocks": [{ "type": "@app" }]
+}
+{% endschema %}

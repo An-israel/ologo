@@ -1,0 +1,260 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "close": "Close",
+    "menu": "Menu",
+    "open_menu": "Open menu",
+    "home": "Home",
+    "breadcrumbs": "Breadcrumbs",
+    "previous": "Previous",
+    "next": "Next",
+    "pause": "Pause",
+    "play": "Play",
+    "view_all": "View all",
+    "opens_new_window": "Opens in a new window",
+    "or": "or"
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "announcements": "Announcements",
+    "previous_announcement": "Previous announcement",
+    "next_announcement": "Next announcement",
+    "pause_announcements": "Pause announcements",
+    "play_announcements": "Play announcements",
+    "main_navigation": "Main navigation",
+    "social": "Ornis on social media",
+    "payment_methods": "Payment methods we accept",
+    "image_count": "Image {{ current }} of {{ total }}",
+    "go_to_image": "Go to image {{ index }}",
+    "zoom": "Zoom image {{ index }}",
+    "star_rating": "Rated {{ rating }} out of 5",
+    "required": "required",
+    "unavailable_option": "sold out"
+  },
+  "header": {
+    "search": "Search",
+    "account": "Account",
+    "bag": "Bag",
+    "bag_count": {
+      "one": "{{ count }} item",
+      "other": "{{ count }} items"
+    },
+    "shop_all": "Shop all {{ title }}"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search for jumpers, dresses, gifts",
+    "label": "Search the shop",
+    "submit": "Search",
+    "products": "Products",
+    "collections": "Collections",
+    "pages": "Pages",
+    "see_all": "See all results for \"{{ terms }}\"",
+    "no_results": "Nothing found for \"{{ terms }}\". Check the spelling or try a shorter word.",
+    "results_count": {
+      "one": "{{ count }} result for \"{{ terms }}\"",
+      "other": "{{ count }} results for \"{{ terms }}\""
+    },
+    "results_announcement": "Search results updated",
+    "suggestions_count": {
+      "one": "{{ count }} suggestion",
+      "other": "{{ count }} suggestions"
+    },
+    "popular": "Popular right now"
+  },
+  "products": {
+    "add_to_bag": "Add to bag",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "quick_add": "Quick add",
+    "view_details": "View full details",
+    "choose_options": "Choose options",
+    "choose_size": "Choose a size",
+    "quantity": "Quantity",
+    "decrease_quantity": "Decrease quantity for {{ product }}",
+    "increase_quantity": "Increase quantity for {{ product }}",
+    "size_guide": "Size guide",
+    "colour": "Colour",
+    "size": "Size",
+    "from_price": "From {{ price }}",
+    "price": "Price",
+    "regular_price": "Was",
+    "sale_price": "Now",
+    "unit_price": "Unit price",
+    "low_stock": "Low stock",
+    "new": "New",
+    "sale": "Sale",
+    "gift": "Gift idea",
+    "more_colours": "+{{ count }}",
+    "colours_available": {
+      "one": "{{ count }} colour",
+      "other": "{{ count }} colours"
+    },
+    "sku": "Product code",
+    "tax_included": "Price includes VAT.",
+    "description": "Description",
+    "fabric_and_care": "Fabric and care",
+    "fabric": "Fabric",
+    "care": "Care",
+    "size_and_fit": "Size and fit",
+    "model_info": "Model",
+    "delivery_and_returns": "Delivery and returns",
+    "complete_the_look": "Complete the look",
+    "you_may_also_like": "You may also like",
+    "recently_viewed": "Recently viewed",
+    "how_to_measure": "How to measure",
+    "size_chart_units": "Measurements in cm, with inches in brackets.",
+    "no_size_chart": "A size chart for this item is coming soon. Our size guide page shows our general sizing.",
+    "view_size_guide_page": "See all size guides",
+    "free_delivery_over": "Free UK delivery on orders over {{ amount }}",
+    "returns_window": "{{ days }}-day returns",
+    "secure_checkout": "Secure checkout with Klarna, Apple Pay and Shop Pay",
+    "image_counter": "{{ current }} / {{ total }}",
+    "verified_reviews": "Reviews from verified buyers",
+    "added_days_ago": "New in"
+  },
+  "delivery": {
+    "arrives": "Order today, arrives between [from] and [to]",
+    "estimate_label": "Estimated delivery",
+    "standard": "Standard UK delivery {{ price }}, free over {{ threshold }}",
+    "express": "Express delivery {{ price }}",
+    "processing": "Orders are packed within {{ days }} working days.",
+    "range": "Delivery usually takes {{ min }} to {{ max }} working days after dispatch.",
+    "separate_parcels": "Items may arrive in separate parcels.",
+    "returns": "You can return unworn items within {{ days }} days.",
+    "read_delivery": "Delivery information",
+    "read_returns": "Returns and exchanges",
+    "christmas_cutoffs": "Christmas last order dates",
+    "christmas_standard": "Standard delivery: order by {{ date }}",
+    "christmas_express": "Express delivery: order by {{ date }}"
+  },
+  "cart": {
+    "title": "Your bag",
+    "empty": "Your bag is empty",
+    "empty_text": "Not sure where to start? Try one of these.",
+    "continue_shopping": "Continue shopping",
+    "remove": "Remove {{ product }}",
+    "remove_short": "Remove",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout",
+    "view_bag": "View bag",
+    "note": "Order note",
+    "note_hint": "Gift message or delivery instructions",
+    "taxes_shipping": "Delivery is calculated at checkout. Prices include VAT where applicable.",
+    "taxes_shipping_no_vat": "Delivery is calculated at checkout.",
+    "free_delivery_remaining": "You're {{ amount }} away from free UK delivery",
+    "free_delivery_reached": "You've got free UK delivery",
+    "added": "Added to your bag",
+    "updated": "Your bag has been updated",
+    "error": "Something went wrong. Please try again.",
+    "discount": "Discount",
+    "line_price": "Total",
+    "returns_line_plain": "{{ days }}-day returns.",
+    "item_count": {
+      "one": "{{ count }} item",
+      "other": "{{ count }} items"
+    }
+  },
+  "collections": {
+    "product_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "filter": "Filter",
+    "filter_and_sort": "Filter and sort",
+    "sort_by": "Sort by",
+    "apply": "Show results",
+    "clear_all": "Clear all",
+    "clear": "Clear",
+    "remove_filter": "Remove filter: {{ filter }}",
+    "active_filters": "Active filters",
+    "from": "From",
+    "to": "To",
+    "price_range": "Price range in pounds",
+    "load_more": "Load more",
+    "showing": "Showing {{ shown }} of {{ total }}",
+    "empty": "No products match these filters.",
+    "empty_collection": "This collection is being restocked. Have a look at these instead.",
+    "selected": "{{ count }} selected"
+  },
+  "newsletter": {
+    "label": "Email address",
+    "placeholder": "you@example.co.uk",
+    "subscribe": "Sign up",
+    "success": "Thanks for signing up. Check your inbox for your welcome email.",
+    "consent": "By signing up you agree to receive marketing emails from Ornis. You can unsubscribe at any time. See our privacy policy.",
+    "popup_heading": "Join the Ornis list",
+    "popup_text": "New arrivals and offers, no more than once a week.",
+    "no_thanks": "No thanks"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "order_number": "Order number (if you have one)",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Thanks, your message has been sent. We'll reply by email.",
+    "error_heading": "Please fix the following:",
+    "email_us": "Email us",
+    "reply_time": "We reply {{ time }}.",
+    "address": "Business address",
+    "phone": "Phone",
+    "faq_link": "Many answers are already in our FAQ"
+  },
+  "footer": {
+    "newsletter_heading": "Get new arrivals first",
+    "copyright": "© {{ year }} {{ name }}",
+    "company_number": "Company number {{ number }}",
+    "vat_number": "VAT number {{ number }}"
+  },
+  "reviews": {
+    "heading": "What customers say",
+    "verified": "Verified buyer"
+  },
+  "templates": {
+    "404": {
+      "title": "Page not found",
+      "text": "We couldn't find that page. It may have moved, or the link may be wrong. Try a search, or start from one of these.",
+      "back_home": "Back to the home page"
+    },
+    "password": {
+      "heading": "Opening soon",
+      "enter": "Enter",
+      "password": "Password",
+      "store_owner": "Are you the store owner?",
+      "login": "Log in here",
+      "wrong": "That password isn't right. Please try again."
+    },
+    "gift_card": {
+      "title": "Your Ornis gift card",
+      "balance": "Balance",
+      "code": "Gift card code",
+      "copy": "Copy code",
+      "copied": "Code copied",
+      "expires": "Expires on {{ date }}",
+      "expired": "This gift card expired on {{ date }}",
+      "disabled": "This gift card is disabled",
+      "shop": "Start shopping",
+      "print": "Print",
+      "add_to_wallet": "Add to Apple Wallet"
+    },
+    "blog": {
+      "read_more": "Read more",
+      "by": "By {{ author }}"
+    },
+    "faq": {
+      "topics": "Topics"
+    },
+    "track": {
+      "button": "Track my order"
+    }
+  },
+  "customer": {
+    "account": "Your account",
+    "orders": "Orders",
+    "log_out": "Log out"
+  }
+}

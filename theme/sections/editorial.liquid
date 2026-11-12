@@ -1,0 +1,45 @@
+<style>
+  #shopify-section-{{ section.id }} .editorial { display: grid; gap: 24px; align-items: center; }
+  @media (min-width: 750px) {
+    #shopify-section-{{ section.id }} .editorial { grid-template-columns: 1fr 1fr; gap: 48px; }
+    #shopify-section-{{ section.id }} .editorial--reverse .editorial__media { order: 2; }
+  }
+</style>
+<div class="section {% if section.settings.background == 'sand' %}section--sand{% elsif section.settings.background == 'plume' %}section--plume{% endif %}">
+  <div class="page-width editorial{% if section.settings.reverse %} editorial--reverse{% endif %}">
+    <div class="editorial__media">
+      <div class="media">
+        {%- if section.settings.image != blank -%}
+          {%- render 'image', image: section.settings.image, sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.image.alt -%}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+    </div>
+    <div>
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a class="button button--secondary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Editorial image and text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Real product photography. No text in the image." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Winter layers" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Knits, fleeces and coats that work hard on cold mornings and still look good by the evening.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop knitwear" },
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/women" },
+    { "type": "checkbox", "id": "reverse", "label": "Image on the right", "default": false },
+    { "type": "select", "id": "background", "label": "Background", "default": "sand", "options": [
+      { "value": "none", "label": "Paper" }, { "value": "sand", "label": "Sand" }, { "value": "plume", "label": "Plume" }
+    ] }
+  ],
+  "presets": [{ "name": "Editorial image and text" }]
+}
+{% endschema %}

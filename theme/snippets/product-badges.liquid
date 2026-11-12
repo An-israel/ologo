@@ -1,0 +1,28 @@
+{%- comment -%}
+  Badges come only from real data: New (created in the last N days), Sale (proven compare-at), Low stock (tracked inventory under threshold).
+{%- endcomment -%}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  capture sale
+    render 'compare-allowed', product: product, variant: variant
+  endcapture
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign created_s = product.created_at | date: '%s' | plus: 0
+  assign new_days = settings.new_badge_days | default: 30
+  assign age_days = now_s | minus: created_s | divided_by: 86400
+  assign is_new = false
+  if age_days <= new_days
+    assign is_new = true
+  endif
+  assign low = false
+  if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' and variant.inventory_quantity > 0 and variant.inventory_quantity < settings.low_stock_threshold
+    assign low = true
+  endif
+-%}
+{%- if sale == 'true' or is_new or low -%}
+  <div class="card__badges">
+    {%- if sale == 'true' -%}<span class="badge badge--sale">{{ 'products.sale' | t }}</span>{%- endif -%}
+    {%- if is_new -%}<span class="badge">{{ 'products.new' | t }}</span>{%- endif -%}
+    {%- if low -%}<span class="badge badge--low">{{ 'products.low_stock' | t }}</span>{%- endif -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,29 @@
+{%- liquid
+  assign active_count = 0
+  for filter in results.filters
+    assign active_count = active_count | plus: filter.active_values.size
+    if filter.type == 'price_range'
+      if filter.min_value.value != nil or filter.max_value.value != nil
+        assign active_count = active_count | plus: 1
+      endif
+    endif
+  endfor
+-%}
+<div class="active-filters" data-active-filters>
+  {%- if active_count > 0 -%}
+    <h2 class="visually-hidden">{{ 'collections.active_filters' | t }}</h2>
+    <ul class="list-unstyled active-filters__list">
+      {%- for filter in results.filters -%}
+        {%- for value in filter.active_values -%}
+          <li><a class="chip" data-facet-link href="{{ value.url_to_remove }}">{{ value.label | escape }} {% render 'icon', name: 'close', class: 'icon--small' %}<span class="visually-hidden">{{ 'collections.remove_filter' | t: filter: value.label }}</span></a></li>
+        {%- endfor -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+            <li><a class="chip" data-facet-link href="{{ filter.url_to_remove }}">{{ filter.min_value.value | default: 0 | money_without_trailing_zeros }} - {{ filter.max_value.value | default: filter.range_max | money_without_trailing_zeros }} {% render 'icon', name: 'close', class: 'icon--small' %}<span class="visually-hidden">{{ 'collections.remove_filter' | t: filter: filter.label }}</span></a></li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      <li><a class="link" data-facet-link href="{% if results.terms %}{{ routes.search_url }}?q={{ results.terms | url_encode }}{% else %}{{ results.url }}{% endif %}">{{ 'collections.clear_all' | t }}</a></li>
+    </ul>
+  {%- endif -%}
+</div>

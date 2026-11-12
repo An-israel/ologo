@@ -1,0 +1,338 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Ornis 2.0",
+    "theme_version": "2.0.0",
+    "theme_author": "Ornis",
+    "theme_documentation_url": "https://ornis.shop/pages/faq",
+    "theme_support_url": "https://ornis.shop/pages/contact"
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Every text pair below passes WCAG 2.2 AA at these defaults. If you change a colour, check contrast at webaim.org/resources/contrastchecker before saving."
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Ink (text, header, footer, primary buttons)",
+        "default": "#15171C"
+      },
+      {
+        "type": "color",
+        "id": "color_paper",
+        "label": "Paper (page background)",
+        "default": "#FBFAF7"
+      },
+      {
+        "type": "color",
+        "id": "color_kingfisher",
+        "label": "Kingfisher (links, focus ring, selected swatch)",
+        "default": "#0B6782"
+      },
+      {
+        "type": "color",
+        "id": "color_robin",
+        "label": "Robin (real sale prices only)",
+        "default": "#C23A1E",
+        "info": "Never place Robin text on Sand."
+      },
+      {
+        "type": "color",
+        "id": "color_stone",
+        "label": "Stone (secondary text, borders)",
+        "default": "#5B6068"
+      },
+      {
+        "type": "color",
+        "id": "color_plume",
+        "label": "Plume (soft panels)",
+        "default": "#E8F1F3"
+      },
+      {
+        "type": "color",
+        "id": "color_sand",
+        "label": "Sand (seasonal and editorial bands)",
+        "default": "#EFE9DF"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Gold (small accents only)",
+        "default": "#E2B23A"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Headings use Bricolage Grotesque, bundled with the theme. Pick the body font from Shopify's library."
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body and interface font",
+        "default": "inter_n4"
+      }
+    ]
+  },
+  {
+    "name": "Logo and favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Leave empty to use the built-in ORNIS wordmark."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 60,
+        "max": 240,
+        "step": 4,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 112
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Leave empty to use the built-in feather favicon."
+      }
+    ]
+  },
+  {
+    "name": "Business details",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shown in the footer and on the Contact page. Anything left empty is hidden, never faked."
+      },
+      {
+        "type": "text",
+        "id": "business_name",
+        "label": "Trading name",
+        "default": "Ornis"
+      },
+      {
+        "type": "text",
+        "id": "legal_name",
+        "label": "Legal business name"
+      },
+      {
+        "type": "textarea",
+        "id": "business_address",
+        "label": "Business address"
+      },
+      {
+        "type": "text",
+        "id": "business_email",
+        "label": "Customer support email"
+      },
+      {
+        "type": "text",
+        "id": "business_phone",
+        "label": "Phone"
+      },
+      {
+        "type": "text",
+        "id": "company_number",
+        "label": "Company number"
+      },
+      {
+        "type": "text",
+        "id": "vat_number",
+        "label": "VAT number"
+      },
+      {
+        "type": "text",
+        "id": "response_time",
+        "label": "Reply time",
+        "info": "For example: within one working day"
+      }
+    ]
+  },
+  {
+    "name": "Delivery and returns",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Fallbacks used when the shop_info metaobject has no value. Leave the day fields empty and no delivery estimate is shown anywhere."
+      },
+      {
+        "type": "number",
+        "id": "free_delivery_threshold",
+        "label": "Free UK delivery over (£)",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "standard_price_pence",
+        "label": "Standard delivery price (pence)",
+        "default": 499
+      },
+      {
+        "type": "number",
+        "id": "express_price_pence",
+        "label": "Express delivery price (pence)",
+        "default": 699
+      },
+      {
+        "type": "number",
+        "id": "processing_days",
+        "label": "Processing time (working days)",
+        "default": 3,
+        "info": "Currently 3 working days."
+      },
+      {
+        "type": "number",
+        "id": "delivery_min_days",
+        "label": "Delivery time, minimum (working days)"
+      },
+      {
+        "type": "number",
+        "id": "delivery_max_days",
+        "label": "Delivery time, maximum (working days)"
+      },
+      {
+        "type": "number",
+        "id": "order_cutoff_hour",
+        "label": "Same-day processing cut-off (hour, UK time)",
+        "default": 14
+      },
+      {
+        "type": "number",
+        "id": "returns_window_days",
+        "label": "Returns window (days)",
+        "default": 14
+      },
+      {
+        "type": "textarea",
+        "id": "bank_holidays",
+        "label": "England and Wales bank holidays",
+        "info": "One date per line as YYYY-MM-DD. Update each year from gov.uk/bank-holidays.",
+        "default": "2026-01-01\n2026-04-03\n2026-04-06\n2026-05-04\n2026-05-25\n2026-08-31\n2026-12-25\n2026-12-28\n2027-01-01\n2027-03-26\n2027-03-29\n2027-05-03\n2027-05-31\n2027-08-30\n2027-12-27\n2027-12-28"
+      }
+    ]
+  },
+  {
+    "name": "Seasonal and features",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "christmas_mode",
+        "label": "Christmas mode",
+        "default": true,
+        "info": "Shows the Christmas last order dates in the cart and on the Delivery page."
+      },
+      {
+        "type": "text",
+        "id": "christmas_standard_cutoff",
+        "label": "Christmas last order date, standard",
+        "info": "For example: Thursday 11 December. Leave empty to hide."
+      },
+      {
+        "type": "text",
+        "id": "christmas_express_cutoff",
+        "label": "Christmas last order date, express",
+        "info": "Leave empty to hide."
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sale_menu",
+        "label": "Show Sale in menus",
+        "default": true,
+        "info": "Sale is still hidden automatically while the sale collection is empty."
+      },
+      {
+        "type": "checkbox",
+        "id": "newsletter_popup",
+        "label": "Newsletter offer pop-up",
+        "default": true,
+        "info": "Appears once per visitor after 30 seconds or half-way down the page."
+      },
+      {
+        "type": "text",
+        "id": "newsletter_offer",
+        "label": "Newsletter offer",
+        "default": "10% off your first order"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_klarna_message",
+        "label": "Show Pay in 3 message on product pages",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "low_stock_threshold",
+        "label": "Low stock badge below",
+        "default": 5
+      },
+      {
+        "type": "number",
+        "id": "new_badge_days",
+        "label": "New badge for products added in the last (days)",
+        "default": 30
+      },
+      {
+        "type": "number",
+        "id": "reviews_min_count",
+        "label": "Show reviews only when there are at least",
+        "default": 5
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Icons appear only for links you add."
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      }
+    ]
+  },
+  {
+    "name": "Sharing",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default social sharing image",
+        "info": "1200 x 630 px. Used when a page has no image of its own."
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_note",
+        "label": "Allow order note",
+        "default": true
+      }
+    ]
+  }
+]

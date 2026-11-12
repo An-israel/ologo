@@ -1,0 +1,51 @@
+{
+  "name": "ornis-theme",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Ornis 2.0 Shopify theme and operator toolkit for ornis.shop",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "theme:dev": "shopify theme dev --path theme",
+    "theme:check": "theme-check theme --fail-level suggestion",
+    "theme:push": "shopify theme push --path theme --unpublished --theme \"Ornis 2.0\" --json",
+    "theme:share": "shopify theme share --path theme",
+    "lint:placeholders": "tsx tests/static-placeholder-scan.ts",
+    "lint:links": "tsx tests/static-link-check.ts",
+    "lint:copy": "tsx tests/static-copy-check.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test --trace off",
+    "lhci": "lhci autorun",
+    "ci": "npm run typecheck && npm test && npm run lint:placeholders && npm run lint:links && npm run lint:copy && npm run theme:check",
+    "setup-store": "tsx scripts/setup-store.ts",
+    "audit": "tsx scripts/audit-catalogue.ts",
+    "normalise": "tsx scripts/normalise-products.ts",
+    "validate": "tsx scripts/validate-products.ts",
+    "prepare-images": "tsx scripts/prepare-images.ts",
+    "import": "tsx scripts/import-products.ts",
+    "publish-products": "tsx scripts/publish-products.ts",
+    "redirects": "tsx scripts/set-redirects.ts",
+    "weekly-report": "tsx scripts/weekly-report.ts",
+    "smoke": "tsx scripts/smoke-test.ts",
+    "backup": "tsx scripts/backup-export.ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@fontsource/bricolage-grotesque": "^5.3.0",
+    "@lhci/cli": "^0.16.1",
+    "@playwright/test": "^1.65.0",
+    "@shopify/theme-check-node": "^4.0.0",
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "csv-parse": "^7.0.3",
+    "csv-stringify": "^6.9.0",
+    "sharp": "^0.35.5"
+  }
+}

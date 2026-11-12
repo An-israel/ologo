@@ -1,0 +1,14 @@
+{%- if settings.newsletter_popup and request.page_type != 'password' and request.page_type != 'cart' -%}
+  <newsletter-popup>
+    <dialog class="modal" id="NewsletterPopup" aria-labelledby="NewsletterPopupTitle">
+      <div class="modal__inner">
+        <button type="button" class="icon-button modal__close" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+        <h2 class="h3" id="NewsletterPopupTitle">{{ 'newsletter.popup_heading' | t }}</h2>
+        {%- if settings.newsletter_offer != blank -%}<p><strong>{{ settings.newsletter_offer | escape }}</strong></p>{%- endif -%}
+        <p>{{ 'newsletter.popup_text' | t }}</p>
+        {%- render 'newsletter-form', form_id: 'NewsletterPopupForm' -%}
+        <button type="button" class="link-button" data-dialog-close>{{ 'newsletter.no_thanks' | t }}</button>
+      </div>
+    </dialog>
+  </newsletter-popup>
+{%- endif -%}
