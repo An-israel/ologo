@@ -9,26 +9,113 @@
         "button_style": "accent",
         "text": "Thoughtful gifts for her, for him and for the kids, delivered across the UK.",
         "button_label": "Shop all gifts",
-        "button_link": "shopify://collections/gifts"
+        "button_link": "shopify://collections/gifts",
+        "background": "plume"
       }
     },
     "finder": {
       "type": "gift-finder",
       "blocks": {
-        "under-15": { "type": "link", "settings": { "collection": "gifts-under-15", "label": "Gifts under £15" } },
-        "under-25": { "type": "link", "settings": { "collection": "gifts-under-25", "label": "Gifts under £25" } },
-        "her": { "type": "link", "settings": { "collection": "gifts-for-her", "label": "For her" } },
-        "him": { "type": "link", "settings": { "collection": "gifts-for-him", "label": "For him" } },
-        "kids": { "type": "link", "settings": { "collection": "gifts-for-kids", "label": "For kids" } }
+        "under-15": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-under-15",
+            "label": "Gifts under £15"
+          }
+        },
+        "under-25": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-under-25",
+            "label": "Gifts under £25"
+          }
+        },
+        "her": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-her",
+            "label": "For her"
+          }
+        },
+        "him": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-him",
+            "label": "For him"
+          }
+        },
+        "kids": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-kids",
+            "label": "For kids"
+          }
+        }
       },
-      "block_order": ["under-15", "under-25", "her", "him", "kids"],
-      "settings": { "heading": "Shop gifts by budget and person" }
+      "block_order": [
+        "under-15",
+        "under-25",
+        "her",
+        "him",
+        "kids"
+      ],
+      "settings": {
+        "heading": "Shop gifts by budget and person"
+      }
     },
-    "under-15": { "type": "featured-collection", "settings": { "heading": "Gifts under £15", "collection": "gifts-under-15", "limit": 4, "quick_add": true } },
-    "under-25": { "type": "featured-collection", "settings": { "heading": "Gifts under £25", "collection": "gifts-under-25", "limit": 4, "quick_add": true } },
-    "her": { "type": "featured-collection", "settings": { "heading": "For her", "collection": "gifts-for-her", "limit": 4, "quick_add": true } },
-    "him": { "type": "featured-collection", "settings": { "heading": "For him", "collection": "gifts-for-him", "limit": 4, "quick_add": true } },
-    "kids": { "type": "featured-collection", "settings": { "heading": "For kids", "collection": "gifts-for-kids", "limit": 4, "quick_add": true } }
+    "under-15": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Gifts under £15",
+        "collection": "gifts-under-15",
+        "limit": 4,
+        "quick_add": true
+      }
+    },
+    "under-25": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Gifts under £25",
+        "collection": "gifts-under-25",
+        "limit": 4,
+        "quick_add": true
+      }
+    },
+    "her": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "For her",
+        "collection": "gifts-for-her",
+        "limit": 4,
+        "quick_add": true
+      }
+    },
+    "him": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "For him",
+        "collection": "gifts-for-him",
+        "limit": 4,
+        "quick_add": true
+      }
+    },
+    "kids": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "For kids",
+        "collection": "gifts-for-kids",
+        "limit": 4,
+        "quick_add": true
+      }
+    }
   },
-  "order": ["hero", "finder", "under-15", "under-25", "her", "him", "kids"]
+  "order": [
+    "hero",
+    "finder",
+    "under-15",
+    "under-25",
+    "her",
+    "him",
+    "kids"
+  ]
 }

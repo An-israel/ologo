@@ -7,12 +7,14 @@
   assign mobile = section.settings.image_mobile | default: desktop
 -%}
 <style>
-  #shopify-section-{{ section.id }} .hero { position: relative; display: grid; background: linear-gradient(135deg, var(--color-peach) 0%, var(--color-butter) 60%, var(--color-mint) 100%); overflow: hidden; }
-  #shopify-section-{{ section.id }} .hero::before { content: ''; position: absolute; width: 420px; height: 420px; right: -120px; bottom: -160px; border-radius: 50%; background: var(--color-gold); opacity: 0.7; pointer-events: none; }
+  #shopify-section-{{ section.id }} .hero { position: relative; display: grid; background: var(--color-{{ section.settings.background }}); overflow: hidden; }
   #shopify-section-{{ section.id }} .hero__content { position: relative; }
   #shopify-section-{{ section.id }} .hero__content h1 span { color: var(--color-coral); }
   #shopify-section-{{ section.id }} .hero__media { position: relative; aspect-ratio: 4 / 5; max-height: 52vh; width: 100%; overflow: hidden; }
-  #shopify-section-{{ section.id }} .hero__media img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+  #shopify-section-{{ section.id }} .hero__media { padding: 16px; }
+  #shopify-section-{{ section.id }} .hero__media img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #fff; }
+  #shopify-section-{{ section.id }} .hero__media picture { display: block; width: 100%; height: 100%; }
+  @media (min-width: 750px) { #shopify-section-{{ section.id }} .hero__media { padding: 32px; } }
   #shopify-section-{{ section.id }} .hero__content { padding: 24px 16px 32px; }
   #shopify-section-{{ section.id }} .hero__content p { font-size: 1.125rem; }
   @media (min-width: 750px) {
@@ -59,7 +61,8 @@
     { "type": "text", "id": "text", "label": "Supporting line", "default": "Jumpers, accessories and stocking fillers, delivered across the UK." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop gifts" },
     { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/gifts" },
-    { "type": "select", "id": "button_style", "label": "Button colour", "default": "accent", "options": [{ "value": "accent", "label": "Marigold" }, { "value": "primary", "label": "Kingfisher" }] }
+    { "type": "select", "id": "background", "label": "Background colour", "default": "plume", "options": [{ "value": "plume", "label": "Sky blue" }, { "value": "paper", "label": "White" }, { "value": "butter", "label": "Butter" }, { "value": "peach", "label": "Peach" }, { "value": "mint", "label": "Mint" }, { "value": "lilac", "label": "Lilac" }], "info": "One solid colour. Text stays dark for readability." },
+    { "type": "select", "id": "button_style", "label": "Button colour", "default": "accent", "options": [{ "value": "accent", "label": "Sunshine yellow" }, { "value": "primary", "label": "Royal blue" }] }
   ],
   "presets": [{ "name": "Hero" }]
 }

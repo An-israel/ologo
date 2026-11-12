@@ -7,7 +7,10 @@ Theme releases are tagged in Git (`v2.0.0` upward). Store schema changes bump `S
 ### Brighter colours (operator request: "colours look faint and dull")
 - Vivid palette: royal blue #1D4ED8 header and buttons, navy #172554 footer, sunshine #FFC629 highlights, coral #D9381E,
   raspberry #BE185D, and saturated sky, mint, peach, lilac, butter and pink backgrounds on a pure white page.
-- Photo areas take on the section colour (light photo backgrounds blend in). All pairs still pass WCAG AA.
+- Hero is one solid colour (sky blue by default, editable) instead of a gradient; the trust strip below is navy with
+  yellow icons, so the top of the page is one blue family.
+- Product photos always show their true colours: they sit in a white frame inside the coloured card, never blended
+  with the background. All pairs still pass WCAG AA.
 
 ### Font change (operator request)
 - Poppins for headings and body, from Shopify's font library (no self-hosted font files). Montserrat or Helvetica can be picked in Theme settings > Typography.

@@ -9,7 +9,8 @@
         "button_style": "accent",
         "text": "Jumpers, accessories and stocking fillers, delivered across the UK.",
         "button_label": "Shop gifts",
-        "button_link": "shopify://collections/gifts"
+        "button_link": "shopify://collections/gifts",
+        "background": "plume"
       }
     },
     "trust": {

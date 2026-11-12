@@ -196,8 +196,8 @@ cart-items, facet-form, load-more, newsletter-popup, recently-viewed, product-re
 .grid > li:nth-child(5n+3) .card__media .media, .scroll-row > li:nth-child(5n+3) .card__media .media { background: var(--color-lilac); }
 .grid > li:nth-child(5n+4) .card__media .media, .scroll-row > li:nth-child(5n+4) .card__media .media { background: var(--color-butter); }
 .grid > li:nth-child(5n+5) .card__media .media, .scroll-row > li:nth-child(5n+5) .card__media .media { background: var(--color-plume); }
-/* Light photo backgrounds take on the card tint; the product itself keeps its colours. */
-.card__media .media img { mix-blend-mode: multiply; }
+/* Photos keep their true colours, framed by the card colour. */
+.card__media .media img { inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px); border-radius: 6px; object-fit: cover; background: #fff; }
 .card .price { color: var(--color-deep); }
 .card__quick-add .button:hover { background: var(--color-kingfisher); color: var(--color-paper); }
 .card__quick-add .button { width: 100%; min-height: 44px; padding: 8px 12px; font-size: 0.875rem; }

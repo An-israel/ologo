@@ -2,13 +2,12 @@
 <style>
   #shopify-section-{{ section.id }} .trust-strip { display: grid; gap: 16px; list-style: none; margin: 0; padding: 0; }
   #shopify-section-{{ section.id }} .trust-strip li { display: flex; gap: 12px; align-items: center; }
-  #shopify-section-{{ section.id }} .trust-strip .icon { width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: var(--color-paper); color: var(--color-kingfisher); flex: none; }
-  #shopify-section-{{ section.id }} .trust-strip li:nth-child(2) .icon { color: var(--color-coral); }
-  #shopify-section-{{ section.id }} .trust-strip li:nth-child(3) .icon { color: var(--color-berry); }
+  #shopify-section-{{ section.id }} .trust-strip .icon { width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: var(--color-gold); color: var(--color-ink); flex: none; }
+  #shopify-section-{{ section.id }} .trust-strip p { color: #dbe4ff; }
   #shopify-section-{{ section.id }} .trust-strip p { margin: 0; }
   @media (min-width: 750px) { #shopify-section-{{ section.id }} .trust-strip { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
 </style>
-<div class="section section--tight section--mint">
+<div class="section section--tight section--deep on-ink">
   <div class="page-width">
     <h2 class="visually-hidden">{{ section.settings.heading | escape }}</h2>
     <ul class="trust-strip">
