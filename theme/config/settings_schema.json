@@ -21,8 +21,8 @@
       {
         "type": "color",
         "id": "color_ink",
-        "label": "Ink (body text)",
-        "default": "#111827"
+        "label": "Ink (text, primary buttons)",
+        "default": "#0F172A"
       },
       {
         "type": "color",
@@ -33,8 +33,8 @@
       {
         "type": "color",
         "id": "color_deep",
-        "label": "Navy (footer, dark bands)",
-        "default": "#172554"
+        "label": "Footer and dark bands",
+        "default": "#0F172A"
       },
       {
         "type": "color",
@@ -47,6 +47,12 @@
         "id": "color_stone",
         "label": "Stone (secondary text, borders)",
         "default": "#4B5563"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Surface (image backgrounds, soft panels)",
+        "default": "#F3F4F6"
       },
       {
         "type": "header",

@@ -1,29 +1,36 @@
 <style>
-  #shopify-section-{{ section.id }} .editorial { display: grid; gap: 24px; align-items: center; }
-  #shopify-section-{{ section.id }} .editorial__media .media { border-radius: 8px; background: #fff; }
+  #shopify-section-{{ section.id }} .editorial { display: grid; overflow: hidden; border-radius: 28px; background: var(--color-{{ section.settings.background | replace: 'none', 'surface' }}); }
+  #shopify-section-{{ section.id }} .editorial__media .media { aspect-ratio: 4 / 3; height: 100%; background: #fff; }
+  #shopify-section-{{ section.id }} .editorial__content { padding: 28px 22px 32px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+  #shopify-section-{{ section.id }} .editorial__content .rte { font-size: 1.0625rem; color: #374151; margin-bottom: 22px; max-width: 460px; }
   @media (min-width: 750px) {
-    #shopify-section-{{ section.id }} .editorial { grid-template-columns: 1fr 1fr; gap: 48px; }
+    #shopify-section-{{ section.id }} .editorial { grid-template-columns: 1.1fr 1fr; min-height: 520px; }
+    #shopify-section-{{ section.id }} .editorial__media .media { aspect-ratio: auto; position: absolute; inset: 0; }
+    #shopify-section-{{ section.id }} .editorial__media { position: relative; min-height: 420px; }
     #shopify-section-{{ section.id }} .editorial--reverse .editorial__media { order: 2; }
+    #shopify-section-{{ section.id }} .editorial__content { padding: 56px; }
   }
 </style>
-<div class="section{% if section.settings.background != 'none' %} section--{{ section.settings.background }}{% endif %}">
-  <div class="page-width editorial{% if section.settings.reverse %} editorial--reverse{% endif %}">
-    <div class="editorial__media">
-      <div class="media">
-        {%- if section.settings.image != blank -%}
-          {%- render 'image', image: section.settings.image, sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.image.alt -%}
-        {%- else -%}
-          {{ 'lifestyle-2' | placeholder_svg_tag }}
+<div class="section">
+  <div class="page-width">
+    <div class="editorial{% if section.settings.reverse %} editorial--reverse{% endif %}">
+      <div class="editorial__media">
+        <div class="media">
+          {%- if section.settings.image != blank -%}
+            {%- render 'image', image: section.settings.image, sizes: '(min-width: 750px) 55vw, 100vw', alt: section.settings.image.alt -%}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="editorial__content">
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+        <h2>{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
         {%- endif -%}
       </div>
-    </div>
-    <div>
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
-      <h2 class="heading-accent">{{ section.settings.heading | escape }}</h2>
-      {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
-      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-        <a class="button button--primary" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
-      {%- endif -%}
     </div>
   </div>
 </div>

@@ -4,6 +4,16 @@ Theme releases are tagged in Git (`v2.0.0` upward). Store schema changes bump `S
 
 ## Unreleased: 2.0.0 (milestones 1 to 3, built before store access)
 
+### New design (operator request: "change the entire UI, make it better")
+- Modern fashion-store layout: clean white base, rounded imagery, pill buttons, soft shadows and hover motion.
+- Header: white with blur, centred menu, visible search bar on desktop, coral bag count; slim royal blue announcement bar.
+- Home: full-width rounded image banner with text over it and two buttons; light trust cards; round category bubbles;
+  product cards with a round "+" quick add on the image; split editorial card; colourful gift shortcut cards;
+  royal blue newsletter card; dark rounded footer (no duplicate newsletter on the home page).
+- Product page: pill size buttons (selected in ink), large rounded gallery, pill Add to bag, floating sticky bar on phones.
+- Collection: sky blue header card, pill sort control, ink filter chips.
+- New "Surface" colour setting for image backgrounds and soft panels. Preview images now resize like Shopify's CDN.
+
 ### Brighter colours (operator request: "colours look faint and dull")
 - Vivid palette: royal blue #1D4ED8 header and buttons, navy #172554 footer, sunshine #FFC629 highlights, coral #D9381E,
   raspberry #BE185D, and saturated sky, mint, peach, lilac, butter and pink backgrounds on a pure white page.

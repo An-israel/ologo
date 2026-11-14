@@ -6,11 +6,13 @@
         "eyebrow": "The Christmas shop",
         "heading": "Christmas gifts",
         "heading_highlight": "from £10",
-        "button_style": "accent",
+        "button_style": "light",
         "text": "Jumpers, accessories and stocking fillers, delivered across the UK.",
         "button_label": "Shop gifts",
         "button_link": "shopify://collections/gifts",
-        "background": "plume"
+        "background": "deep",
+        "button2_label": "New in",
+        "button2_link": "shopify://collections/new-in"
       }
     },
     "trust": {
@@ -107,7 +109,8 @@
         "collection": "new-in",
         "limit": 8,
         "quick_add": true,
-        "background": "none"
+        "background": "none",
+        "intro": "Fresh styles added every week"
       }
     },
     "editorial": {
@@ -179,7 +182,8 @@
         "collection": "picked-for-you",
         "limit": 8,
         "quick_add": true,
-        "background": "mint"
+        "background": "none",
+        "intro": "Our favourite pieces this season"
       }
     },
     "reviews": {

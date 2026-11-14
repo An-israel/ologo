@@ -1,10 +1,15 @@
-<div class="section section--tight section--butter">
+<div class="section section--tight">
   <div class="page-width page-width--narrow text-center">
-    <h2 class="h3 heading-accent">{{ section.settings.heading | escape }}</h2>
-    <p>{{ section.settings.text | escape }}</p>
-    {%- if section.settings.link != blank -%}<a class="link" href="{{ section.settings.link }}">{{ section.settings.link_label | escape }}</a>{%- endif -%}
+    {%- render 'feather-illustration' -%}
+    <h2 class="h3">{{ section.settings.heading | escape }}</h2>
+    <p class="about-line__text">{{ section.settings.text | escape }}</p>
+    {%- if section.settings.link != blank -%}<a class="view-all" href="{{ section.settings.link }}">{{ section.settings.link_label | escape }} {% render 'icon', name: 'chevron-right', class: 'icon--small' %}</a>{%- endif -%}
   </div>
 </div>
+<style>
+  #shopify-section-{{ section.id }} .feather-illustration { width: 64px; height: 64px; margin: 0 auto 12px; color: var(--color-coral); }
+  #shopify-section-{{ section.id }} .about-line__text { font-size: 1.125rem; color: #374151; }
+</style>
 
 {% schema %}
 {

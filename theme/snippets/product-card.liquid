@@ -32,6 +32,7 @@
     </div>
   </a>
   {%- render 'product-badges', product: product -%}
+  <div class="card__body">
   <h3 class="card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
   {%- render 'price', product: product, show_from: true -%}
   {%- if colour_option and colour_option.values.size > 1 -%}
@@ -46,21 +47,22 @@
       {%- endif -%}
     </div>
   {%- endif -%}
+  </div>
   {%- if show_quick_add and product.available -%}
     <div class="card__quick-add">
       {%- if product.has_only_default_variant -%}
         <product-form>
           {%- form 'product', product, novalidate: 'novalidate' -%}
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <button type="submit" class="button button--secondary">
-              {{- 'products.add_to_bag' | t -}}<span class="visually-hidden">: {{ product.title | escape }}</span>
+            <button type="submit" class="quick-add__button" aria-label="{{ 'products.add_to_bag' | t }}: {{ product.title | escape }}" title="{{ 'products.add_to_bag' | t }}">
+              {%- render 'icon', name: 'plus' -%}
             </button>
             <p class="field__error" role="alert" data-form-error-message hidden></p>
           {%- endform -%}
         </product-form>
       {%- else -%}
-        <button type="button" class="button button--secondary js-only" data-dialog-open="QuickAdd-{{ card_id }}">
-          {{- 'products.quick_add' | t -}}<span class="visually-hidden">: {{ product.title | escape }}</span>
+        <button type="button" class="quick-add__button js-only" data-dialog-open="QuickAdd-{{ card_id }}" aria-label="{{ 'products.quick_add' | t }}: {{ product.title | escape }}" title="{{ 'products.quick_add' | t }}">
+          {%- render 'icon', name: 'plus' -%}
         </button>
         <dialog class="modal" id="QuickAdd-{{ card_id }}" aria-labelledby="QuickAddTitle-{{ card_id }}">
           <div class="modal__inner">

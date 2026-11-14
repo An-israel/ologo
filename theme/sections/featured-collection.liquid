@@ -4,8 +4,11 @@
   <div class="section{% if section.settings.background != 'none' %} section--{{ section.settings.background }}{% endif %}">
     <div class="page-width">
       <div class="section-header">
-        <h2 class="heading-accent">{{ section.settings.heading | escape }}</h2>
-        <a class="link" href="{{ c.url }}">{{ 'general.view_all' | t }}<span class="visually-hidden">: {{ section.settings.heading | escape }}</span></a>
+        <div>
+          <h2>{{ section.settings.heading | escape }}</h2>
+          {%- if section.settings.intro != blank -%}<p>{{ section.settings.intro | escape }}</p>{%- endif -%}
+        </div>
+        <a class="view-all" href="{{ c.url }}">{{ 'general.view_all' | t }}<span class="visually-hidden">: {{ section.settings.heading | escape }}</span> {% render 'icon', name: 'chevron-right', class: 'icon--small' %}</a>
       </div>
       <ul class="grid grid--4">
         {%- for product in c.products limit: section.settings.limit -%}
@@ -21,6 +24,7 @@
   "name": "Product row",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "New in", "info": "Do not call this Bestsellers or Customer favourites unless sales data proves it." },
+    { "type": "text", "id": "intro", "label": "Line under the heading" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "limit", "label": "Products", "min": 4, "max": 12, "step": 4, "default": 8 },
     { "type": "checkbox", "id": "quick_add", "label": "Show quick add", "default": true },

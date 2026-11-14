@@ -3,14 +3,15 @@
 -%}
 {%- if count > 0 -%}
   <style>
-    .announcement { background: var(--color-gold); color: var(--color-ink); font-size: 0.875rem; font-weight: var(--font-body-weight-bold); }
+    .announcement { background: var(--color-kingfisher); color: #fff; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.01em; }
+    .announcement .icon-button:hover { background: rgba(255, 255, 255, 0.15); }
     .announcement__inner { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 40px; }
     .announcement__slides { flex: 1; text-align: center; max-width: 560px; }
     .announcement__slides p { margin: 0; padding: 8px 0; }
-    .announcement__slides a { color: var(--color-ink); }
+    .announcement__slides a { color: #fff; }
     .announcement .icon-button { width: 40px; height: 40px; }
   </style>
-  <announcement-bar class="announcement" role="region" aria-label="{{ 'accessibility.announcements' | t }}" data-interval="{{ section.settings.interval }}">
+  <announcement-bar class="announcement on-ink" role="region" aria-label="{{ 'accessibility.announcements' | t }}" data-interval="{{ section.settings.interval }}">
     <div class="announcement__inner page-width">
       {%- if count > 1 -%}
         <button type="button" class="icon-button" data-prev aria-label="{{ 'accessibility.previous_announcement' | t }}">{% render 'icon', name: 'chevron-left', class: 'icon--small' %}</button>

@@ -12,7 +12,7 @@ Last updated: 12 November 2026 (milestone 1 to 3 build, before store access).
 | Product pages complete | 100% of active products with description, size chart (clothing), alt text, delivery estimate | ☐ | Theme renders all four. Catalogue clean-up is milestone 4: the audit report counts the gap, and publish-products refuses incomplete products. |
 | Fake "was" prices | 0% | ☑ in the theme, ☐ in data | The theme shows a compare-at price only with proven price history (`snippets/compare-allowed.liquid`). normalise-products clears the formula prices. |
 | Accessibility | WCAG 2.2 AA; Lighthouse Accessibility 100 on home, collection, product, cart | ☑ automated (preview) | axe: zero serious or critical issues on 12 templates at 390 px and 1440 px. Lighthouse Accessibility 100 on home, collection and product (preview). Manual keyboard and VoiceOver passes are still to do. |
-| Mobile speed | Lighthouse mobile Performance 90+, LCP < 2.5 s, CLS < 0.05, INP < 200 ms | ☑ preview, ☐ live | 98 to 99 on the preview (below), with budgets enforced in CI. Must be re-measured on Shopify with real products and apps. |
+| Mobile speed | Lighthouse mobile Performance 90+, LCP < 2.5 s, CLS < 0.05, INP < 200 ms | ☑ preview, ☐ live | 99 to 100 on the preview (below), with budgets enforced in CI. Must be re-measured on Shopify with real products and apps. |
 | SEO | Unique title and description on every template; Lighthouse SEO 100; Product, Organization, BreadcrumbList structured data valid | ☑ in the theme | `snippets/meta-tags.liquid`, `structured-data-*.liquid`, `breadcrumbs.liquid`. Rich Results Test is still to run on the live preview. |
 | Theme code | Theme Check zero errors and warnings | ☑ | `npm run theme:check`: 0 offences |
 | Trust | Contact, About, Size guide, Delivery, Returns, FAQ pages live; reviews only from verified buyers | ☑ built, ☐ live | Pages are created by setup-store. The reviews section hides itself below 5 verified reviews. |
@@ -24,9 +24,9 @@ Recorded from `npm run lhci` (desktop-class sandbox, simulated mobile throttling
 
 | Page | Performance | Accessibility | Best practices | SEO |
 |---|---|---|---|---|
-| Home | 98 (LCP 1.7 s, CLS 0.021, TBT 0 ms) | 100 | 100 | 100 |
-| Collection | 98 (LCP 1.8 s, CLS 0.021, TBT 0 ms) | 100 | 100 | 100 |
-| Product | 99 (LCP 1.7 s, CLS 0.021, TBT 0 ms) | 100 | 100 | 100 |
+| Home | 99 (LCP 2.0 s, CLS 0) | 100 | 100 | 100 |
+| Collection | 100 (LCP 1.4 s, CLS 0) | 100 | 100 | 100 |
+| Product | 99 (LCP 2.2 s, CLS 0) | 100 | 100 | 100 |
 
 ## Section 1.3 audit issues
 

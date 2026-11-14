@@ -7,7 +7,7 @@
   assign logo_sizes = settings.logo_width | append: 'px'
 -%}
 
-<sticky-header class="site-header on-ink">
+<sticky-header class="site-header">
   <header class="header page-width">
     <div class="header__left">
       <button type="button" class="icon-button header__menu-button" data-dialog-open="MenuDrawer" aria-label="{{ 'general.open_menu' | t }}">
@@ -80,7 +80,10 @@
     </nav>
 
     <div class="header__icons">
-      <a href="{{ routes.search_url }}" class="icon-button" data-dialog-open="SearchModal" aria-label="{{ 'header.search' | t }}">{% render 'icon', name: 'search' %}</a>
+      <a href="{{ routes.search_url }}" class="header__search-pill" data-dialog-open="SearchModal">
+        {%- render 'icon', name: 'search', class: 'icon--small' -%}<span>{{ 'search.placeholder' | t }}</span>
+      </a>
+      <a href="{{ routes.search_url }}" class="icon-button header__search-icon" data-dialog-open="SearchModal" aria-label="{{ 'header.search' | t }}">{% render 'icon', name: 'search' %}</a>
       {%- if shop.customer_accounts_enabled -%}
         <a href="{{ routes.account_url }}" class="icon-button header__account" aria-label="{{ 'header.account' | t }}">{% render 'icon', name: 'account' %}</a>
       {%- endif -%}

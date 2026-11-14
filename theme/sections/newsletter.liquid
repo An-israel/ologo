@@ -1,18 +1,29 @@
-<div class="section section--brand on-ink">
-  <div class="page-width page-width--narrow">
-    <h2 class="heading-accent">{{ section.settings.heading | escape }}</h2>
-    {%- if settings.newsletter_offer != blank -%}<p><strong>{{ settings.newsletter_offer | escape }}</strong></p>{%- endif -%}
-    {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
-    {%- render 'newsletter-form', form_id: section.id -%}
-  </div>
-</div>
 <style>
-  #shopify-section-{{ section.id }} .input { border-color: var(--color-paper); }
-  #shopify-section-{{ section.id }} .muted { color: #e6eef0; }
-  #shopify-section-{{ section.id }} strong { color: var(--color-gold); }
-  #shopify-section-{{ section.id }} .button--primary { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); }
+  #shopify-section-{{ section.id }} .newsletter { text-align: center; }
+  #shopify-section-{{ section.id }} .newsletter::before, #shopify-section-{{ section.id }} .newsletter::after { content: ''; position: absolute; border-radius: 50%; pointer-events: none; }
+  #shopify-section-{{ section.id }} .newsletter::before { width: 260px; height: 260px; left: -90px; top: -110px; background: rgba(255, 255, 255, 0.1); }
+  #shopify-section-{{ section.id }} .newsletter::after { width: 200px; height: 200px; right: -60px; bottom: -90px; background: var(--color-gold); opacity: 0.9; }
+  #shopify-section-{{ section.id }} .newsletter__inner { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+  #shopify-section-{{ section.id }} .newsletter h2 { color: #fff; margin-bottom: 8px; }
+  #shopify-section-{{ section.id }} .newsletter__offer { display: inline-block; margin-bottom: 12px; padding: 6px 14px; border-radius: 999px; background: var(--color-gold); color: var(--color-ink); font-weight: 700; font-size: 0.875rem; }
+  #shopify-section-{{ section.id }} .newsletter p { color: rgba(255, 255, 255, 0.92); }
+  #shopify-section-{{ section.id }} .newsletter .muted { color: rgba(255, 255, 255, 0.88); margin-top: 12px; }
+  #shopify-section-{{ section.id }} .newsletter .muted a { color: #fff; }
+  #shopify-section-{{ section.id }} .newsletter .inline-form .button--primary { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
   #shopify-section-{{ section.id }} .form-message--success { color: var(--color-ink); }
 </style>
+<div class="section">
+  <div class="page-width">
+    <div class="panel panel--brand newsletter on-ink">
+      <div class="newsletter__inner">
+        {%- if settings.newsletter_offer != blank -%}<p class="newsletter__offer">{{ settings.newsletter_offer | escape }}</p>{%- endif -%}
+        <h2>{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+        {%- render 'newsletter-form', form_id: section.id, pill: true -%}
+      </div>
+    </div>
+  </div>
+</div>
 
 {% schema %}
 {

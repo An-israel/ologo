@@ -1,68 +1,77 @@
 {%- comment -%}
-  Hero: real product photography, live-text heading, one line, one button. Separate mobile and desktop images.
-  This image is the LCP element: eager, fetchpriority high, preloaded. Never put text inside the image.
+  Hero: large rounded image banner with live text over it (never text baked into the image).
+  Separate mobile and desktop images. The image is the LCP element: eager, fetchpriority high, preloaded.
 {%- endcomment -%}
 {%- liquid
   assign desktop = section.settings.image_desktop
   assign mobile = section.settings.image_mobile | default: desktop
 -%}
 <style>
-  #shopify-section-{{ section.id }} .hero { position: relative; display: grid; background: var(--color-{{ section.settings.background }}); overflow: hidden; }
-  #shopify-section-{{ section.id }} .hero__content { position: relative; }
-  #shopify-section-{{ section.id }} .hero__content h1 span { color: var(--color-coral); }
-  #shopify-section-{{ section.id }} .hero__media { position: relative; aspect-ratio: 4 / 5; max-height: 52vh; width: 100%; overflow: hidden; }
-  #shopify-section-{{ section.id }} .hero__media { padding: 16px; }
-  #shopify-section-{{ section.id }} .hero__media img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; background: #fff; }
-  #shopify-section-{{ section.id }} .hero__media picture { display: block; width: 100%; height: 100%; }
-  @media (min-width: 750px) { #shopify-section-{{ section.id }} .hero__media { padding: 32px; } }
-  #shopify-section-{{ section.id }} .hero__content { padding: 24px 16px 32px; }
-  #shopify-section-{{ section.id }} .hero__content p { font-size: 1.125rem; }
+  #shopify-section-{{ section.id }} .hero-wrap { padding-top: 12px; }
+  #shopify-section-{{ section.id }} .hero { position: relative; display: flex; align-items: flex-end; min-height: 560px; border-radius: 28px; overflow: hidden; background: var(--color-{{ section.settings.background }}); isolation: isolate; }
+  #shopify-section-{{ section.id }} .hero__media { position: absolute; inset: 0; z-index: -2; }
+  #shopify-section-{{ section.id }} .hero__media picture, #shopify-section-{{ section.id }} .hero__media img, #shopify-section-{{ section.id }} .hero__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+  #shopify-section-{{ section.id }} .hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(15, 23, 42, 0) 30%, rgba(15, 23, 42, 0.55) 62%, rgba(15, 23, 42, 0.85) 100%); }
+  #shopify-section-{{ section.id }} .hero__content { position: relative; padding: 28px 22px 30px; color: #fff; max-width: 640px; }
+  #shopify-section-{{ section.id }} .hero__content h1 { color: #fff; margin-bottom: 12px; text-wrap: balance; }
+  #shopify-section-{{ section.id }} .hero__content h1 span { color: var(--color-gold); }
+  #shopify-section-{{ section.id }} .hero__content p.hero__text { font-size: 1.0625rem; color: rgba(255, 255, 255, 0.92); max-width: 480px; margin-bottom: 22px; }
+  #shopify-section-{{ section.id }} .hero__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
   @media (min-width: 750px) {
-    #shopify-section-{{ section.id }} .hero { grid-template-columns: 1fr 1fr; align-items: center; }
-    #shopify-section-{{ section.id }} .hero__media { aspect-ratio: 1; max-height: none; }
-    #shopify-section-{{ section.id }} .hero__content { padding: 48px; max-width: 560px; }
+    #shopify-section-{{ section.id }} .hero { min-height: 620px; align-items: center; }
+    #shopify-section-{{ section.id }} .hero::after { background: linear-gradient(90deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.55) 38%, rgba(15, 23, 42, 0) 70%); }
+    #shopify-section-{{ section.id }} .hero__content { padding: 56px; }
   }
+  @media (min-width: 1200px) { #shopify-section-{{ section.id }} .hero { min-height: 680px; } #shopify-section-{{ section.id }} .hero__content { padding: 72px; } }
 </style>
 {%- if desktop != blank -%}
-  {%- comment -%} Preload the right image per viewport so the LCP image starts downloading immediately. {%- endcomment -%}
-  <link rel="preload" as="image" media="(max-width: 749px)" fetchpriority="high" imagesrcset="{{ mobile | image_url: width: 480 }} 480w, {{ mobile | image_url: width: 750 }} 750w, {{ mobile | image_url: width: 1100 }} 1100w" imagesizes="100vw">
-  <link rel="preload" as="image" media="(min-width: 750px)" fetchpriority="high" imagesrcset="{{ desktop | image_url: width: 750 }} 750w, {{ desktop | image_url: width: 1100 }} 1100w, {{ desktop | image_url: width: 1500 }} 1500w" imagesizes="50vw">
+  <link rel="preload" as="image" media="(max-width: 749px)" fetchpriority="high" imagesrcset="{{ mobile | image_url: width: 600 }} 600w, {{ mobile | image_url: width: 900 }} 900w, {{ mobile | image_url: width: 1200 }} 1200w" imagesizes="100vw">
+  <link rel="preload" as="image" media="(min-width: 750px)" fetchpriority="high" imagesrcset="{{ desktop | image_url: width: 1200 }} 1200w, {{ desktop | image_url: width: 1800 }} 1800w, {{ desktop | image_url: width: 2400 }} 2400w" imagesizes="100vw">
 {%- endif -%}
-<section class="hero" aria-labelledby="HeroHeading-{{ section.id }}">
-  <div class="hero__media">
-    {%- if desktop != blank -%}
-      <picture>
-        <source media="(max-width: 749px)" srcset="{{ mobile | image_url: width: 480 }} 480w, {{ mobile | image_url: width: 750 }} 750w, {{ mobile | image_url: width: 1100 }} 1100w" sizes="100vw" width="{{ mobile.width }}" height="{{ mobile.height }}">
-        {{ desktop | image_url: width: 1500 | image_tag: widths: '750,1100,1500', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: desktop.alt }}
-      </picture>
-    {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-    {%- endif -%}
-  </div>
-  <div class="hero__content">
-    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
-    <h1 id="HeroHeading-{{ section.id }}">{{ section.settings.heading | escape }}{% if section.settings.heading_highlight != blank %} <span>{{ section.settings.heading_highlight | escape }}</span>{% endif %}</h1>
-    {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
-    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-      <a class="button button--{{ section.settings.button_style }}" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
-    {%- endif -%}
-  </div>
-</section>
+<div class="hero-wrap page-width">
+  <section class="hero" aria-labelledby="HeroHeading-{{ section.id }}">
+    <div class="hero__media">
+      {%- if desktop != blank -%}
+        <picture>
+          <source media="(max-width: 749px)" srcset="{{ mobile | image_url: width: 600 }} 600w, {{ mobile | image_url: width: 900 }} 900w, {{ mobile | image_url: width: 1200 }} 1200w" sizes="100vw" width="{{ mobile.width }}" height="{{ mobile.height }}">
+          {{ desktop | image_url: width: 2400 | image_tag: widths: '1200,1800,2400', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: desktop.alt }}
+        </picture>
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    <div class="hero__content">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow eyebrow--light">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+      <h1 id="HeroHeading-{{ section.id }}">{{ section.settings.heading | escape }}{% if section.settings.heading_highlight != blank %} <span>{{ section.settings.heading_highlight | escape }}</span>{% endif %}</h1>
+      {%- if section.settings.text != blank -%}<p class="hero__text">{{ section.settings.text | escape }}</p>{%- endif -%}
+      <div class="hero__buttons">
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a class="button button--{{ section.settings.button_style }}" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+        {%- endif -%}
+        {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
+          <a class="button button--ghost-light" href="{{ section.settings.button2_link }}">{{ section.settings.button2_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+</div>
 
 {% schema %}
 {
   "name": "Hero",
   "settings": [
-    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Real product photography, at least 1500 px wide. No text in the image." },
-    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Portrait 4:5, at least 1100 px wide. Uses the desktop image if empty." },
+    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Real product or lifestyle photography, landscape, at least 2400 px wide. Keep the left side calm: the text sits there. No text in the image." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Portrait 4:5, at least 1200 px wide. Keep the bottom calm: the text sits there. Uses the desktop image if empty." },
     { "type": "text", "id": "eyebrow", "label": "Label above the heading", "default": "The Christmas shop" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Christmas gifts" },
-    { "type": "text", "id": "heading_highlight", "label": "Highlighted end of the heading (coral)", "default": "from £10" },
+    { "type": "text", "id": "heading_highlight", "label": "Highlighted end of the heading (yellow)", "default": "from £10" },
     { "type": "text", "id": "text", "label": "Supporting line", "default": "Jumpers, accessories and stocking fillers, delivered across the UK." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop gifts" },
     { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/gifts" },
-    { "type": "select", "id": "background", "label": "Background colour", "default": "plume", "options": [{ "value": "plume", "label": "Sky blue" }, { "value": "paper", "label": "White" }, { "value": "butter", "label": "Butter" }, { "value": "peach", "label": "Peach" }, { "value": "mint", "label": "Mint" }, { "value": "lilac", "label": "Lilac" }], "info": "One solid colour. Text stays dark for readability." },
-    { "type": "select", "id": "button_style", "label": "Button colour", "default": "accent", "options": [{ "value": "accent", "label": "Sunshine yellow" }, { "value": "primary", "label": "Royal blue" }] }
+    { "type": "select", "id": "button_style", "label": "Button colour", "default": "light", "options": [{ "value": "light", "label": "White" }, { "value": "accent", "label": "Sunshine yellow" }, { "value": "brand", "label": "Royal blue" }] },
+    { "type": "text", "id": "button2_label", "label": "Second button label", "default": "New in" },
+    { "type": "url", "id": "button2_link", "label": "Second button link", "default": "/collections/new-in" },
+    { "type": "select", "id": "background", "label": "Colour behind the image", "default": "deep", "options": [{ "value": "deep", "label": "Dark" }, { "value": "kingfisher", "label": "Royal blue" }, { "value": "plume", "label": "Sky blue" }], "info": "Shows only while the image loads." }
   ],
   "presets": [{ "name": "Hero" }]
 }

@@ -11,9 +11,12 @@
         "menu_2": "footer-help",
         "menu_heading_2": "Help",
         "menu_3": "footer-about",
-        "menu_heading_3": "About"
+        "menu_heading_3": "About",
+        "tagline": "Affordable fashion, beauty and gifts, delivered across the UK."
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

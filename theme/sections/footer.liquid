@@ -2,9 +2,15 @@
 <footer class="footer on-ink">
   <div class="page-width footer__grid">
     <div class="footer__newsletter">
-      <h2 class="h3">{{ section.settings.newsletter_heading | escape }}</h2>
-      {%- if settings.newsletter_offer != blank -%}<p>{{ settings.newsletter_offer | escape }}</p>{%- endif -%}
-      {%- render 'newsletter-form', form_id: 'FooterNewsletter' -%}
+      {%- if request.page_type == 'index' -%}
+        {%- comment -%} The home page already has its own newsletter section. {%- endcomment -%}
+        <p class="footer__brand">{%- render 'wordmark' -%}<span class="visually-hidden">{{ shop.name }}</span></p>
+        <p>{{ section.settings.tagline | escape }}</p>
+      {%- else -%}
+        <h2 class="h3">{{ section.settings.newsletter_heading | escape }}</h2>
+        {%- if settings.newsletter_offer != blank -%}<p>{{ settings.newsletter_offer | escape }}</p>{%- endif -%}
+        {%- render 'newsletter-form', form_id: 'FooterNewsletter', pill: true -%}
+      {%- endif -%}
       {%- render 'social-icons' -%}
     </div>
     {%- for i in (1..3) -%}
@@ -44,6 +50,7 @@
   "name": "Footer",
   "settings": [
     { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Get new arrivals first" },
+    { "type": "text", "id": "tagline", "label": "Brand line (home page)", "default": "Affordable fashion, beauty and gifts, delivered across the UK." },
     { "type": "link_list", "id": "menu_1", "label": "First menu", "default": "footer-shop" },
     { "type": "text", "id": "menu_heading_1", "label": "First menu heading", "default": "Shop" },
     { "type": "link_list", "id": "menu_2", "label": "Second menu", "default": "footer-help" },

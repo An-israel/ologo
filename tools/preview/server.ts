@@ -14,6 +14,7 @@ import path from 'node:path';
 import { Liquid, Tag, Value, type Context, type Emitter, type TagToken, type TopLevelToken, type Template } from 'liquidjs';
 import { MENUS, PAGES, type MenuItemPlan } from '../../scripts/lib/store-plan.js';
 import { COLLECTIONS, FAQ, PRODUCTS, SIZE_CHARTS, type FixtureProduct, type Img } from './fixtures.js';
+import sharp from 'sharp';
 import { ensureImage } from './images.js';
 
 const ROOT = path.resolve('theme');
@@ -341,8 +342,8 @@ function buildData(): Data {
   const linklists = Object.fromEntries(MENUS.map((m) => [m.handle, { handle: m.handle, title: m.title, links: m.items.map(toLink) }]));
   return {
     products, collections, pages, linklists,
-    heroImage: imageObj({ name: 'hero', shape: 'jumper', colour: '#C2491D', width: 1536, height: 2048, alt: 'Knitwear gifts laid out on a table' }),
-    editorialImage: imageObj({ name: 'editorial', shape: 'jacket', colour: '#5d6532', width: 1536, height: 2048, alt: 'Olive padded jacket' }),
+    heroImage: imageObj({ name: 'hero', shape: 'jumper', colour: '#1D4ED8', width: 2400, height: 1350, alt: 'Blue jumper, cream scarf and berry beanie laid out as gifts' }),
+    editorialImage: imageObj({ name: 'editorial', shape: 'jacket', colour: '#5d6532', width: 1600, height: 1200, alt: 'Olive padded jacket and rust hoodie' }),
   };
 }
 
@@ -543,7 +544,12 @@ const server = http.createServer(async (req, res) => {
       const name = path.basename(url.pathname, '.jpg');
       const fixture = PRODUCTS.flatMap((p) => p.images).find((i) => i.name === name) ?? (name === 'hero' ? { name, shape: 'jumper', colour: '#C2491D' } : { name, shape: 'jacket', colour: '#5d6532' });
       const file = await ensureImage(IMG_DIR, fixture.name, fixture.shape, fixture.colour);
-      return send(200, fs.readFileSync(file), 'image/jpeg');
+      // Resize like Shopify's CDN does for ?width=, so speed tests are realistic.
+      const width = Math.min(Number(url.searchParams.get('width')) || 0, 3000);
+      if (!width) return send(200, fs.readFileSync(file), 'image/jpeg');
+      const sized = path.join(IMG_DIR, `${fixture.name}-w${width}.jpg`);
+      if (!fs.existsSync(sized)) await sharp(file).resize({ width, withoutEnlargement: true }).jpeg({ quality: 78, mozjpeg: true }).toFile(sized);
+      return send(200, fs.readFileSync(sized), 'image/jpeg');
     }
     if (url.pathname === '/cart.js') { const c = cartObject(data); return send(200, JSON.stringify({ item_count: c.item_count, total_price: c.total_price, note: c.note }), 'application/json'); }
     if (url.pathname === '/cart/add.js' && req.method === 'POST') {
