@@ -1,0 +1,61 @@
+name: Publish theme branch for Shopify
+
+# Shopify's GitHub connection needs the theme files (layout/, sections/, templates/ ...) at the root of a branch.
+# In this repository the theme lives in theme/, next to the scripts, tests and docs. This workflow copies theme/
+# to the root of the `shopify-theme` branch, which is the branch to pick in Shopify > Online Store > Themes >
+# Add theme > Connect from GitHub.
+#
+# Settings saved in the Shopify theme editor are committed by Shopify to config/settings_data.json on the
+# shopify-theme branch. That file is kept as it is on every update, so editor changes are never overwritten.
+
+on:
+  push:
+    branches: [main, claude/stoic-euler-hwmw8t]
+    paths: ['theme/**', '.github/workflows/shopify-theme-branch.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shopify-theme-branch
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Copy theme/ to the root of the shopify-theme branch
+        run: |
+          set -euo pipefail
+          git config user.name "ornis-theme-bot"
+          git config user.email "theme-bot@users.noreply.github.com"
+          OUT="$RUNNER_TEMP/shopify-theme"
+          if git ls-remote --exit-code --heads origin shopify-theme >/dev/null; then
+            git fetch origin shopify-theme
+            git worktree add "$OUT" origin/shopify-theme
+            git -C "$OUT" checkout -B shopify-theme
+          else
+            git worktree add --orphan -b shopify-theme "$OUT"
+          fi
+
+          # Keep theme editor settings that Shopify committed to the branch.
+          if [ -f "$OUT/config/settings_data.json" ]; then cp "$OUT/config/settings_data.json" "$RUNNER_TEMP/settings_data.json"; fi
+
+          find "$OUT" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a theme/. "$OUT/"
+
+          if [ -f "$RUNNER_TEMP/settings_data.json" ]; then cp "$RUNNER_TEMP/settings_data.json" "$OUT/config/settings_data.json"; fi
+
+          cd "$OUT"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Theme branch already up to date."
+            exit 0
+          fi
+          git commit -m "Update theme from ${GITHUB_REF_NAME} at ${GITHUB_SHA::7}"
+          git push origin shopify-theme
