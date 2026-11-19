@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "delivery-info", "settings": {} } },
+  "order": ["main"]
+}

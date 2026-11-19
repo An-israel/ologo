@@ -1,0 +1,17 @@
+{%- comment -%}
+  Outputs "true" only when the variant's compare-at price is proven by custom.price_history,
+  a JSON list like [{"date":"2026-10-01","price":24.99}] (prices in pounds). Otherwise outputs nothing.
+{%- endcomment -%}
+{%- liquid
+  assign v = variant | default: product.selected_or_first_available_variant
+  if v.compare_at_price > v.price
+    assign history = product.metafields.custom.price_history.value
+    for entry in history
+      assign hist_pence = entry.price | times: 100 | round
+      if hist_pence >= v.compare_at_price
+        echo 'true'
+        break
+      endif
+    endfor
+  endif
+-%}

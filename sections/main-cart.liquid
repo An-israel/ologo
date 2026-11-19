@@ -1,0 +1,19 @@
+<script src="{{ 'delivery-date.js' | asset_url }}" type="module"></script>
+<style>
+  .cart-page { padding-block: 24px 64px; }
+  @media (min-width: 990px) {
+    .cart-page .cart-contents { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 48px; align-items: start; }
+    .cart-page .free-delivery { grid-column: 1 / -1; }
+    .cart-page .cart-summary { position: sticky; top: 96px; }
+  }
+  .cart-page .cart-summary { display: grid; gap: 12px; }
+  .cart-page .cart-item { grid-template-columns: 120px 1fr; }
+</style>
+<div class="page-width cart-page">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {%- render 'cart-contents', section_id: section.id, context: 'page' -%}
+</div>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

@@ -1,0 +1,16 @@
+{%- comment -%} All size_chart metaobjects with how-to-measure text. {%- endcomment -%}
+{{ 'section-product.css' | asset_url | stylesheet_tag }}
+{%- render 'breadcrumbs' -%}
+<div class="section section--tight">
+  <div class="page-width page-width--narrow">
+    <h1>{{ page.title | escape }}</h1>
+    {%- if page.content != blank -%}<div class="rte">{{ page.content }}</div>{%- endif -%}
+    {%- for chart in shop.metaobjects.size_chart.values -%}
+      <section class="stack" style="margin-top: 32px">{%- render 'size-chart', chart: chart -%}</section>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Size guide", "settings": [] }
+{% endschema %}

@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": { "type": "main-product", "settings": { "show_dynamic_checkout": true } },
+    "complete": { "type": "complete-the-look", "settings": { "heading": "Complete the look" } },
+    "recommendations": { "type": "product-recommendations", "settings": { "heading": "You may also like", "limit": 4 } },
+    "recent": { "type": "recently-viewed", "settings": { "heading": "Recently viewed" } }
+  },
+  "order": ["main", "complete", "recommendations", "recent"]
+}

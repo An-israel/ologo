@@ -1,0 +1,82 @@
+{%- comment -%}
+  Hero: clean promo banner. Soft colour panel, live text on the left, product photo on the right
+  (never text baked into the image). The image is the LCP element: eager, fetchpriority high, preloaded.
+{%- endcomment -%}
+{%- liquid
+  assign desktop = section.settings.image_desktop
+  assign mobile = section.settings.image_mobile | default: desktop
+-%}
+<style>
+  #shopify-section-{{ section.id }} .hero-wrap { padding-top: 16px; }
+  #shopify-section-{{ section.id }} .hero { display: grid; border-radius: 16px; overflow: hidden; background: var(--color-{{ section.settings.background }}); border: 1px solid var(--color-border); }
+  #shopify-section-{{ section.id }} .hero__media { position: relative; aspect-ratio: 16 / 10; background: #fff; }
+  #shopify-section-{{ section.id }} .hero__media picture, #shopify-section-{{ section.id }} .hero__media img, #shopify-section-{{ section.id }} .hero__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+  #shopify-section-{{ section.id }} .hero__content { padding: 24px 20px 28px; }
+  #shopify-section-{{ section.id }} .hero__content .eyebrow { align-self: flex-start; }
+  #shopify-section-{{ section.id }} .hero__content h1 { margin-bottom: 12px; text-wrap: balance; }
+  #shopify-section-{{ section.id }} .hero__content h1 span { color: var(--color-kingfisher); }
+  #shopify-section-{{ section.id }} .hero__text { font-size: 1.0625rem; color: #374151; max-width: 460px; margin-bottom: 22px; }
+  #shopify-section-{{ section.id }} .hero__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+  #shopify-section-{{ section.id }} .hero__note { margin: 18px 0 0; font-size: 0.875rem; color: var(--color-stone); display: flex; align-items: center; gap: 8px; }
+  #shopify-section-{{ section.id }} .hero__note .icon { color: var(--color-kingfisher); }
+  @media (min-width: 750px) {
+    #shopify-section-{{ section.id }} .hero { grid-template-columns: 1fr 1.15fr; min-height: 440px; }
+    #shopify-section-{{ section.id }} .hero__media { order: 2; aspect-ratio: auto; }
+    #shopify-section-{{ section.id }} .hero__content { padding: 48px; display: flex; flex-direction: column; justify-content: center; }
+  }
+  @media (min-width: 1200px) { #shopify-section-{{ section.id }} .hero { min-height: 480px; } #shopify-section-{{ section.id }} .hero__content { padding: 56px 64px; } }
+</style>
+{%- if desktop != blank -%}
+  <link rel="preload" as="image" media="(max-width: 749px)" fetchpriority="high" imagesrcset="{{ mobile | image_url: width: 600 }} 600w, {{ mobile | image_url: width: 900 }} 900w, {{ mobile | image_url: width: 1200 }} 1200w" imagesizes="100vw">
+  <link rel="preload" as="image" media="(min-width: 750px)" fetchpriority="high" imagesrcset="{{ desktop | image_url: width: 900 }} 900w, {{ desktop | image_url: width: 1200 }} 1200w, {{ desktop | image_url: width: 1600 }} 1600w" imagesizes="55vw">
+{%- endif -%}
+<div class="hero-wrap page-width">
+  <section class="hero" aria-labelledby="HeroHeading-{{ section.id }}">
+    <div class="hero__media">
+      {%- if desktop != blank -%}
+        <picture>
+          <source media="(max-width: 749px)" srcset="{{ mobile | image_url: width: 600 }} 600w, {{ mobile | image_url: width: 900 }} 900w, {{ mobile | image_url: width: 1200 }} 1200w" sizes="100vw" width="{{ mobile.width }}" height="{{ mobile.height }}">
+          {{ desktop | image_url: width: 1600 | image_tag: widths: '900,1200,1600', sizes: '(min-width: 750px) 55vw, 100vw', loading: 'eager', fetchpriority: 'high', alt: desktop.alt }}
+        </picture>
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    <div class="hero__content">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+      <h1 id="HeroHeading-{{ section.id }}">{{ section.settings.heading | escape }}{% if section.settings.heading_highlight != blank %} <span>{{ section.settings.heading_highlight | escape }}</span>{% endif %}</h1>
+      {%- if section.settings.text != blank -%}<p class="hero__text">{{ section.settings.text | escape }}</p>{%- endif -%}
+      <div class="hero__buttons">
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a class="button button--{{ section.settings.button_style }}" href="{{ section.settings.button_link }}">{{ section.settings.button_label | escape }}</a>
+        {%- endif -%}
+        {%- if section.settings.button2_label != blank and section.settings.button2_link != blank -%}
+          <a class="button button--secondary" href="{{ section.settings.button2_link }}">{{ section.settings.button2_label | escape }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.note != blank -%}<p class="hero__note">{% render 'icon', name: 'delivery', class: 'icon--small' %}{{ section.settings.note | escape }}</p>{%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    { "type": "image_picker", "id": "image_desktop", "label": "Desktop image", "info": "Real product photography, landscape about 16:10, at least 1600 px wide. No text in the image." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Landscape 16:10, at least 1200 px wide. Uses the desktop image if empty." },
+    { "type": "text", "id": "eyebrow", "label": "Label above the heading", "default": "The Christmas shop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Christmas gifts" },
+    { "type": "text", "id": "heading_highlight", "label": "Highlighted end of the heading (brand colour)", "default": "from £10" },
+    { "type": "text", "id": "text", "label": "Supporting line", "default": "Jumpers, accessories and stocking fillers, delivered across the UK." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop gifts" },
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/gifts" },
+    { "type": "select", "id": "button_style", "label": "Button colour", "default": "primary", "options": [{ "value": "primary", "label": "Brand green" }, { "value": "accent", "label": "Tangerine" }, { "value": "dark", "label": "Black" }] },
+    { "type": "text", "id": "button2_label", "label": "Second button label", "default": "New in" },
+    { "type": "url", "id": "button2_link", "label": "Second button link", "default": "/collections/new-in" },
+    { "type": "text", "id": "note", "label": "Small line under the buttons", "default": "Free UK delivery on orders over £30" },
+    { "type": "select", "id": "background", "label": "Panel colour", "default": "mint", "options": [{ "value": "mint", "label": "Light green" }, { "value": "peach", "label": "Light orange" }, { "value": "surface", "label": "Light grey" }, { "value": "paper", "label": "White" }, { "value": "lilac", "label": "Light lilac" }, { "value": "sand", "label": "Light pink" }] }
+  ],
+  "presets": [{ "name": "Hero banner" }]
+}
+{% endschema %}

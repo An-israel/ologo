@@ -1,0 +1,7 @@
+{%- if settings.social_instagram != blank or settings.social_tiktok != blank or settings.social_facebook != blank -%}
+  <ul class="social-icons list-unstyled" aria-label="{{ 'accessibility.social' | t }}">
+    {%- if settings.social_instagram != blank -%}<li><a class="icon-button" href="{{ settings.social_instagram }}" rel="noopener" target="_blank" aria-label="Instagram ({{ 'general.opens_new_window' | t }})">{% render 'icon', name: 'instagram' %}</a></li>{%- endif -%}
+    {%- if settings.social_tiktok != blank -%}<li><a class="icon-button" href="{{ settings.social_tiktok }}" rel="noopener" target="_blank" aria-label="TikTok ({{ 'general.opens_new_window' | t }})">{% render 'icon', name: 'tiktok' %}</a></li>{%- endif -%}
+    {%- if settings.social_facebook != blank -%}<li><a class="icon-button" href="{{ settings.social_facebook }}" rel="noopener" target="_blank" aria-label="Facebook ({{ 'general.opens_new_window' | t }})">{% render 'icon', name: 'facebook' %}</a></li>{%- endif -%}
+  </ul>
+{%- endif -%}

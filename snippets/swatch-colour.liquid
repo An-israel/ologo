@@ -1,0 +1,35 @@
+{%- comment -%}
+  Maps a standard colour name (data standard, section 6.3) to a swatch colour.
+  Uses Shopify's native swatch when the option value has one. Outputs a CSS colour value.
+{%- endcomment -%}
+{%- if value.swatch.color -%}{{ value.swatch.color }}{%- else -%}
+{%- assign key = value | downcase | strip -%}
+{%- case key -%}
+{%- when 'black' -%}#111111
+{%- when 'white' -%}#ffffff
+{%- when 'ivory', 'cream', 'off white' -%}#f4efe3
+{%- when 'beige', 'stone', 'sand', 'khaki beige' -%}#d9c8ab
+{%- when 'camel', 'tan' -%}#b98a55
+{%- when 'brown', 'chocolate', 'coffee' -%}#5c3a21
+{%- when 'khaki' -%}#8f8a5a
+{%- when 'olive', 'olive green', 'army green' -%}#5d6532
+{%- when 'green', 'forest green', 'dark green' -%}#2f5d3a
+{%- when 'sage', 'sage green', 'mint', 'mint green' -%}#9cb8a0
+{%- when 'navy', 'navy blue' -%}#1d2a4d
+{%- when 'blue', 'royal blue' -%}#2852a8
+{%- when 'sky blue', 'light blue', 'baby blue' -%}#9cc6e6
+{%- when 'denim', 'denim blue' -%}#4a6a8f
+{%- when 'teal' -%}#1f7a7a
+{%- when 'grey', 'gray', 'charcoal', 'dark grey' -%}#6e6e6e
+{%- when 'light grey', 'light gray', 'silver' -%}#c9c9c9
+{%- when 'red' -%}#b3261e
+{%- when 'burgundy', 'wine', 'wine red' -%}#6b1d2c
+{%- when 'pink', 'light pink', 'blush', 'blush pink' -%}#efb8c3
+{%- when 'hot pink', 'rose', 'fuchsia' -%}#d6457f
+{%- when 'purple', 'lilac', 'lavender' -%}#a08bc6
+{%- when 'yellow', 'mustard' -%}#e0b43a
+{%- when 'orange', 'rust' -%}#d0662b
+{%- when 'gold' -%}#c9a24a
+{%- else -%}#d9d9d9
+{%- endcase -%}
+{%- endif -%}

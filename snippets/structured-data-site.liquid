@@ -1,0 +1,43 @@
+{%- liquid
+  assign same_as = ''
+  if settings.social_instagram != blank
+    assign same_as = same_as | append: settings.social_instagram | append: '|'
+  endif
+  if settings.social_tiktok != blank
+    assign same_as = same_as | append: settings.social_tiktok | append: '|'
+  endif
+  if settings.social_facebook != blank
+    assign same_as = same_as | append: settings.social_facebook | append: '|'
+  endif
+  assign same_as_list = same_as | split: '|' | compact
+-%}
+{%- if request.page_type == 'index' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ settings.business_name | default: shop.name | json }},
+      "url": {{ request.origin | json }}
+      {%- if settings.logo != blank -%}
+        ,"logo": {{ settings.logo | image_url: width: 512 | prepend: 'https:' | json }}
+      {%- else -%}
+        ,"logo": {{ 'ornis-wordmark-dark.svg' | asset_url | prepend: 'https:' | json }}
+      {%- endif -%}
+      {%- if same_as_list.size > 0 -%},"sameAs": {{ same_as_list | json }}{%- endif -%}
+      {%- if settings.business_email != blank -%},"email": {{ settings.business_email | json }}{%- endif -%}
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ request.origin | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ request.origin | append: routes.search_url | append: '?q={search_term_string}' | json }},
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+{%- endif -%}

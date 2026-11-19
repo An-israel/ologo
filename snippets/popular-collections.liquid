@@ -1,0 +1,7 @@
+<h2 class="h3">{%- if heading != blank -%}{{ heading | escape }}{%- else -%}{{ 'search.popular' | t }}{%- endif -%}</h2>
+<ul class="cart-empty__links" style="justify-content: flex-start">
+  {%- for link in linklists['main-menu'].links -%}
+    {%- if link.type == 'collection_link' and link.object.products_count == 0 -%}{%- continue -%}{%- endif -%}
+    <li><a class="button button--secondary" href="{{ link.url }}">{{ link.title | escape }}</a></li>
+  {%- endfor -%}
+</ul>

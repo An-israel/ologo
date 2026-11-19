@@ -1,0 +1,30 @@
+{%- comment -%} Delivery and returns facts from shop_info (or theme settings). Missing facts are simply left out. {%- endcomment -%}
+{%- liquid
+  assign info = shop.metaobjects.shop_info.main
+  assign processing = info.processing_days.value | default: settings.processing_days
+  assign dmin = info.delivery_min_days.value | default: settings.delivery_min_days
+  assign dmax = info.delivery_max_days.value | default: settings.delivery_max_days
+  if product.metafields.custom.delivery_min_days.value
+    assign dmin = product.metafields.custom.delivery_min_days.value
+  endif
+  if product.metafields.custom.delivery_max_days.value
+    assign dmax = product.metafields.custom.delivery_max_days.value
+  endif
+  assign threshold = info.free_delivery_threshold.value | default: settings.free_delivery_threshold
+  assign threshold_pence = threshold | times: 100 | round
+  assign standard_pence = settings.standard_price_pence
+  assign express_pence = settings.express_price_pence
+  assign standard_money = standard_pence | money
+  assign express_money = express_pence | money
+  assign threshold_money = threshold_pence | money_without_trailing_zeros
+  assign returns = info.returns_window_days.value | default: settings.returns_window_days
+-%}
+<ul>
+  {%- if standard_pence > 0 -%}<li>{{ 'delivery.standard' | t: price: standard_money, threshold: threshold_money }}</li>{%- endif -%}
+  {%- if express_pence > 0 -%}<li>{{ 'delivery.express' | t: price: express_money }}</li>{%- endif -%}
+  {%- if processing != blank -%}<li>{{ 'delivery.processing' | t: days: processing }}</li>{%- endif -%}
+  {%- if dmin != blank and dmax != blank -%}<li>{{ 'delivery.range' | t: min: dmin, max: dmax }}</li>{%- endif -%}
+  <li>{{ 'delivery.separate_parcels' | t }}</li>
+  {%- if returns != blank -%}<li>{{ 'delivery.returns' | t: days: returns }}</li>{%- endif -%}
+</ul>
+<p><a href="/pages/delivery">{{ 'delivery.read_delivery' | t }}</a> · <a href="/pages/returns">{{ 'delivery.read_returns' | t }}</a></p>

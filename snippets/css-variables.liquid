@@ -1,0 +1,41 @@
+{%- liquid
+  assign heading_font = settings.type_heading_font
+  assign heading_font_semibold = heading_font | font_modify: 'weight', '600'
+  assign body_font = settings.type_body_font
+  assign body_font_bold = body_font | font_modify: 'weight', '600'
+-%}
+<style>
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font_semibold | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+
+  :root {
+    --color-ink: {{ settings.color_ink }};
+    --color-paper: {{ settings.color_paper }};
+    --color-kingfisher: {{ settings.color_kingfisher }};
+    --color-robin: {{ settings.color_robin }};
+    --color-stone: {{ settings.color_stone }};
+    --color-plume: {{ settings.color_plume }};
+    --color-sand: {{ settings.color_sand }};
+    --color-gold: {{ settings.color_gold }};
+    --color-deep: {{ settings.color_deep }};
+    --color-surface: {{ settings.color_surface }};
+    --color-coral: {{ settings.color_coral }};
+    --color-berry: {{ settings.color_berry }};
+    --color-mint: {{ settings.color_mint }};
+    --color-peach: {{ settings.color_peach }};
+    --color-lilac: {{ settings.color_lilac }};
+    --color-butter: {{ settings.color_butter }};
+    --color-border: #E5E7EB;
+    --color-ink-rgb: {{ settings.color_ink | color_extract: 'red' }}, {{ settings.color_ink | color_extract: 'green' }}, {{ settings.color_ink | color_extract: 'blue' }};
+
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading-weight: {{ heading_font.weight }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body-weight: {{ body_font.weight }};
+    --font-body-weight-bold: 600;
+
+    --logo-width: {{ settings.logo_width }}px;
+  }
+</style>

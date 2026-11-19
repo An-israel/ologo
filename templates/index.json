@@ -1,0 +1,232 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "The Christmas shop",
+        "heading": "Christmas gifts",
+        "heading_highlight": "from £10",
+        "button_style": "primary",
+        "text": "Jumpers, accessories and stocking fillers, delivered across the UK.",
+        "button_label": "Shop gifts",
+        "button_link": "shopify://collections/gifts",
+        "background": "mint",
+        "button2_label": "New in",
+        "button2_link": "shopify://collections/new-in",
+        "note": "Free UK delivery on orders over £30"
+      }
+    },
+    "categories": {
+      "type": "category-tiles",
+      "blocks": {
+        "women": {
+          "type": "tile",
+          "settings": {
+            "collection": "women",
+            "title": "Women"
+          }
+        },
+        "men": {
+          "type": "tile",
+          "settings": {
+            "collection": "men",
+            "title": "Men"
+          }
+        },
+        "kids": {
+          "type": "tile",
+          "settings": {
+            "collection": "kids",
+            "title": "Kids"
+          }
+        },
+        "beauty": {
+          "type": "tile",
+          "settings": {
+            "collection": "beauty",
+            "title": "Beauty"
+          }
+        },
+        "gifts": {
+          "type": "tile",
+          "settings": {
+            "collection": "gifts",
+            "title": "Gifts"
+          }
+        }
+      },
+      "block_order": [
+        "women",
+        "men",
+        "kids",
+        "beauty",
+        "gifts"
+      ],
+      "settings": {
+        "heading": "Shop by category"
+      }
+    },
+    "new-in": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "New in",
+        "collection": "new-in",
+        "limit": 8,
+        "quick_add": true,
+        "background": "none",
+        "intro": "Fresh styles added every week"
+      }
+    },
+    "editorial": {
+      "type": "editorial",
+      "settings": {
+        "heading": "Winter layers",
+        "text": "<p>Knits, fleeces and coats that work hard on cold mornings and still look good by the evening.</p>",
+        "button_label": "Shop winter layers",
+        "button_link": "shopify://collections/women",
+        "reverse": false,
+        "background": "lilac",
+        "eyebrow": "Edit"
+      }
+    },
+    "gift-finder": {
+      "type": "gift-finder",
+      "blocks": {
+        "under-15": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-under-15",
+            "label": "Gifts under £15"
+          }
+        },
+        "under-25": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-under-25",
+            "label": "Gifts under £25"
+          }
+        },
+        "her": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-her",
+            "label": "For her"
+          }
+        },
+        "him": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-him",
+            "label": "For him"
+          }
+        },
+        "kids": {
+          "type": "link",
+          "settings": {
+            "collection": "gifts-for-kids",
+            "label": "For kids"
+          }
+        }
+      },
+      "block_order": [
+        "under-15",
+        "under-25",
+        "her",
+        "him",
+        "kids"
+      ],
+      "settings": {
+        "heading": "Find a gift"
+      }
+    },
+    "picked": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Picked for you",
+        "collection": "picked-for-you",
+        "limit": 8,
+        "quick_add": true,
+        "background": "none",
+        "intro": "Our favourite pieces this season"
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "heading": "What customers say"
+      }
+    },
+    "about": {
+      "type": "about-line",
+      "settings": {
+        "heading": "About Ornis",
+        "text": "Ornis is a small UK online shop for affordable fashion, beauty and gifts. We check every product before it goes on sale.",
+        "link_label": "Read our story",
+        "link": "shopify://pages/about"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join the Ornis list",
+        "text": "New arrivals and offers, no more than once a week."
+      }
+    },
+    "promos": {
+      "type": "promo-cards",
+      "blocks": {
+        "knit": {
+          "type": "card",
+          "settings": {
+            "collection": "women-knitwear",
+            "title": "Winter knitwear",
+            "text": "Cosy jumpers and cardigans",
+            "label": "New",
+            "background": "peach"
+          }
+        },
+        "under15": {
+          "type": "card",
+          "settings": {
+            "collection": "gifts-under-15",
+            "title": "Gifts under £15",
+            "text": "Stocking fillers sorted",
+            "label": "",
+            "background": "mint"
+          }
+        },
+        "men": {
+          "type": "card",
+          "settings": {
+            "collection": "men",
+            "title": "Menswear",
+            "text": "Hoodies, jeans and more",
+            "label": "",
+            "background": "lilac"
+          }
+        }
+      },
+      "block_order": [
+        "knit",
+        "under15",
+        "men"
+      ],
+      "settings": {
+        "heading": "",
+        "cta": "Shop now"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "promos",
+    "categories",
+    "new-in",
+    "editorial",
+    "gift-finder",
+    "picked",
+    "reviews",
+    "about",
+    "newsletter"
+  ]
+}

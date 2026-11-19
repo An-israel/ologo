@@ -1,0 +1,25 @@
+<div class="section section--tight">
+  <div class="page-width page-width--narrow text-center">
+    {%- render 'feather-illustration' -%}
+    <h2 class="h3">{{ section.settings.heading | escape }}</h2>
+    <p class="about-line__text">{{ section.settings.text | escape }}</p>
+    {%- if section.settings.link != blank -%}<a class="view-all" href="{{ section.settings.link }}">{{ section.settings.link_label | escape }} {% render 'icon', name: 'chevron-right', class: 'icon--small' %}</a>{%- endif -%}
+  </div>
+</div>
+<style>
+  #shopify-section-{{ section.id }} .feather-illustration { width: 64px; height: 64px; margin: 0 auto 12px; color: var(--color-coral); }
+  #shopify-section-{{ section.id }} .about-line__text { font-size: 1.125rem; color: #374151; }
+</style>
+
+{% schema %}
+{
+  "name": "About in one line",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "About Ornis" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Ornis is a small UK online shop for affordable fashion, beauty and gifts. We check every product before it goes on sale." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Read our story" },
+    { "type": "url", "id": "link", "label": "Link", "default": "/pages/about" }
+  ],
+  "presets": [{ "name": "About in one line" }]
+}
+{% endschema %}

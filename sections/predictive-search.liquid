@@ -1,0 +1,39 @@
+{%- comment -%} Rendered by /search/suggest?section_id=predictive-search. Each result is an ARIA option for keyboard navigation. {%- endcomment -%}
+<div data-predictive-fragment>
+  {%- assign total = predictive_search.resources.products.size | plus: predictive_search.resources.collections.size | plus: predictive_search.resources.pages.size -%}
+  <p class="visually-hidden" data-predictive-count>{{ 'search.suggestions_count' | t: count: total }}</p>
+  {%- if total > 0 -%}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <h3 id="PredictiveProducts">{{ 'search.products' | t }}</h3>
+      <ul role="listbox" aria-labelledby="PredictiveProducts">
+        {%- for product in predictive_search.resources.products -%}
+          <li role="option" id="PredictiveOption-product-{{ forloop.index }}" aria-selected="false">
+            <a href="{{ product.url }}" tabindex="-1">
+              <div class="media">{%- if product.featured_media -%}{{ product.featured_media | image_url: width: 112 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}</div>
+              <span><span>{{ product.title | escape }}</span><br><strong>{{ product.price | money }}</strong></span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if predictive_search.resources.collections.size > 0 -%}
+      <h3 id="PredictiveCollections">{{ 'search.collections' | t }}</h3>
+      <ul role="listbox" aria-labelledby="PredictiveCollections">
+        {%- for collection in predictive_search.resources.collections -%}
+          <li role="option" class="is-text" id="PredictiveOption-collection-{{ forloop.index }}" aria-selected="false"><a href="{{ collection.url }}" tabindex="-1">{{ collection.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if predictive_search.resources.pages.size > 0 -%}
+      <h3 id="PredictivePages">{{ 'search.pages' | t }}</h3>
+      <ul role="listbox" aria-labelledby="PredictivePages">
+        {%- for page in predictive_search.resources.pages -%}
+          <li role="option" class="is-text" id="PredictiveOption-page-{{ forloop.index }}" aria-selected="false"><a href="{{ page.url }}" tabindex="-1">{{ page.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  {%- else -%}
+    <p>{{ 'search.no_results' | t: terms: predictive_search.terms }}</p>
+  {%- endif -%}
+  <a class="predictive-results__all" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&options%5Bprefix%5D=last">{{ 'search.see_all' | t: terms: predictive_search.terms }}</a>
+</div>

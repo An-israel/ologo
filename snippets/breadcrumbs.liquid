@@ -1,0 +1,53 @@
+{%- comment -%} Breadcrumbs with BreadcrumbList structured data. Product URLs always use the canonical /products/ path. {%- endcomment -%}
+{%- liquid
+  assign crumb_collection = collection
+  if request.page_type == 'product' and crumb_collection == blank
+    assign crumb_collection = product.collections | where: 'published_at' | first
+  endif
+-%}
+<nav class="breadcrumbs page-width" aria-label="{{ 'general.breadcrumbs' | t }}">
+  <ol>
+    <li><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a></li>
+    {%- case request.page_type -%}
+      {%- when 'product' -%}
+        {%- if crumb_collection -%}<li><a href="{{ crumb_collection.url }}">{{ crumb_collection.title | escape }}</a></li>{%- endif -%}
+        <li><a href="{{ product.url }}" aria-current="page">{{ product.title | escape }}</a></li>
+      {%- when 'collection' -%}
+        <li><a href="{{ collection.url }}" aria-current="page">{{ collection.title | escape }}</a></li>
+      {%- when 'page' -%}
+        <li><a href="{{ page.url }}" aria-current="page">{{ page.title | escape }}</a></li>
+      {%- when 'search' -%}
+        <li><a href="{{ routes.search_url }}" aria-current="page">{{ 'search.title' | t }}</a></li>
+      {%- when 'blog' -%}
+        <li><a href="{{ blog.url }}" aria-current="page">{{ blog.title | escape }}</a></li>
+      {%- when 'article' -%}
+        <li><a href="{{ blog.url }}">{{ blog.title | escape }}</a></li>
+        <li><a href="{{ article.url }}" aria-current="page">{{ article.title | escape }}</a></li>
+    {%- endcase -%}
+  </ol>
+</nav>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": {{ 'general.home' | t | json }}, "item": {{ request.origin | append: routes.root_url | json }} }
+      {%- case request.page_type -%}
+        {%- when 'product' -%}
+          {%- if crumb_collection -%}
+            ,{ "@type": "ListItem", "position": 2, "name": {{ crumb_collection.title | json }}, "item": {{ request.origin | append: crumb_collection.url | json }} }
+            ,{ "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ request.origin | append: product.url | json }} }
+          {%- else -%}
+            ,{ "@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ request.origin | append: product.url | json }} }
+          {%- endif -%}
+        {%- when 'collection' -%}
+          ,{ "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ request.origin | append: collection.url | json }} }
+        {%- when 'page' -%}
+          ,{ "@type": "ListItem", "position": 2, "name": {{ page.title | json }}, "item": {{ request.origin | append: page.url | json }} }
+        {%- when 'article' -%}
+          ,{ "@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ request.origin | append: blog.url | json }} }
+          ,{ "@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ request.origin | append: article.url | json }} }
+      {%- endcase -%}
+    ]
+  }
+</script>
