@@ -19,7 +19,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test --trace off",
     "lhci": "lhci autorun",
-    "ci": "npm run typecheck && npm test && npm run lint:placeholders && npm run lint:links && npm run lint:copy && npm run theme:check",
+    "ci": "npm run typecheck && npm test && npm run lint:schema && npm run lint:placeholders && npm run lint:links && npm run lint:copy && npm run theme:check",
     "setup-store": "tsx scripts/setup-store.ts",
     "audit": "tsx scripts/audit-catalogue.ts",
     "normalise": "tsx scripts/normalise-products.ts",
@@ -31,7 +31,8 @@
     "weekly-report": "tsx scripts/weekly-report.ts",
     "smoke": "tsx scripts/smoke-test.ts",
     "backup": "tsx scripts/backup-export.ts",
-    "preview": "tsx tools/preview/server.ts"
+    "preview": "tsx tools/preview/server.ts",
+    "lint:schema": "tsx tests/static-schema-rules.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",

@@ -8,6 +8,8 @@ export function url(path: string): string {
 }
 
 export async function unlock(page: Page) {
+  // Behave like a returning visitor who has already seen the newsletter pop-up, so it never covers a click.
+  await page.addInitScript(() => { try { window.localStorage.setItem('ornis:newsletter-seen', '1'); } catch (e) { /* storage blocked */ } });
   const password = process.env.STOREFRONT_PASSWORD;
   if (!password) return;
   await page.goto('/password');

@@ -247,7 +247,10 @@ function sectionObject(type: string, id: string, config: any, data: Data) {
 async function renderSection(type: string, id: string, config: any, scope: Record<string, unknown>, data: Data): Promise<string> {
   const section = sectionObject(type, id, config, data);
   const html = await engine.renderFile(`sections/${type}`, { section }, { globals: scope });
-  return `<div id="shopify-section-${id}" class="shopify-section">${html}</div>`;
+  // Same wrapper as Shopify: section group class plus the schema's "class", so layout bugs show up locally.
+  const schemaClass = schemaOf(type).class ?? '';
+  const group = id.startsWith('sections--') ? ` shopify-section-group-${id.split('__')[0].replace('sections--', '')}` : '';
+  return `<div id="shopify-section-${id}" class="shopify-section${group}${schemaClass ? ` ${schemaClass}` : ''}">${html}</div>`;
 }
 
 class SectionTag extends Tag {

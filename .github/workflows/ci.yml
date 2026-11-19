@@ -27,6 +27,8 @@ jobs:
       - run: npm test
       - name: Theme Check (zero errors, zero warnings)
         run: npm run theme:check
+      - name: Shopify schema rules (upload would be rejected otherwise)
+        run: npm run lint:schema
       - name: Placeholder scan
         run: npm run lint:placeholders
       - name: Link check
