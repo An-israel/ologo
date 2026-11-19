@@ -6,50 +6,14 @@
         "eyebrow": "The Christmas shop",
         "heading": "Christmas gifts",
         "heading_highlight": "from £10",
-        "button_style": "light",
+        "button_style": "primary",
         "text": "Jumpers, accessories and stocking fillers, delivered across the UK.",
         "button_label": "Shop gifts",
         "button_link": "shopify://collections/gifts",
-        "background": "deep",
+        "background": "mint",
         "button2_label": "New in",
-        "button2_link": "shopify://collections/new-in"
-      }
-    },
-    "trust": {
-      "type": "trust-strip",
-      "blocks": {
-        "delivery": {
-          "type": "point",
-          "settings": {
-            "icon": "delivery",
-            "heading": "Free UK delivery over £30",
-            "text": "Standard delivery £4.99, express £6.99."
-          }
-        },
-        "returns": {
-          "type": "point",
-          "settings": {
-            "icon": "returns",
-            "heading": "14-day returns",
-            "text": "Changed your mind? Send it back within 14 days."
-          }
-        },
-        "secure": {
-          "type": "point",
-          "settings": {
-            "icon": "secure",
-            "heading": "Secure payment",
-            "text": "Pay with card, Apple Pay, Shop Pay or Klarna."
-          }
-        }
-      },
-      "block_order": [
-        "delivery",
-        "returns",
-        "secure"
-      ],
-      "settings": {
-        "heading": "Why shop with Ornis"
+        "button2_link": "shopify://collections/new-in",
+        "note": "Free UK delivery on orders over £30"
       }
     },
     "categories": {
@@ -207,11 +171,55 @@
         "heading": "Join the Ornis list",
         "text": "New arrivals and offers, no more than once a week."
       }
+    },
+    "promos": {
+      "type": "promo-cards",
+      "blocks": {
+        "knit": {
+          "type": "card",
+          "settings": {
+            "collection": "women-knitwear",
+            "title": "Winter knitwear",
+            "text": "Cosy jumpers and cardigans",
+            "label": "New",
+            "background": "peach"
+          }
+        },
+        "under15": {
+          "type": "card",
+          "settings": {
+            "collection": "gifts-under-15",
+            "title": "Gifts under £15",
+            "text": "Stocking fillers sorted",
+            "label": "",
+            "background": "mint"
+          }
+        },
+        "men": {
+          "type": "card",
+          "settings": {
+            "collection": "men",
+            "title": "Menswear",
+            "text": "Hoodies, jeans and more",
+            "label": "",
+            "background": "lilac"
+          }
+        }
+      },
+      "block_order": [
+        "knit",
+        "under15",
+        "men"
+      ],
+      "settings": {
+        "heading": "",
+        "cta": "Shop now"
+      }
     }
   },
   "order": [
     "hero",
-    "trust",
+    "promos",
     "categories",
     "new-in",
     "editorial",

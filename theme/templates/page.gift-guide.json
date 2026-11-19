@@ -6,13 +6,14 @@
         "eyebrow": "Gift guide",
         "heading": "Presents for everyone,",
         "heading_highlight": "most under £25",
-        "button_style": "light",
+        "button_style": "primary",
         "text": "Thoughtful gifts for her, for him and for the kids, delivered across the UK.",
         "button_label": "Shop all gifts",
         "button_link": "shopify://collections/gifts",
-        "background": "deep",
+        "background": "peach",
         "button2_label": "",
-        "button2_link": ""
+        "button2_link": "",
+        "note": ""
       }
     },
     "finder": {

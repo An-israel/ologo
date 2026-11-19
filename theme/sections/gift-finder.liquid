@@ -1,14 +1,14 @@
 {%- comment -%} Links to automated gift collections (by price and tag). Empty collections are hidden. {%- endcomment -%}
 <style>
   #shopify-section-{{ section.id }} .gift-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
-  @media (min-width: 750px) { #shopify-section-{{ section.id }} .gift-links { grid-template-columns: repeat({{ section.blocks.size | at_most: 5 }}, minmax(0, 1fr)); gap: 16px; } }
+  @media (min-width: 750px) { #shopify-section-{{ section.id }} .gift-links { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; } }
   #shopify-section-{{ section.id }} .gift-card { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; min-height: 140px; padding: 20px; border-radius: 22px; background: var(--color-butter); color: var(--color-ink); text-decoration: none; font-weight: 700; font-size: 1.125rem; line-height: 1.25; letter-spacing: -0.01em; transition: transform 200ms var(--ease), box-shadow 200ms ease; }
   #shopify-section-{{ section.id }} li:nth-child(5n+2) .gift-card { background: var(--color-plume); }
   #shopify-section-{{ section.id }} li:nth-child(5n+3) .gift-card { background: var(--color-sand); }
   #shopify-section-{{ section.id }} li:nth-child(5n+4) .gift-card { background: var(--color-mint); }
   #shopify-section-{{ section.id }} li:nth-child(5n+5) .gift-card { background: var(--color-lilac); }
   #shopify-section-{{ section.id }} .gift-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
-  #shopify-section-{{ section.id }} .gift-card__arrow { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--color-ink); color: #fff; align-self: flex-end; transition: background-color 150ms ease; }
+  #shopify-section-{{ section.id }} .gift-card__arrow { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--color-kingfisher); color: #fff; align-self: flex-end; transition: background-color 150ms ease; }
   #shopify-section-{{ section.id }} .gift-card:hover .gift-card__arrow { background: var(--color-kingfisher); }
 </style>
 <div class="section section--tight">

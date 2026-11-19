@@ -1,10 +1,10 @@
 {{ 'section-results.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'facets.js' | asset_url }}" defer></script>
 {%- render 'breadcrumbs' -%}
-<div class="collection-hero page-width">
+<div class="page-width"><div class="collection-hero">
   <h1>{{ collection.title | escape }}</h1>
   {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
-</div>
+</div></div>
 {%- paginate collection.products by section.settings.per_page -%}
   {%- if collection.all_products_count == 0 -%}
     <div class="page-width results__empty">

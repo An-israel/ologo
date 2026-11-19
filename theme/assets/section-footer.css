@@ -5,26 +5,26 @@
 @media (min-width: 750px) { .footer__grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; } }
 .footer h2 { color: #fff; }
 .footer__newsletter h2 { font-size: 1.5rem; }
-.footer__newsletter p { color: #CBD5E1; }
-.footer__menu h2 { font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.1em; color: #94A3B8; margin-bottom: 14px; font-family: var(--font-body); }
+.footer__newsletter p { color: #D1FAE5; }
+.footer__menu h2 { font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.1em; color: #A7D7C5; margin-bottom: 14px; font-family: var(--font-body); }
 .footer__menu ul li a { display: inline-block; min-height: 34px; padding: 5px 0; text-decoration: none; color: #E2E8F0; transition: color 150ms ease; }
 .footer__menu ul li a:hover { color: var(--color-gold); }
 .footer .newsletter-form .inline-form { background: rgba(255, 255, 255, 0.08); border-radius: 999px; padding: 6px; }
 .footer .newsletter-form .input { background: transparent; color: #fff; border: 0; border-radius: 999px; min-height: 46px; padding-left: 18px; }
-.footer .newsletter-form .input::placeholder { color: #94A3B8; }
-.footer .newsletter-form .muted { color: #94A3B8; margin-top: 10px; }
+.footer .newsletter-form .input::placeholder { color: #A7D7C5; }
+.footer .newsletter-form .muted { color: #A7D7C5; margin-top: 10px; }
 .footer .newsletter-form .button--primary { background: var(--color-gold); color: var(--color-ink); border-color: var(--color-gold); }
 .footer .form-message--success { color: var(--color-ink); }
 .footer__bottom { border-top: 1px solid rgba(255, 255, 255, 0.12); margin-top: 48px; padding-top: 24px; display: grid; gap: 16px; }
 @media (min-width: 990px) { .footer__bottom { grid-template-columns: 1fr auto; align-items: center; } }
-.footer__legal { color: #94A3B8; display: grid; gap: 4px; font-size: 0.8125rem; }
-.footer__legal a { color: #CBD5E1; }
+.footer__legal { color: #A7D7C5; display: grid; gap: 4px; font-size: 0.8125rem; }
+.footer__legal a { color: #D1FAE5; }
 .footer__legal address { font-style: normal; }
 .social-icons { display: flex; gap: 6px; margin-top: 18px; }
 .social-icons .icon-button { background: rgba(255, 255, 255, 0.08); }
 .social-icons .icon-button:hover { background: var(--color-gold); color: var(--color-ink); }
 .payment-icons { display: flex; flex-wrap: wrap; gap: 8px; }
 .payment-icon { width: 40px; height: 26px; border-radius: 4px; }
-.footer__cookies { color: #CBD5E1; min-height: 24px; }
+.footer__cookies { color: #D1FAE5; min-height: 24px; }
 .footer__brand .wordmark { color: #fff; font-size: 2rem; }
 .footer .newsletter-form .inline-form--pill { box-shadow: none; }

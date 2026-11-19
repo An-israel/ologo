@@ -11,16 +11,21 @@
         this.timer = window.setTimeout(() => this.search(this.input.value.trim()), 200);
       };
       this.onKey = (event) => this.keydown(event);
+      this.onOutside = (event) => { if (!this.contains(event.target)) this.close(); };
+      this.onFocus = () => { if (this.results.children.length) { this.results.hidden = false; this.input.setAttribute('aria-expanded', 'true'); } };
       this.input.addEventListener('input', this.onInput);
       this.input.addEventListener('keydown', this.onKey);
+      this.input.addEventListener('focus', this.onFocus);
+      document.addEventListener('click', this.onOutside);
     }
     disconnectedCallback() {
       window.clearTimeout(this.timer);
       this.abort?.abort();
+      document.removeEventListener('click', this.onOutside);
     }
 
     async search(term) {
-      if (term.length < 2) { this.close(); return; }
+      if (term.length < 2) { this.results.replaceChildren(); this.close(); return; }
       if (this.cache.has(term)) { this.render(this.cache.get(term)); return; }
       this.abort?.abort();
       this.abort = new AbortController();
@@ -54,13 +59,12 @@
 
     close() {
       this.results.hidden = true;
-      this.results.replaceChildren();
       this.input.setAttribute('aria-expanded', 'false');
       this.input.removeAttribute('aria-activedescendant');
     }
 
     keydown(event) {
-      const options = [...this.results.querySelectorAll('[role="option"]')];
+      const options = this.results.hidden ? [] : [...this.results.querySelectorAll('[role="option"]')];
       if (event.key === 'Escape' && !this.results.hidden) {
         event.preventDefault();
         event.stopPropagation();

@@ -8,8 +8,8 @@
 -%}
 
 <sticky-header class="site-header">
-  <header class="header page-width">
-    <div class="header__left">
+  <div class="header__bar on-ink">
+    <header class="header page-width">
       <button type="button" class="icon-button header__menu-button" data-dialog-open="MenuDrawer" aria-label="{{ 'general.open_menu' | t }}">
         {%- render 'icon', name: 'menu' -%}
       </button>
@@ -20,9 +20,35 @@
           {%- render 'wordmark' -%}
         {%- endif -%}
       </a>
-    </div>
 
-    <nav class="header__nav" aria-label="{{ 'accessibility.main_navigation' | t }}">
+      {%- comment -%} Always-visible search with live results (Shopify predictive search). {%- endcomment -%}
+      <predictive-search class="header__search">
+        <form action="{{ routes.search_url }}" method="get" role="search">
+          <label class="visually-hidden" for="PredictiveSearchInput">{{ 'search.label' | t }}</label>
+          <div class="header__search-field">
+            <input class="header__search-input" type="search" id="PredictiveSearchInput" name="q" autocomplete="off"
+              placeholder="{{ 'search.placeholder' | t }}"
+              role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="PredictiveResults" aria-haspopup="listbox">
+            <input type="hidden" name="options[prefix]" value="last">
+            <button type="submit" class="header__search-submit" aria-label="{{ 'search.submit' | t }}">{% render 'icon', name: 'search' %}</button>
+          </div>
+          <div id="PredictiveResults" class="predictive-results" data-predictive-results hidden></div>
+          <p class="visually-hidden" role="status" aria-live="polite" data-predictive-status></p>
+        </form>
+      </predictive-search>
+
+      <div class="header__icons">
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="header__icon-link header__account">{% render 'icon', name: 'account' %}<span>{{ 'header.account' | t }}</span></a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="header__icon-link" id="CartIcon" data-dialog-open="CartDrawer">
+          {%- render 'icon', name: 'bag' -%}<span aria-hidden="true">{{ 'header.bag' | t }}</span>
+          {%- render 'cart-count-badge' -%}
+        </a>
+      </div>
+    </header>
+  </div>
+    <nav class="header__nav page-width" aria-label="{{ 'accessibility.main_navigation' | t }}">
       <mega-menu>
         <ul class="header__menu list-unstyled">
           {%- for link in menu.links -%}
@@ -78,21 +104,6 @@
         </ul>
       </mega-menu>
     </nav>
-
-    <div class="header__icons">
-      <a href="{{ routes.search_url }}" class="header__search-pill" data-dialog-open="SearchModal">
-        {%- render 'icon', name: 'search', class: 'icon--small' -%}<span>{{ 'search.placeholder' | t }}</span>
-      </a>
-      <a href="{{ routes.search_url }}" class="icon-button header__search-icon" data-dialog-open="SearchModal" aria-label="{{ 'header.search' | t }}">{% render 'icon', name: 'search' %}</a>
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="icon-button header__account" aria-label="{{ 'header.account' | t }}">{% render 'icon', name: 'account' %}</a>
-      {%- endif -%}
-      <a href="{{ routes.cart_url }}" class="icon-button" id="CartIcon" data-dialog-open="CartDrawer">
-        {%- render 'icon', name: 'bag' -%}
-        {%- render 'cart-count-badge' -%}
-      </a>
-    </div>
-  </header>
 </sticky-header>
 
 {%- comment -%} Mobile menu: full-screen drawer with large tap targets and a visible close button. {%- endcomment -%}
@@ -140,28 +151,7 @@
   </nav>
 </dialog>
 
-<dialog class="drawer drawer--search" id="SearchModal" aria-labelledby="SearchModalTitle">
-  <div class="drawer__header">
-    <h2 id="SearchModalTitle">{{ 'search.title' | t }}</h2>
-    <button type="button" class="icon-button" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
-  </div>
-  <div class="drawer__body">
-    <predictive-search>
-      <form action="{{ routes.search_url }}" method="get" role="search">
-        <label class="visually-hidden" for="PredictiveSearchInput">{{ 'search.label' | t }}</label>
-        <div class="inline-form">
-          <input class="input" type="search" id="PredictiveSearchInput" name="q" autofocus autocomplete="off"
-            placeholder="{{ 'search.placeholder' | t }}"
-            role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="PredictiveResults" aria-haspopup="listbox">
-          <input type="hidden" name="options[prefix]" value="last">
-          <button type="submit" class="button button--primary" aria-label="{{ 'search.submit' | t }}">{% render 'icon', name: 'search' %}</button>
-        </div>
-        <div id="PredictiveResults" class="predictive-results" data-predictive-results hidden></div>
-        <p class="visually-hidden" role="status" aria-live="polite" data-predictive-status></p>
-      </form>
-    </predictive-search>
-  </div>
-</dialog>
+
 
 {% schema %}
 {

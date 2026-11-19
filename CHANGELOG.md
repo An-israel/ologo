@@ -4,6 +4,16 @@ Theme releases are tagged in Git (`v2.0.0` upward). Store schema changes bump `S
 
 ## Unreleased: 2.0.0 (milestones 1 to 3, built before store access)
 
+### Retail redesign (operator samples: Toolstation, Flexykart, GBG concept; no blue or yellow)
+- Clean retail layout: dark green header bar with logo, a large always-visible search box with live results and a
+  tangerine search button, labelled Account and Bag icons, and a white department menu row.
+- Selling points bar under the header on every page (free delivery, returns, Klarna, gifts).
+- Promo banner (soft green panel, text left, product photo right), a row of three promo cards, square category tiles
+  with labels, and product cards as white bordered boxes with square images, price and a full-width
+  Add to bag / Choose options button.
+- Palette: deep green #064E3B, brand green #047857, tangerine #FB923C, burnt orange labels, very light tints.
+  All pairs pass WCAG AA. Buttons are softly squared (10 px) instead of pills.
+
 ### New design (operator request: "change the entire UI, make it better")
 - Modern fashion-store layout: clean white base, rounded imagery, pill buttons, soft shadows and hover motion.
 - Header: white with blur, centred menu, visible search bar on desktop, coral bag count; slim royal blue announcement bar.

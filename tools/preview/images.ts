@@ -49,13 +49,13 @@ export async function ensureImage(dir: string, name: string, shape: string, colo
   else if (name === 'editorial') svg = editorialScene();
   else {
     svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="2048" viewBox="0 0 1536 2048">
-      <defs>${defs('g')}${shade(colour, 'unused')}<radialGradient id="bg" cx="0.5" cy="0.42" r="0.75"><stop offset="0" stop-color="#FAFAFA"/><stop offset="1" stop-color="#ECEDEF"/></radialGradient></defs>
+      <defs>${defs('g')}${shade(colour, 'unused')}<radialGradient id="bg" cx="0.5" cy="0.42" r="0.75"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></radialGradient></defs>
       <rect width="1536" height="2048" fill="url(#bg)"/>
-      <ellipse cx="768" cy="1790" rx="470" ry="44" fill="rgba(15,23,42,0.09)"/>
+      <ellipse cx="768" cy="1790" rx="470" ry="40" fill="rgba(15,23,42,0.06)"/>
       ${garment(shape, colour, 'g')}
     </svg>`;
   }
-  const size = name === 'hero' ? { w: 2400, h: 1350 } : name === 'editorial' ? { w: 1600, h: 1200 } : null;
+  const size = name === 'hero' ? { w: 1600, h: 1000 } : name === 'editorial' ? { w: 1600, h: 1200 } : null;
   let img = sharp(Buffer.from(svg));
   if (size) img = img.resize(size.w, size.h);
   await img.jpeg({ quality: 82, mozjpeg: true }).toFile(file);
@@ -66,18 +66,17 @@ export async function ensureImage(dir: string, name: string, shape: string, colo
 function heroScene(): string {
   const place = (shape: string, colour: string, id: string, x: number, y: number, s: number, r: number) =>
     `<g transform="translate(${x - 768 * s} ${y - 1024 * s}) scale(${s}) rotate(${r} 768 1024)">${garment(shape, colour, id)}</g>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1350" viewBox="0 0 2400 1350">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1500" viewBox="0 0 2400 1500">
     <defs>${defs('a')}${defs('b')}${defs('c')}${defs('d')}
-      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E86A45"/><stop offset="0.55" stop-color="#F29A6B"/><stop offset="1" stop-color="#F7C59F"/></linearGradient>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3F7F5"/></linearGradient>
     </defs>
-    <rect width="2400" height="1350" fill="url(#bg)"/>
-    <circle cx="1720" cy="660" r="560" fill="#FFD9BE" opacity="0.55"/>
-    <circle cx="2250" cy="150" r="220" fill="#FFC629" opacity="0.9"/>
-    <rect x="1080" y="1110" width="1320" height="240" fill="rgba(120,40,20,0.18)"/>
-    ${place('jumper', '#1D4ED8', 'a', 1580, 600, 0.62, -6)}
-    ${place('scarf', '#FFF4E6', 'b', 1150, 640, 0.5, 14)}
-    ${place('beanie', '#BE185D', 'c', 2070, 820, 0.42, 8)}
-    ${place('jeans', '#0F172A', 'd', 1950, 500, 0.36, 16)}
+    <rect width="2400" height="1500" fill="url(#bg)"/>
+    <circle cx="1200" cy="760" r="600" fill="#E3F4EC"/>
+    <ellipse cx="1200" cy="1330" rx="900" ry="60" fill="rgba(15,23,42,0.06)"/>
+    ${place('scarf', '#F5EBDD', 'b', 640, 760, 0.62, -10)}
+    ${place('jumper', '#047857', 'a', 1200, 700, 0.78, 0)}
+    ${place('beanie', '#FB923C', 'c', 1800, 960, 0.5, 8)}
+    ${place('jeans', '#1F2937', 'd', 1850, 560, 0.42, 12)}
   </svg>`;
 }
 

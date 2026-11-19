@@ -54,15 +54,15 @@
         <product-form>
           {%- form 'product', product, novalidate: 'novalidate' -%}
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <button type="submit" class="quick-add__button" aria-label="{{ 'products.add_to_bag' | t }}: {{ product.title | escape }}" title="{{ 'products.add_to_bag' | t }}">
-              {%- render 'icon', name: 'plus' -%}
+            <button type="submit" class="button button--primary">
+              {%- render 'icon', name: 'bag', class: 'icon--small' -%}{{ 'products.add_to_bag' | t }}<span class="visually-hidden">: {{ product.title | escape }}</span>
             </button>
             <p class="field__error" role="alert" data-form-error-message hidden></p>
           {%- endform -%}
         </product-form>
       {%- else -%}
-        <button type="button" class="quick-add__button js-only" data-dialog-open="QuickAdd-{{ card_id }}" aria-label="{{ 'products.quick_add' | t }}: {{ product.title | escape }}" title="{{ 'products.quick_add' | t }}">
-          {%- render 'icon', name: 'plus' -%}
+        <button type="button" class="button button--secondary js-only" data-dialog-open="QuickAdd-{{ card_id }}">
+          {{- 'products.choose_options' | t -}}<span class="visually-hidden">: {{ product.title | escape }}</span>
         </button>
         <dialog class="modal" id="QuickAdd-{{ card_id }}" aria-labelledby="QuickAddTitle-{{ card_id }}">
           <div class="modal__inner">

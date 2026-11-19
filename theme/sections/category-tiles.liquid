@@ -1,33 +1,29 @@
 <style>
-  #shopify-section-{{ section.id }} .bubbles { display: grid; grid-auto-flow: column; grid-auto-columns: 112px; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; list-style: none; padding: 4px 0 12px; margin: 0; scrollbar-width: none; }
-  #shopify-section-{{ section.id }} .bubbles::-webkit-scrollbar { display: none; }
-  #shopify-section-{{ section.id }} .bubbles > li { scroll-snap-align: start; }
-  @media (min-width: 990px) { #shopify-section-{{ section.id }} .bubbles { grid-auto-flow: row; grid-template-columns: repeat({{ section.blocks.size | at_most: 6 }}, minmax(0, 1fr)); gap: 24px; overflow: visible; } }
-  #shopify-section-{{ section.id }} .bubble { display: grid; justify-items: center; gap: 12px; color: var(--color-ink); text-decoration: none; font-weight: 600; text-align: center; }
-  #shopify-section-{{ section.id }} .bubble__media { position: relative; width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--color-peach); transition: transform 250ms var(--ease), box-shadow 250ms ease; }
-  #shopify-section-{{ section.id }} li:nth-child(6n+2) .bubble__media { background: var(--color-mint); }
-  #shopify-section-{{ section.id }} li:nth-child(6n+3) .bubble__media { background: var(--color-lilac); }
-  #shopify-section-{{ section.id }} li:nth-child(6n+4) .bubble__media { background: var(--color-butter); }
-  #shopify-section-{{ section.id }} li:nth-child(6n+5) .bubble__media { background: var(--color-plume); }
-  #shopify-section-{{ section.id }} li:nth-child(6n+6) .bubble__media { background: var(--color-sand); }
-  #shopify-section-{{ section.id }} .bubble__media img { position: absolute; inset: 14%; width: 72%; height: 72%; object-fit: cover; border-radius: 50%; }
-  #shopify-section-{{ section.id }} .bubble:hover .bubble__media { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
-  #shopify-section-{{ section.id }} .bubble:hover .bubble__label { color: var(--color-kingfisher); }
-  #shopify-section-{{ section.id }} .bubble__label { font-size: 0.9375rem; }
-  @media (min-width: 990px) { #shopify-section-{{ section.id }} .bubble__label { font-size: 1.0625rem; } }
+  #shopify-section-{{ section.id }} .cat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+  @media (min-width: 750px) { #shopify-section-{{ section.id }} .cat-grid { grid-template-columns: repeat({{ section.blocks.size | at_most: 6 }}, minmax(0, 1fr)); gap: 16px; } }
+  #shopify-section-{{ section.id }} .cat { display: grid; gap: 8px; color: var(--color-ink); text-decoration: none; font-weight: 600; text-align: center; font-size: 0.875rem; }
+  @media (min-width: 750px) { #shopify-section-{{ section.id }} .cat { font-size: 0.9375rem; gap: 10px; } }
+  #shopify-section-{{ section.id }} .cat__media { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--color-border); transition: box-shadow 200ms ease, border-color 200ms ease; }
+  #shopify-section-{{ section.id }} .cat__media img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; transition: transform 300ms var(--ease); }
+  #shopify-section-{{ section.id }} .cat:hover .cat__media { border-color: var(--color-kingfisher); box-shadow: 0 8px 22px rgba(17, 24, 39, 0.08); }
+  #shopify-section-{{ section.id }} .cat:hover .cat__media img { transform: scale(1.04); }
+  #shopify-section-{{ section.id }} .cat:hover .cat__label { color: var(--color-kingfisher); }
 </style>
 <div class="section section--tight">
   <div class="page-width">
-    <div class="section-header"><h2>{{ section.settings.heading | escape }}</h2></div>
-    <ul class="bubbles">
+    <div class="section-header">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.view_all_link != blank -%}<a class="view-all" href="{{ section.settings.view_all_link }}">{{ 'general.view_all' | t }}<span class="visually-hidden">: {{ section.settings.heading | escape }}</span> {% render 'icon', name: 'chevron-right', class: 'icon--small' %}</a>{%- endif -%}
+    </div>
+    <ul class="cat-grid">
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
         {%- if c == blank or c.products_count == 0 -%}{%- continue -%}{%- endif -%}
         {%- assign tile_image = block.settings.image | default: c.featured_image -%}
         <li {{ block.shopify_attributes }}>
-          <a class="bubble" href="{{ c.url }}">
-            <span class="bubble__media">{%- render 'image', image: tile_image, sizes: '(min-width: 990px) 200px, 112px', widths: '160,240,320,400', alt: '' -%}</span>
-            <span class="bubble__label">{{ block.settings.title | default: c.title | escape }}</span>
+          <a class="cat" href="{{ c.url }}">
+            <span class="cat__media">{%- render 'image', image: tile_image, sizes: '(min-width: 750px) 200px, 33vw', widths: '160,240,320,400', alt: '' -%}</span>
+            <span class="cat__label">{{ block.settings.title | default: c.title | escape }}</span>
           </a>
         </li>
       {%- endfor -%}
@@ -40,7 +36,8 @@
   "name": "Shop by category",
   "max_blocks": 8,
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" }
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" },
+    { "type": "url", "id": "view_all_link", "label": "View all link", "default": "/collections" }
   ],
   "blocks": [
     {
@@ -49,7 +46,7 @@
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
         { "type": "text", "id": "title", "label": "Label", "info": "Uses the collection name if empty." },
-        { "type": "image_picker", "id": "image", "label": "Image", "info": "Square product photo, item centred. Uses the collection image if empty." }
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Square photo on a white background, item centred. Uses the collection image if empty." }
       ]
     }
   ],

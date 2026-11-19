@@ -28,7 +28,7 @@ Some settings can only be changed by a person in the Shopify admin. **S** means 
 
 - [ ] M: Settings > Customer accounts: new customer accounts (sign-in by email code), optional at checkout.
 - [ ] M: Settings > Checkout: email marketing consent box unticked by default, SMS off, address autocomplete on, company name hidden, phone optional.
-- [ ] M: Settings > Checkout > Customise: logo, royal blue #1D4ED8 buttons, white background, navy #172554 accents, sunshine #FFC629 highlights, Poppins font.
+- [ ] M: Settings > Checkout > Customise: logo, brand green #047857 buttons, white background, dark green #064E3B accents, tangerine #FB923C highlights, Poppins font.
 - [ ] M: Settings > Checkout > Order status page additional scripts: none. Add the note "Items may arrive in separate parcels" to the order status page through the checkout editor's text block.
 
 ## 4. Taxes and duties

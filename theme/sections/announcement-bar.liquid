@@ -3,13 +3,13 @@
 -%}
 {%- if count > 0 -%}
   <style>
-    .announcement { background: var(--color-kingfisher); color: #fff; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.01em; }
+    .announcement { background: var(--color-ink); color: #fff; font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.01em; }
     .announcement .icon-button:hover { background: rgba(255, 255, 255, 0.15); }
-    .announcement__inner { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 40px; }
+    .announcement__inner { display: flex; align-items: center; justify-content: center; gap: 4px; min-height: 36px; }
     .announcement__slides { flex: 1; text-align: center; max-width: 560px; }
-    .announcement__slides p { margin: 0; padding: 8px 0; }
+    .announcement__slides p { margin: 0; padding: 6px 0; }
     .announcement__slides a { color: #fff; }
-    .announcement .icon-button { width: 40px; height: 40px; }
+    .announcement .icon-button { width: 36px; height: 36px; }
   </style>
   <announcement-bar class="announcement on-ink" role="region" aria-label="{{ 'accessibility.announcements' | t }}" data-interval="{{ section.settings.interval }}">
     <div class="announcement__inner page-width">

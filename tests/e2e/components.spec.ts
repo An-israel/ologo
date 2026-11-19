@@ -5,8 +5,8 @@ test.beforeEach(async ({ page }) => { await unlock(page); });
 
 test('predictive search finds a product by part of its name and works with the keyboard', async ({ page }) => {
   await page.goto(url('/'));
-  await page.getByRole('link', { name: 'Search' }).click();
   const input = page.getByRole('combobox', { name: /Search the shop/ });
+  await input.click();
   await expect(input).toBeFocused();
   await input.fill('cable');
   await expect(page.locator('[data-predictive-results] [role="option"]').first()).toBeVisible();

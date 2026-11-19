@@ -342,7 +342,7 @@ function buildData(): Data {
   const linklists = Object.fromEntries(MENUS.map((m) => [m.handle, { handle: m.handle, title: m.title, links: m.items.map(toLink) }]));
   return {
     products, collections, pages, linklists,
-    heroImage: imageObj({ name: 'hero', shape: 'jumper', colour: '#1D4ED8', width: 2400, height: 1350, alt: 'Blue jumper, cream scarf and berry beanie laid out as gifts' }),
+    heroImage: imageObj({ name: 'hero', shape: 'jumper', colour: '#047857', width: 1600, height: 1000, alt: 'Green jumper, cream scarf, orange beanie and dark jeans laid out as gifts' }),
     editorialImage: imageObj({ name: 'editorial', shape: 'jacket', colour: '#5d6532', width: 1600, height: 1200, alt: 'Olive padded jacket and rust hoodie' }),
   };
 }

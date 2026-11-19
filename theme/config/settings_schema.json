@@ -22,7 +22,7 @@
         "type": "color",
         "id": "color_ink",
         "label": "Ink (text, primary buttons)",
-        "default": "#0F172A"
+        "default": "#111827"
       },
       {
         "type": "color",
@@ -33,14 +33,14 @@
       {
         "type": "color",
         "id": "color_deep",
-        "label": "Footer and dark bands",
-        "default": "#0F172A"
+        "label": "Dark green (header bar, footer)",
+        "default": "#064E3B"
       },
       {
         "type": "color",
         "id": "color_kingfisher",
-        "label": "Royal blue (header, buttons, links, focus ring)",
-        "default": "#1D4ED8"
+        "label": "Brand green (links, menu highlights, focus ring)",
+        "default": "#047857"
       },
       {
         "type": "color",
@@ -51,8 +51,8 @@
       {
         "type": "color",
         "id": "color_surface",
-        "label": "Surface (image backgrounds, soft panels)",
-        "default": "#F3F4F6"
+        "label": "Light grey (image backgrounds, panels)",
+        "default": "#F5F5F4"
       },
       {
         "type": "header",
@@ -61,14 +61,14 @@
       {
         "type": "color",
         "id": "color_gold",
-        "label": "Sunshine (highlight buttons, announcement bar). Text on it is Ink.",
-        "default": "#FFC629"
+        "label": "Tangerine (search button, highlight buttons, badges). Text on it is Ink.",
+        "default": "#FB923C"
       },
       {
         "type": "color",
         "id": "color_coral",
-        "label": "Coral (New badges, labels). Text on it is Paper.",
-        "default": "#D9381E"
+        "label": "Burnt orange (labels). Text on it is White.",
+        "default": "#C2410C"
       },
       {
         "type": "color",
@@ -80,7 +80,7 @@
         "type": "color",
         "id": "color_robin",
         "label": "Robin (real sale prices only)",
-        "default": "#C81E1E"
+        "default": "#B91C1C"
       },
       {
         "type": "header",
@@ -89,38 +89,38 @@
       {
         "type": "color",
         "id": "color_plume",
-        "label": "Sky",
-        "default": "#BFDBFE"
+        "label": "Light green tint",
+        "default": "#F0FDF4"
       },
       {
         "type": "color",
         "id": "color_mint",
         "label": "Mint",
-        "default": "#A7F3D0"
+        "default": "#ECFDF5"
       },
       {
         "type": "color",
         "id": "color_peach",
         "label": "Peach",
-        "default": "#FED7AA"
+        "default": "#FFF7ED"
       },
       {
         "type": "color",
         "id": "color_lilac",
         "label": "Lilac",
-        "default": "#DDD6FE"
+        "default": "#F5F3FF"
       },
       {
         "type": "color",
         "id": "color_butter",
         "label": "Butter",
-        "default": "#FDE68A"
+        "default": "#FEFCE8"
       },
       {
         "type": "color",
         "id": "color_sand",
-        "label": "Pink",
-        "default": "#FBCFE8"
+        "label": "Light pink tint",
+        "default": "#FDF2F8"
       }
     ]
   },
